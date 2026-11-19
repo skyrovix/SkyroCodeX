@@ -16,7 +16,11 @@ export function WebPreview({ html, css, javascript }: WebPreviewProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const assembleDocument = () => {
-    // Generate clean bundle without allow-same-origin
+    // Strip external references to local tabs since they are injected inline
+    const sanitizedHtml = html
+      .replace(/<link[^>]+href=["']styles\.css["'][^>]*>/gi, "")
+      .replace(/<script[^>]+src=["']script\.js["'][^>]*><\/script>/gi, "");
+
     return `
 <!DOCTYPE html>
 <html>
@@ -29,7 +33,7 @@ export function WebPreview({ html, css, javascript }: WebPreviewProps) {
   </style>
 </head>
 <body>
-  ${html}
+  ${sanitizedHtml}
   <script>
     try {
       ${javascript}
@@ -95,3 +99,4 @@ export function WebPreview({ html, css, javascript }: WebPreviewProps) {
     </div>
   );
 }
+
