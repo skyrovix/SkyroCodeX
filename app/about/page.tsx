@@ -18,7 +18,18 @@ export default function AboutPage() {
               className="h-full w-full object-contain filter drop-shadow-[0_0_8px_rgba(255,87,34,0.4)]"
             />
           </div>
-          <h1 className="text-3xl font-black text-slate-900 dark:text-white">About SkyroCodeX</h1>
+          <div>
+            <img
+              src="/logo-wordmark-dark.png"
+              alt="SkyroCodeX"
+              className="hidden dark:block h-7 w-auto object-contain"
+            />
+            <img
+              src="/logo-wordmark-light.png"
+              alt="SkyroCodeX"
+              className="block dark:hidden h-7 w-auto object-contain"
+            />
+          </div>
         </div>
 
         <p className="text-base text-slate-700 dark:text-slate-300 leading-relaxed mb-8">

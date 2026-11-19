@@ -71,11 +71,11 @@ export function Navbar({
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800/80 bg-white/90 dark:bg-[#0B0F17]/90 backdrop-blur-md transition-colors">
+    <header className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800/80 bg-white/95 dark:bg-[#0B0F17]/95 backdrop-blur-md transition-colors">
       <div className="flex h-14 items-center justify-between px-3 sm:px-6">
         {/* Brand / Logo */}
         <div className="flex items-center gap-3">
-          <Link href="/" className="flex items-center gap-2.5 group">
+          <Link href="/" className="flex items-center gap-2 group py-1">
             <div className="relative h-8 w-8 flex-shrink-0 group-hover:scale-105 transition-transform">
               <img
                 src="/logo-icon.png"
@@ -83,20 +83,21 @@ export function Navbar({
                 className="h-full w-full object-contain filter drop-shadow-[0_0_8px_rgba(255,87,34,0.45)]"
               />
             </div>
-            <div className="flex flex-col">
-              <div className="text-base font-extrabold tracking-tight flex items-center leading-none">
-                <span className="text-slate-800 dark:text-slate-200">Skyro</span>
-                <span className="text-[#FF5722] font-black">C</span>
-                <span className="text-slate-800 dark:text-slate-200">ode</span>
-                <span className="relative text-[#FF5722] font-black ml-0.5">
-                  <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 text-[8px] font-mono text-slate-500 dark:text-slate-400 font-bold leading-none select-none">
-                    &lt;/&gt;
-                  </span>
-                  X
-                </span>
-              </div>
-              <span className="text-[9px] font-semibold tracking-wider text-slate-500 dark:text-slate-400 uppercase -mt-0.5 hidden sm:block">
-                by Skyrovix
+            <div className="flex flex-col justify-center">
+              {/* Dark mode official wordmark */}
+              <img
+                src="/logo-wordmark-dark.png"
+                alt="SkyroCodeX"
+                className="hidden dark:block h-[22px] sm:h-[25px] w-auto object-contain -mb-0.5"
+              />
+              {/* Light mode official wordmark */}
+              <img
+                src="/logo-wordmark-light.png"
+                alt="SkyroCodeX"
+                className="block dark:hidden h-[22px] sm:h-[25px] w-auto object-contain -mb-0.5"
+              />
+              <span className="text-[8.5px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase pl-0.5">
+                BY SKYROVIX
               </span>
             </div>
           </Link>

@@ -15,14 +15,18 @@ export function Footer() {
                 className="h-full w-full object-contain filter drop-shadow-[0_0_6px_rgba(255,87,34,0.4)]"
               />
             </div>
-            <div>
-              <span className="font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center">
-                <span>Skyro</span>
-                <span className="text-[#FF5722]">C</span>
-                <span>ode</span>
-                <span className="text-[#FF5722]">X</span>
-              </span>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
+            <div className="flex flex-col">
+              <img
+                src="/logo-wordmark-dark.png"
+                alt="SkyroCodeX"
+                className="hidden dark:block h-[20px] w-auto object-contain"
+              />
+              <img
+                src="/logo-wordmark-light.png"
+                alt="SkyroCodeX"
+                className="block dark:hidden h-[20px] w-auto object-contain"
+              />
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
                 Code. Run. Share. Instantly. Powered by <span className="text-orange-600 dark:text-orange-400 font-semibold">Skyrovix</span>
               </p>
             </div>
