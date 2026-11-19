@@ -55,14 +55,18 @@ export default function LandingPage() {
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[380px] bg-gradient-to-tr from-orange-600/20 via-amber-500/15 to-orange-400/10 blur-[140px] -z-10 rounded-full pointer-events-none" />
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          {/* Logo Mark Presentation */}
+          {/* Official Brand Wordmark Presentation */}
           <div className="flex justify-center mb-6">
-            <div className="relative group cursor-pointer">
-              <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-orange-600 via-amber-500 to-orange-500 opacity-60 blur-lg group-hover:opacity-100 transition duration-500"></div>
+            <div className="relative group p-2">
               <img
-                src="/logo-icon.png"
-                alt="SkyroCodeX Emblem"
-                className="relative h-20 w-20 sm:h-24 sm:w-24 object-contain filter drop-shadow-[0_10px_20px_rgba(255,87,34,0.4)]"
+                src="/logo-wordmark-dark.png"
+                alt="SkyroCodeX"
+                className="hidden dark:block h-12 sm:h-16 w-auto object-contain filter drop-shadow-[0_8px_24px_rgba(255,87,34,0.35)]"
+              />
+              <img
+                src="/logo-wordmark-light.png"
+                alt="SkyroCodeX"
+                className="block dark:hidden h-12 sm:h-16 w-auto object-contain filter drop-shadow-[0_8px_20px_rgba(255,87,34,0.25)]"
               />
             </div>
           </div>

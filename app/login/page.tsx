@@ -22,11 +22,16 @@ export default function LoginPage() {
       <div className="flex flex-1 items-center justify-center p-4">
         <div className="w-full max-w-md rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 p-8 shadow-2xl backdrop-blur-xl">
           <div className="text-center mb-6">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center mb-3">
+            <div className="flex justify-center mb-4">
               <img
-                src="/logo-icon.png"
+                src="/logo-wordmark-dark.png"
                 alt="SkyroCodeX"
-                className="h-full w-full object-contain filter drop-shadow-[0_0_12px_rgba(255,87,34,0.5)]"
+                className="hidden dark:block h-8 w-auto object-contain"
+              />
+              <img
+                src="/logo-wordmark-light.png"
+                alt="SkyroCodeX"
+                className="block dark:hidden h-8 w-auto object-contain"
               />
             </div>
             <h1 className="text-2xl font-black text-slate-900 dark:text-white">Log in to SkyroCodeX</h1>

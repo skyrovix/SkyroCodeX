@@ -75,31 +75,22 @@ export function Navbar({
       <div className="flex h-14 items-center justify-between px-3 sm:px-6">
         {/* Brand / Logo */}
         <div className="flex items-center gap-3">
-          <Link href="/" className="flex items-center gap-2 group py-1">
-            <div className="relative h-8 w-8 flex-shrink-0 group-hover:scale-105 transition-transform">
-              <img
-                src="/logo-icon.png"
-                alt="SkyroCodeX Icon"
-                className="h-full w-full object-contain filter drop-shadow-[0_0_8px_rgba(255,87,34,0.45)]"
-              />
-            </div>
-            <div className="flex flex-col justify-center">
-              {/* Dark mode official wordmark */}
-              <img
-                src="/logo-wordmark-dark.png"
-                alt="SkyroCodeX"
-                className="hidden dark:block h-[22px] sm:h-[25px] w-auto object-contain -mb-0.5"
-              />
-              {/* Light mode official wordmark */}
-              <img
-                src="/logo-wordmark-light.png"
-                alt="SkyroCodeX"
-                className="block dark:hidden h-[22px] sm:h-[25px] w-auto object-contain -mb-0.5"
-              />
-              <span className="text-[8.5px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase pl-0.5">
-                BY SKYROVIX
-              </span>
-            </div>
+          <Link href="/" className="flex flex-col justify-center group py-1">
+            {/* Dark mode official wordmark */}
+            <img
+              src="/logo-wordmark-dark.png"
+              alt="SkyroCodeX"
+              className="hidden dark:block h-[24px] sm:h-[28px] w-auto object-contain transition-transform group-hover:scale-[1.02]"
+            />
+            {/* Light mode official wordmark */}
+            <img
+              src="/logo-wordmark-light.png"
+              alt="SkyroCodeX"
+              className="block dark:hidden h-[24px] sm:h-[28px] w-auto object-contain transition-transform group-hover:scale-[1.02]"
+            />
+            <span className="text-[8.5px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase pl-0.5">
+              BY SKYROVIX
+            </span>
           </Link>
 
           {isEditor && onLanguageChange && (
@@ -209,7 +200,7 @@ export function Navbar({
         <div className="flex items-center gap-2">
           {!isEditor && (
             <Link href="/editor">
-              <Button variant="primary" size="sm" className="text-xs h-8 shadow-glow">
+              <Button variant="primary" size="sm" className="text-xs h-8 shadow-glow font-bold">
                 <span>Start Coding</span>
               </Button>
             </Link>

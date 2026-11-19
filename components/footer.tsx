@@ -6,30 +6,21 @@ export function Footer() {
     <footer className="w-full border-t border-slate-200 dark:border-slate-800/80 bg-white dark:bg-[#0B0F17] py-8 text-slate-600 dark:text-slate-400 transition-colors">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          {/* Brand */}
-          <div className="flex items-center gap-3">
-            <div className="h-8 w-8 flex-shrink-0">
-              <img
-                src="/logo-icon.png"
-                alt="SkyroCodeX Icon"
-                className="h-full w-full object-contain filter drop-shadow-[0_0_6px_rgba(255,87,34,0.4)]"
-              />
-            </div>
-            <div className="flex flex-col">
-              <img
-                src="/logo-wordmark-dark.png"
-                alt="SkyroCodeX"
-                className="hidden dark:block h-[20px] w-auto object-contain"
-              />
-              <img
-                src="/logo-wordmark-light.png"
-                alt="SkyroCodeX"
-                className="block dark:hidden h-[20px] w-auto object-contain"
-              />
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
-                Code. Run. Share. Instantly. Powered by <span className="text-orange-600 dark:text-orange-400 font-semibold">Skyrovix</span>
-              </p>
-            </div>
+          {/* Brand Wordmark */}
+          <div className="flex flex-col">
+            <img
+              src="/logo-wordmark-dark.png"
+              alt="SkyroCodeX"
+              className="hidden dark:block h-[22px] w-auto object-contain"
+            />
+            <img
+              src="/logo-wordmark-light.png"
+              alt="SkyroCodeX"
+              className="block dark:hidden h-[22px] w-auto object-contain"
+            />
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+              Code. Run. Share. Instantly. Powered by <span className="text-orange-600 dark:text-orange-400 font-semibold">Skyrovix</span>
+            </p>
           </div>
 
           {/* Links */}

@@ -131,6 +131,16 @@ export default function SharedSnippetPage() {
             <ArrowLeft className="h-4 w-4" />
             <span className="hidden sm:inline font-medium">Back to IDE</span>
           </Link>
+          <img
+            src="/logo-wordmark-dark.png"
+            alt="SkyroCodeX"
+            className="hidden dark:block h-[18px] w-auto object-contain"
+          />
+          <img
+            src="/logo-wordmark-light.png"
+            alt="SkyroCodeX"
+            className="block dark:hidden h-[18px] w-auto object-contain"
+          />
           <span className="text-xs font-mono bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
             Snippet #{shortId}
           </span>

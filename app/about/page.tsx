@@ -10,26 +10,18 @@ export default function AboutPage() {
     <div className="flex min-h-screen flex-col bg-slate-50 dark:bg-[#0B0F17] text-slate-900 dark:text-slate-100 transition-colors">
       <Navbar />
       <main className="flex-1 py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="h-10 w-10 flex-shrink-0">
-            <img
-              src="/logo-icon.png"
-              alt="SkyroCodeX"
-              className="h-full w-full object-contain filter drop-shadow-[0_0_8px_rgba(255,87,34,0.4)]"
-            />
-          </div>
-          <div>
-            <img
-              src="/logo-wordmark-dark.png"
-              alt="SkyroCodeX"
-              className="hidden dark:block h-7 w-auto object-contain"
-            />
-            <img
-              src="/logo-wordmark-light.png"
-              alt="SkyroCodeX"
-              className="block dark:hidden h-7 w-auto object-contain"
-            />
-          </div>
+        <div className="mb-6">
+          <img
+            src="/logo-wordmark-dark.png"
+            alt="SkyroCodeX"
+            className="hidden dark:block h-9 w-auto object-contain mb-4"
+          />
+          <img
+            src="/logo-wordmark-light.png"
+            alt="SkyroCodeX"
+            className="block dark:hidden h-9 w-auto object-contain mb-4"
+          />
+          <h1 className="text-3xl font-black text-slate-900 dark:text-white">About SkyroCodeX</h1>
         </div>
 
         <p className="text-base text-slate-700 dark:text-slate-300 leading-relaxed mb-8">
