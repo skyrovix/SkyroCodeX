@@ -225,20 +225,6 @@ export function Navbar({
             )}
             <span className="sr-only">Toggle theme</span>
           </Button>
-
-          {/* Auth links */}
-          <div className="hidden sm:flex items-center gap-1.5 border-l border-slate-200 dark:border-slate-800 pl-2">
-            <Link href="/login">
-              <Button variant="ghost" size="sm" className="h-8 text-xs text-slate-700 dark:text-slate-300">
-                Log in
-              </Button>
-            </Link>
-            <Link href="/signup">
-              <Button variant="brand" size="sm" className="h-8 text-xs font-semibold">
-                Sign up
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
     </header>
