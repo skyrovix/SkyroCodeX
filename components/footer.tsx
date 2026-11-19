@@ -177,19 +177,25 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center gap-1">
-                  <span>Internship Portal</span>
+                <Link href="/internship" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center gap-1">
+                  <span>Skyrovix Internship</span>
                   <ArrowUpRight className="h-3 w-3 text-orange-500" />
+                </Link>
+              </li>
+              <li>
+                <Link href="/courses" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center gap-1">
+                  <span>Skyrovix Courses</span>
+                  <ArrowUpRight className="h-3 w-3 text-orange-500" />
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
+                  Contact Us
                 </Link>
               </li>
               <li>
                 <Link href="/about" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
                   Security & Sandboxing
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
-                  Acceptable Use Policy
                 </Link>
               </li>
               <li>
