@@ -31,3 +31,4 @@ export interface LanguageConfig {
   };
   judge0Id?: number;
 }
+

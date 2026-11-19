@@ -38,7 +38,6 @@ export default function EditorPage() {
 
   // Initialize or fetch files for current language
   useEffect(() => {
-    // Check if files are already initialized for this language
     if (!filesMap[language]) {
       if (currentLangConfig.isWebPreview && currentLangConfig.files) {
         setFilesMap((prev) => ({
@@ -91,7 +90,6 @@ export default function EditorPage() {
   // Execution handler
   const handleRun = useCallback(async () => {
     if (currentLangConfig.isWebPreview) {
-      // For web mode, switch mobile view to output/preview if on mobile
       setMobileTab("output");
       return;
     }
@@ -145,7 +143,6 @@ export default function EditorPage() {
     const id = generateShortId();
     setCurrentShortId(id);
 
-    // Save to localStorage as temporary cache
     if (typeof window !== "undefined") {
       const snippetData = {
         shortId: id,
@@ -170,13 +167,12 @@ export default function EditorPage() {
     },
   });
 
-  // Extract Web files if in Web mode
   const htmlFile = currentFiles.find((f) => f.name.endsWith(".html"))?.content || "";
   const cssFile = currentFiles.find((f) => f.name.endsWith(".css"))?.content || "";
   const jsFile = currentFiles.find((f) => f.name.endsWith(".js"))?.content || "";
 
   return (
-    <div className="flex h-screen w-screen flex-col overflow-hidden bg-slate-950 text-slate-100">
+    <div className="flex h-screen w-screen flex-col overflow-hidden bg-slate-50 dark:bg-[#0B0F17] text-slate-900 dark:text-slate-100 transition-colors">
       {/* Top Navbar */}
       <Navbar
         currentLanguage={language}
@@ -193,12 +189,12 @@ export default function EditorPage() {
         onOpenShortcuts={() => setIsShortcutsOpen(true)}
       />
 
-      {/* Mobile Tab Switcher (Visible only on small screens) */}
-      <div className="flex md:hidden border-b border-slate-800 bg-slate-900 px-3 py-1.5 justify-around text-xs font-medium">
+      {/* Mobile Tab Switcher */}
+      <div className="flex md:hidden border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-1.5 justify-around text-xs font-medium">
         <button
           onClick={() => setMobileTab("editor")}
           className={`flex items-center gap-1.5 py-1 px-3 rounded ${
-            mobileTab === "editor" ? "bg-blue-600 text-white font-semibold" : "text-slate-400"
+            mobileTab === "editor" ? "bg-orange-600 text-white font-semibold" : "text-slate-600 dark:text-slate-400"
           }`}
         >
           <Code className="h-4 w-4" />
@@ -207,12 +203,12 @@ export default function EditorPage() {
         <button
           onClick={() => setMobileTab("output")}
           className={`flex items-center gap-1.5 py-1 px-3 rounded ${
-            mobileTab === "output" ? "bg-blue-600 text-white font-semibold" : "text-slate-400"
+            mobileTab === "output" ? "bg-orange-600 text-white font-semibold" : "text-slate-600 dark:text-slate-400"
           }`}
         >
           {currentLangConfig.isWebPreview ? <Eye className="h-4 w-4" /> : <Terminal className="h-4 w-4" />}
           <span>{currentLangConfig.isWebPreview ? "Web Preview" : "Console Output"}</span>
-          {stats.status === "running" && <span className="h-2 w-2 rounded-full bg-amber-400 animate-ping"></span>}
+          {stats.status === "running" && <span className="h-2 w-2 rounded-full bg-orange-400 animate-ping"></span>}
         </button>
       </div>
 
@@ -220,12 +216,12 @@ export default function EditorPage() {
       <div className="flex flex-1 overflow-hidden">
         {/* Left Pane: Code Editor */}
         <div
-          className={`flex flex-1 flex-col overflow-hidden border-r border-slate-800/80 ${
+          className={`flex flex-1 flex-col overflow-hidden border-r border-slate-200 dark:border-slate-800/80 ${
             mobileTab === "editor" ? "flex" : "hidden md:flex"
           }`}
         >
           {/* Editor Header Toolbar (Tabs + Font controls) */}
-          <div className="flex items-center justify-between border-b border-slate-800 bg-slate-950 pr-3">
+          <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-[#0B0F17] pr-3 transition-colors">
             <EditorTabs
               files={currentFiles}
               activeFileIndex={activeFileIndex}
@@ -233,13 +229,13 @@ export default function EditorPage() {
             />
 
             {/* Font Size & Info */}
-            <div className="flex items-center gap-1 text-slate-400">
-              <span className="text-[11px] font-mono mr-1 hidden sm:inline">
-                {activeFile.language.toUpperCase()}
+            <div className="flex items-center gap-1 text-slate-500 dark:text-slate-400">
+              <span className="text-[11px] font-mono mr-1 hidden sm:inline uppercase font-semibold text-orange-600 dark:text-orange-400">
+                {activeFile.language}
               </span>
               <button
                 onClick={() => setFontSize((f) => Math.max(11, f - 1))}
-                className="p-1 hover:text-slate-200 hover:bg-slate-900 rounded transition-colors"
+                className="p-1 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800 rounded transition-colors"
                 title="Decrease font size"
               >
                 <ZoomOut className="h-3.5 w-3.5" />
@@ -247,7 +243,7 @@ export default function EditorPage() {
               <span className="text-[11px] font-mono w-5 text-center">{fontSize}</span>
               <button
                 onClick={() => setFontSize((f) => Math.min(24, f + 1))}
-                className="p-1 hover:text-slate-200 hover:bg-slate-900 rounded transition-colors"
+                className="p-1 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800 rounded transition-colors"
                 title="Increase font size"
               >
                 <ZoomIn className="h-3.5 w-3.5" />

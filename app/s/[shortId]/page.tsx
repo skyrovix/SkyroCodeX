@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Navbar } from "@/components/navbar";
 import { CodeEditor } from "@/components/editor/code-editor";
 import { EditorTabs, EditorFile } from "@/components/editor/editor-tabs";
 import { IOPanel } from "@/components/editor/io-panel";
@@ -11,7 +10,7 @@ import { useCodeRunner } from "@/hooks/use-code-runner";
 import { getLanguageConfig } from "@/lib/languages";
 import { SupportedLanguage } from "@/types/language";
 import { Button } from "@/components/ui/button";
-import { GitFork, ArrowLeft, Loader2 } from "lucide-react";
+import { GitFork, ArrowLeft, Loader2, Play } from "lucide-react";
 import Link from "next/link";
 
 export default function SharedSnippetPage() {
@@ -31,7 +30,6 @@ export default function SharedSnippetPage() {
   useEffect(() => {
     if (!shortId) return;
 
-    // Check localStorage cache first
     try {
       const cached = localStorage.getItem(`skyro_snippet_${shortId}`);
       if (cached) {
@@ -46,7 +44,6 @@ export default function SharedSnippetPage() {
       console.warn("Could not read local snippet:", e);
     }
 
-    // Attempt to fetch from API
     fetch(`/api/snippets/${shortId}`)
       .then((res) => {
         if (!res.ok) throw new Error("Snippet not found");
@@ -80,7 +77,6 @@ export default function SharedSnippetPage() {
   };
 
   const handleFork = () => {
-    // Save to active session and go to editor
     if (typeof window !== "undefined") {
       sessionStorage.setItem("skyro_fork_language", language);
       sessionStorage.setItem("skyro_fork_files", JSON.stringify(files));
@@ -96,8 +92,8 @@ export default function SharedSnippetPage() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen w-screen items-center justify-center bg-slate-950 text-slate-300">
-        <Loader2 className="h-8 w-8 animate-spin text-blue-500 mr-3" />
+      <div className="flex h-screen w-screen items-center justify-center bg-slate-50 dark:bg-[#0B0F17] text-slate-700 dark:text-slate-300">
+        <Loader2 className="h-8 w-8 animate-spin text-orange-500 mr-3" />
         <span className="font-mono text-sm">Loading shared snippet ({shortId})...</span>
       </div>
     );
@@ -105,14 +101,14 @@ export default function SharedSnippetPage() {
 
   if (error || files.length === 0) {
     return (
-      <div className="flex h-screen w-screen flex-col items-center justify-center bg-slate-950 text-slate-300 px-4 text-center">
-        <div className="max-w-md p-8 rounded-xl border border-slate-800 bg-slate-900/60 shadow-2xl">
-          <h2 className="text-xl font-bold text-slate-100 mb-2">Snippet Not Found</h2>
-          <p className="text-sm text-slate-400 mb-6">
+      <div className="flex h-screen w-screen flex-col items-center justify-center bg-slate-50 dark:bg-[#0B0F17] text-slate-800 dark:text-slate-300 px-4 text-center">
+        <div className="max-w-md p-8 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 shadow-2xl">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-2">Snippet Not Found</h2>
+          <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">
             The snippet link &ldquo;{shortId}&rdquo; does not exist or may have expired.
           </p>
           <Link href="/editor">
-            <Button variant="primary">
+            <Button variant="primary" className="shadow-glow">
               <ArrowLeft className="h-4 w-4 mr-2" />
               <span>Open New IDE Session</span>
             </Button>
@@ -127,29 +123,30 @@ export default function SharedSnippetPage() {
   const jsFile = files.find((f) => f.name.endsWith(".js"))?.content || "";
 
   return (
-    <div className="flex h-screen w-screen flex-col overflow-hidden bg-slate-950 text-slate-100">
+    <div className="flex h-screen w-screen flex-col overflow-hidden bg-slate-50 dark:bg-[#0B0F17] text-slate-900 dark:text-slate-100 transition-colors">
       {/* Navbar with Fork CTA */}
-      <header className="flex h-14 items-center justify-between border-b border-slate-800 bg-slate-950 px-4">
+      <header className="flex h-14 items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F17] px-4">
         <div className="flex items-center gap-3">
-          <Link href="/editor" className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200">
+          <Link href="/editor" className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200">
             <ArrowLeft className="h-4 w-4" />
-            <span className="hidden sm:inline">Back to IDE</span>
+            <span className="hidden sm:inline font-medium">Back to IDE</span>
           </Link>
-          <span className="text-xs font-mono bg-slate-800 px-2 py-0.5 rounded text-slate-300 border border-slate-700">
+          <span className="text-xs font-mono bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
             Snippet #{shortId}
           </span>
-          <span className="text-xs text-blue-400 font-semibold uppercase">{currentLangConfig.name}</span>
+          <span className="text-xs text-orange-600 dark:text-orange-400 font-bold uppercase">{currentLangConfig.name}</span>
         </div>
 
         <div className="flex items-center gap-2">
           {!currentLangConfig.isWebPreview && (
-            <Button variant="primary" size="sm" onClick={handleRun} isLoading={isRunning} className="h-8">
+            <Button variant="primary" size="sm" onClick={handleRun} isLoading={isRunning} className="h-8 shadow-glow">
+              <Play className="h-3 w-3 fill-current mr-1" />
               <span>Run Code</span>
             </Button>
           )}
 
-          <Button variant="secondary" size="sm" onClick={handleFork} className="h-8 gap-1.5 text-slate-200">
-            <GitFork className="h-3.5 w-3.5 text-purple-400" />
+          <Button variant="secondary" size="sm" onClick={handleFork} className="h-8 gap-1.5 text-slate-700 dark:text-slate-200">
+            <GitFork className="h-3.5 w-3.5 text-orange-500" />
             <span>Fork & Edit</span>
           </Button>
         </div>
@@ -157,7 +154,7 @@ export default function SharedSnippetPage() {
 
       {/* Main Split Layout */}
       <div className="flex flex-1 overflow-hidden">
-        <div className="flex flex-1 flex-col overflow-hidden border-r border-slate-800">
+        <div className="flex flex-1 flex-col overflow-hidden border-r border-slate-200 dark:border-slate-800">
           <EditorTabs
             files={files}
             activeFileIndex={activeFileIndex}

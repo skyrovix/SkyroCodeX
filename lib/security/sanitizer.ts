@@ -36,3 +36,4 @@ export function truncateOutput(output: string, maxLength = MAX_OUTPUT_LENGTH): s
   }
   return output;
 }
+

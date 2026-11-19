@@ -22,14 +22,15 @@ export const metadata: Metadata = {
     url: "https://skyrocodex.skyrovix.com",
     siteName: "SkyroCodeX",
     type: "website",
+    images: [{ url: "/logo-full.jpg" }],
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: "/logo-icon.png",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0B0F19",
+  themeColor: "#FF5722",
   width: "device-width",
   initialScale: 1,
 };
@@ -41,8 +42,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased selection:bg-blue-600 selection:text-white">
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+      <body className="min-h-screen font-sans bg-slate-50 dark:bg-[#0B0F17] text-slate-900 dark:text-slate-100 antialiased selection:bg-orange-500 selection:text-white">
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange={false}>
           {children}
         </ThemeProvider>
       </body>

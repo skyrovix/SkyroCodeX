@@ -59,3 +59,4 @@ services:
 volumes:
   judge0-db-data:
   judge0-redis-data:
+

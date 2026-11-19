@@ -24,3 +24,4 @@ export interface UserProfile {
   avatarUrl?: string;
   createdAt: string;
 }
+

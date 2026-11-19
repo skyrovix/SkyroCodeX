@@ -49,7 +49,7 @@ export function Dropdown({
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "inline-flex items-center justify-between w-full rounded-lg border border-slate-700 bg-slate-900/90 px-3 py-1.5 text-xs sm:text-sm font-medium text-slate-200 shadow-sm hover:bg-slate-800 transition-colors focus:outline-none focus:ring-1 focus:ring-blue-500",
+          "inline-flex items-center justify-between w-full rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900 px-3 py-1.5 text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-1 focus:ring-orange-500",
           buttonClassName
         )}
       >
@@ -66,7 +66,7 @@ export function Dropdown({
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 z-50 mt-1 max-h-64 w-56 overflow-y-auto rounded-lg border border-slate-700 bg-slate-900 py-1 shadow-xl focus:outline-none scrollbar-thin">
+        <div className="absolute left-0 z-50 mt-1 max-h-64 w-56 overflow-y-auto rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900 py-1 shadow-xl focus:outline-none scrollbar-thin">
           {items.map((item) => {
             const isSelected = item.id === selectedId;
             return (
@@ -80,8 +80,8 @@ export function Dropdown({
                 className={cn(
                   "flex w-full items-center justify-between px-3 py-2 text-xs sm:text-sm text-left transition-colors",
                   isSelected
-                    ? "bg-blue-600/20 text-blue-400 font-medium"
-                    : "text-slate-300 hover:bg-slate-800/80 hover:text-slate-100"
+                    ? "bg-orange-500/10 text-orange-600 dark:text-orange-400 font-semibold"
+                    : "text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800/80 dark:hover:text-slate-100"
                 )}
               >
                 <div className="flex items-center gap-2 truncate">
@@ -89,7 +89,7 @@ export function Dropdown({
                   <span className="truncate">{item.label}</span>
                 </div>
                 {item.badge && (
-                  <span className="rounded bg-slate-800 px-1.5 py-0.5 text-[10px] text-slate-400">
+                  <span className="rounded bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 text-[10px] text-slate-500 dark:text-slate-400">
                     {item.badge}
                   </span>
                 )}

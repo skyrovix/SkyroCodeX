@@ -332,17 +332,17 @@ SELECT * FROM developers ORDER BY snippets_created DESC;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  background: rgba(59, 130, 246, 0.2);
-  color: #60a5fa;
+  background: rgba(255, 87, 34, 0.15);
+  color: #fb923c;
   border-radius: 9999px;
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  border: 1px solid rgba(255, 87, 34, 0.35);
   margin-bottom: 1rem;
 }
 
 h1 {
   margin: 0 0 0.5rem;
   font-size: 2.2rem;
-  background: linear-gradient(to right, #60a5fa, #c084fc);
+  background: linear-gradient(to right, #ff5722, #f59e0b);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -354,7 +354,7 @@ p {
 }
 
 .btn {
-  background: linear-gradient(to right, #2563eb, #7c3aed);
+  background: linear-gradient(to right, #ff5722, #f97316);
   border: none;
   color: white;
   padding: 0.75rem 1.75rem;
@@ -367,7 +367,7 @@ p {
 
 .btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 8px 20px rgba(255, 87, 34, 0.45);
 }`,
       },
       {
@@ -414,3 +414,4 @@ export const LANGUAGE_LIST = Object.values(SUPPORTED_LANGUAGES);
 export function getLanguageConfig(id: string): LanguageConfig {
   return SUPPORTED_LANGUAGES[id as SupportedLanguage] || SUPPORTED_LANGUAGES.python;
 }
+

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
-import { Check, Copy, Share2, Globe, Lock } from "lucide-react";
+import { Check, Copy, Globe } from "lucide-react";
 
 export interface ShareModalProps {
   isOpen: boolean;
@@ -31,7 +31,7 @@ export function ShareModal({ isOpen, onClose, shortId, isPublic = true }: ShareM
     >
       <div className="space-y-4">
         <div>
-          <label className="text-xs font-medium text-slate-400 mb-1.5 block">
+          <label className="text-xs font-medium text-slate-600 dark:text-slate-400 mb-1.5 block">
             Unique Shareable Link
           </label>
           <div className="flex items-center gap-2">
@@ -39,18 +39,18 @@ export function ShareModal({ isOpen, onClose, shortId, isPublic = true }: ShareM
               type="text"
               readOnly
               value={shareUrl}
-              className="flex-1 rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-xs font-mono text-slate-200 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="flex-1 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 px-3 py-2 text-xs font-mono text-slate-900 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-orange-500"
             />
-            <Button variant="primary" size="sm" onClick={handleCopy} className="h-9 gap-1.5">
+            <Button variant="primary" size="sm" onClick={handleCopy} className="h-9 gap-1.5 shadow-glow">
               {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
               <span>{copied ? "Copied" : "Copy"}</span>
             </Button>
           </div>
         </div>
 
-        <div className="rounded-lg border border-slate-800 bg-slate-950/60 p-3 text-xs text-slate-400 space-y-1.5">
-          <div className="flex items-center gap-2 text-slate-300 font-medium">
-            <Globe className="h-4 w-4 text-emerald-400" />
+        <div className="rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/60 p-3 text-xs text-slate-600 dark:text-slate-400 space-y-1.5">
+          <div className="flex items-center gap-2 text-slate-800 dark:text-slate-300 font-semibold">
+            <Globe className="h-4 w-4 text-emerald-500" />
             <span>Publicly Viewable & Forkable</span>
           </div>
           <p>

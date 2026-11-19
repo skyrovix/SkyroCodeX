@@ -29,3 +29,4 @@ export function useHotkeys({ onRun, onSave, onEscape }: HotkeyOptions) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onRun, onSave, onEscape]);
 }
+
