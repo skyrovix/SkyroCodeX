@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001"),
   title: "SkyroCodeX — Online Code Compiler & IDE by Skyrovix",
   description:
     "Fast, modern online code compiler and IDE supporting Python, JavaScript, Java, C, C++, Go, PHP, SQL, and Web preview with sandboxed execution.",
