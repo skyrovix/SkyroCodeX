@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  piston-api:
+    image: ghcr.io/engineer-man/piston:latest
+    container_name: skyrocodex-piston-api
+    restart: unless-stopped
+    ports:
+      - "2000:2000"
+    environment:
+      - PISTON_LOG_LEVEL=INFO
+      - PISTON_BIND_ADDRESS=0.0.0.0:2000
+    tmpfs:
+      - /tmp:exec
+    volumes:
+      - piston-packages:/piston/packages
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 100
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2048M
+
+volumes:
+  piston-packages:
