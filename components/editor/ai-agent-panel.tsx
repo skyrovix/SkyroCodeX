@@ -70,6 +70,34 @@ export function AiAgentPanel({
 }: AiAgentPanelProps) {
   const storageKey = `skyro_ai_messages_${currentLanguage}`;
 
+  const [availableModels, setAvailableModels] = useState([
+    { id: "qwen3:latest", label: "qwen3:latest", tag: "Local Qwen (Active)", isLocal: true },
+    { id: "llama3.1:8b", label: "llama3.1:8b", tag: "Local Ollama", isLocal: true },
+    { id: "llama3.1:latest", label: "llama3.1:latest", tag: "Local Ollama", isLocal: true },
+    { id: "llama3:latest", label: "llama3:latest", tag: "Local Ollama", isLocal: true },
+  ]);
+  const [selectedModel, setSelectedModel] = useState("qwen3:latest");
+  const [ollamaConnected, setOllamaConnected] = useState(true);
+
+  // Auto-discover local Ollama models on mount
+  useEffect(() => {
+    fetch("/api/ai/models")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.models && data.models.length > 0) {
+          setAvailableModels(data.models);
+          setOllamaConnected(Boolean(data.ollamaConnected));
+          const hasQwen = data.models.find((m: { id: string }) => m.id.includes("qwen"));
+          if (hasQwen) {
+            setSelectedModel(hasQwen.id);
+          } else {
+            setSelectedModel(data.models[0].id);
+          }
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   const [messages, setMessages] = useState<AgentMessage[]>(() => {
     if (typeof window !== "undefined") {
       try {
@@ -84,8 +112,8 @@ export function AiAgentPanel({
       {
         id: "welcome-1",
         role: "assistant",
-        content: `Hello! I am **Qwen 2.5 Coder**, your AI agent embedded in SkyroCodeX. I can inspect your ${currentLanguage} code, debug runtime errors, optimize performance, and write features with step-by-step diffs.`,
-        thought: `Ready to assist with ${activeFileName} (${currentLanguage})`,
+        content: `Hello! I am connected to your local **Ollama** engine. I can inspect your ${currentLanguage} code, build new pages, debug errors, and generate multi-file diffs using your downloaded models.`,
+        thought: `Connected to local Ollama (qwen3:latest)`,
       },
     ];
   });
@@ -101,7 +129,6 @@ export function AiAgentPanel({
 
   const [inputPrompt, setInputPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedModel, setSelectedModel] = useState("qwen-2.5-coder-32b");
   const [isModelDropdownOpen, setIsModelDropdownOpen] = useState(false);
   const [isListening, setIsListening] = useState(false);
 
@@ -273,7 +300,12 @@ export function AiAgentPanel({
   ];
 
   const currentModelObj =
-    QWEN_MODELS.find((m) => m.id === selectedModel) || QWEN_MODELS[0];
+    availableModels.find((m) => m.id === selectedModel) || availableModels[0] || {
+      id: "qwen3:latest",
+      label: "qwen3:latest",
+      tag: "Local Ollama",
+      isLocal: true,
+    };
 
   return (
     <div className="flex flex-col h-full bg-white dark:bg-[#0E131F] border-l border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 transition-colors">
@@ -286,8 +318,9 @@ export function AiAgentPanel({
           <div>
             <div className="flex items-center gap-2">
               <span className="font-bold text-xs sm:text-sm">AI Agent</span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-semibold border border-blue-500/20">
-                {currentModelObj.label}
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold border border-emerald-500/20 flex items-center gap-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>{currentModelObj.label}</span>
               </span>
             </div>
           </div>
@@ -523,11 +556,16 @@ export function AiAgentPanel({
 
                 {/* Model Selector Menu */}
                 {isModelDropdownOpen && (
-                  <div className="absolute bottom-full left-0 mb-1.5 w-64 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F17] shadow-2xl p-1.5 z-50 text-xs">
-                    <div className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                      Select Qwen AI Model
+                  <div className="absolute bottom-full left-0 mb-1.5 w-72 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F17] shadow-2xl p-1.5 z-50 text-xs">
+                    <div className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center justify-between">
+                      <span>Select AI Model</span>
+                      {ollamaConnected && (
+                        <span className="text-emerald-500 font-mono text-[9px] font-bold">
+                          Ollama Connected
+                        </span>
+                      )}
                     </div>
-                    {QWEN_MODELS.map((m) => (
+                    {availableModels.map((m) => (
                       <button
                         key={m.id}
                         onClick={() => {
@@ -541,12 +579,19 @@ export function AiAgentPanel({
                         }`}
                       >
                         <div>
-                          <div>{m.label}</div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-semibold">{m.label}</span>
+                            {m.isLocal && (
+                              <span className="text-[9px] px-1 py-0.2 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-mono font-bold">
+                                Local
+                              </span>
+                            )}
+                          </div>
                           <div className="text-[10px] text-slate-400 font-normal">
                             {m.tag}
                           </div>
                         </div>
-                        {selectedModel === m.id && <Check className="h-3.5 w-3.5" />}
+                        {selectedModel === m.id && <Check className="h-3.5 w-3.5 text-orange-500" />}
                       </button>
                     ))}
                   </div>
