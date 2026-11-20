@@ -101,34 +101,38 @@ export function AiAgentPanel({
       .catch(() => {});
   }, []);
 
-  const [messages, setMessages] = useState<AgentMessage[]>(() => {
-    if (typeof window !== "undefined") {
-      try {
-        const saved = localStorage.getItem(`skyro_ai_messages_${currentLanguage}`);
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-        }
-      } catch {}
-    }
-    return [
-      {
-        id: "welcome-1",
-        role: "assistant",
-        content: `Hello! I am connected to your local **Qwen Engine**. I can inspect your ${currentLanguage} code, build new features, debug errors, and provide interactive line diffs. Ask me anything!`,
-        thought: `Connected to local Ollama (qwen3:latest)`,
-      },
-    ];
-  });
+  const [isClientLoaded, setIsClientLoaded] = useState(false);
 
-  // Persist messages across page reloads
+  const [messages, setMessages] = useState<AgentMessage[]>([
+    {
+      id: "welcome-1",
+      role: "assistant",
+      content: `Hello! I am connected to your local **Qwen Engine**. I can inspect your ${currentLanguage} code, build new features, debug errors, and provide interactive line diffs. Ask me anything!`,
+      thought: `Connected to local Ollama (qwen3:latest)`,
+    },
+  ]);
+
+  // Safely restore messages from localStorage ONLY on client mount (prevents SSR hydration mismatch)
   useEffect(() => {
-    if (typeof window !== "undefined" && messages.length > 0) {
-      try {
-        localStorage.setItem(storageKey, JSON.stringify(messages));
-      } catch {}
-    }
-  }, [messages, storageKey]);
+    setIsClientLoaded(true);
+    try {
+      const saved = localStorage.getItem(storageKey);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setMessages(parsed);
+        }
+      }
+    } catch {}
+  }, [storageKey]);
+
+  // Persist messages across page reloads (only after client has mounted)
+  useEffect(() => {
+    if (!isClientLoaded) return;
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(messages));
+    } catch {}
+  }, [messages, storageKey, isClientLoaded]);
 
   const [inputPrompt, setInputPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
