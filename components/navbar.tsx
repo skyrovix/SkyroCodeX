@@ -44,6 +44,8 @@ export interface NavbarProps {
   onDownload?: () => void;
   onShare?: () => void;
   onOpenShortcuts?: () => void;
+  onToggleAi?: () => void;
+  isAiActive?: boolean;
 }
 
 export function Navbar({
@@ -56,6 +58,8 @@ export function Navbar({
   onDownload,
   onShare,
   onOpenShortcuts,
+  onToggleAi,
+  isAiActive = false,
 }: NavbarProps) {
   const pathname = usePathname();
   const isEditor = pathname.startsWith("/editor") || pathname.startsWith("/s/");
@@ -312,6 +316,27 @@ export function Navbar({
                 <span>Run</span>
                 <span className="hidden md:inline-block ml-1.5 text-[10px] opacity-80 font-mono px-1 py-0.2 bg-white/20 rounded">
                   Ctrl+↵
+                </span>
+              </Button>
+            )}
+
+            {/* AI Agent (Qwen) Quick Button */}
+            {onToggleAi && (
+              <Button
+                variant={isAiActive ? "primary" : "secondary"}
+                size="sm"
+                onClick={onToggleAi}
+                className={`font-bold h-8 text-xs px-3 gap-1.5 transition-all ${
+                  isAiActive
+                    ? "bg-blue-600 hover:bg-blue-500 text-white border-blue-600 shadow-sm"
+                    : "border-blue-500/40 text-blue-600 dark:text-blue-400 hover:bg-blue-500/10"
+                }`}
+                title="Toggle Qwen AI Agent Panel"
+              >
+                <Sparkles className="h-3.5 w-3.5 text-blue-400 fill-current" />
+                <span>AI Agent</span>
+                <span className="hidden sm:inline-block text-[9px] font-mono px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-700 dark:text-blue-300">
+                  Qwen
                 </span>
               </Button>
             )}

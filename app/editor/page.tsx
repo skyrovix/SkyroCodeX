@@ -6,6 +6,7 @@ import { CodeEditor } from "@/components/editor/code-editor";
 import { EditorTabs, EditorFile } from "@/components/editor/editor-tabs";
 import { IOPanel } from "@/components/editor/io-panel";
 import { WebPreview } from "@/components/editor/web-preview";
+import { AiAgentPanel } from "@/components/editor/ai-agent-panel";
 import { ShortcutsModal } from "@/components/editor/shortcuts-modal";
 import { ShareModal } from "@/components/editor/share-modal";
 import { useCodeRunner } from "@/hooks/use-code-runner";
@@ -13,7 +14,7 @@ import { useHotkeys } from "@/hooks/use-hotkeys";
 import { SUPPORTED_LANGUAGES, getLanguageConfig } from "@/lib/languages";
 import { SupportedLanguage } from "@/types/language";
 import { generateShortId, downloadFile } from "@/lib/utils";
-import { ZoomIn, ZoomOut, Code, Terminal, Eye } from "lucide-react";
+import { ZoomIn, ZoomOut, Code, Terminal, Eye, Sparkles } from "lucide-react";
 
 export default function EditorPage() {
   const [language, setLanguage] = useState<SupportedLanguage>("python");
@@ -24,8 +25,14 @@ export default function EditorPage() {
   // Files state (supports multi-tab files like HTML/CSS/JS or multiple code tabs)
   const [filesMap, setFilesMap] = useState<Record<string, EditorFile[]>>({});
 
-  // Mobile layout tab switcher: "editor" | "output"
-  const [mobileTab, setMobileTab] = useState<"editor" | "output">("editor");
+  // Right pane tab switcher: "output" | "preview" | "ai"
+  const [rightPaneTab, setRightPaneTab] = useState<"output" | "preview" | "ai">("output");
+
+  // Mobile layout tab switcher: "editor" | "output" | "ai"
+  const [mobileTab, setMobileTab] = useState<"editor" | "output" | "ai">("editor");
+
+  // Previous code backup for AI Restore function
+  const [previousCodeBackup, setPreviousCodeBackup] = useState<string | null>(null);
 
   // Modals
   const [isShortcutsOpen, setIsShortcutsOpen] = useState(false);
@@ -89,12 +96,13 @@ export default function EditorPage() {
 
   // Execution handler
   const handleRun = useCallback(async () => {
+    setRightPaneTab(currentLangConfig.isWebPreview ? "preview" : "output");
+    setMobileTab("output");
+
     if (currentLangConfig.isWebPreview) {
-      setMobileTab("output");
       return;
     }
 
-    setMobileTab("output");
     await runCode(
       currentLangConfig.id,
       activeFile.content,
@@ -179,6 +187,8 @@ export default function EditorPage() {
         onLanguageChange={(newLang) => {
           setLanguage(newLang);
           setActiveFileIndex(0);
+          const newConfig = getLanguageConfig(newLang);
+          setRightPaneTab(newConfig.isWebPreview ? "preview" : "output");
         }}
         onRun={handleRun}
         isRunning={isRunning}
@@ -187,6 +197,12 @@ export default function EditorPage() {
         onDownload={handleDownload}
         onShare={handleShare}
         onOpenShortcuts={() => setIsShortcutsOpen(true)}
+        onToggleAi={() => {
+          const nextTab = rightPaneTab === "ai" ? (currentLangConfig.isWebPreview ? "preview" : "output") : "ai";
+          setRightPaneTab(nextTab);
+          setMobileTab(nextTab);
+        }}
+        isAiActive={rightPaneTab === "ai"}
       />
 
       {/* Mobile Tab Switcher */}
@@ -201,14 +217,30 @@ export default function EditorPage() {
           <span>Editor</span>
         </button>
         <button
-          onClick={() => setMobileTab("output")}
+          onClick={() => {
+            const outTab = currentLangConfig.isWebPreview ? "preview" : "output";
+            setRightPaneTab(outTab);
+            setMobileTab("output");
+          }}
           className={`flex items-center gap-1.5 py-1 px-3 rounded ${
             mobileTab === "output" ? "bg-orange-600 text-white font-semibold" : "text-slate-600 dark:text-slate-400"
           }`}
         >
           {currentLangConfig.isWebPreview ? <Eye className="h-4 w-4" /> : <Terminal className="h-4 w-4" />}
-          <span>{currentLangConfig.isWebPreview ? "Web Preview" : "Console Output"}</span>
+          <span>{currentLangConfig.isWebPreview ? "Preview" : "Console"}</span>
           {stats.status === "running" && <span className="h-2 w-2 rounded-full bg-orange-400 animate-ping"></span>}
+        </button>
+        <button
+          onClick={() => {
+            setRightPaneTab("ai");
+            setMobileTab("ai");
+          }}
+          className={`flex items-center gap-1.5 py-1 px-3 rounded font-bold ${
+            mobileTab === "ai" ? "bg-blue-600 text-white" : "text-blue-600 dark:text-blue-400"
+          }`}
+        >
+          <Sparkles className="h-4 w-4 fill-current" />
+          <span>AI Qwen</span>
         </button>
       </div>
 
@@ -263,26 +295,105 @@ export default function EditorPage() {
           </div>
         </div>
 
-        {/* Right Pane: Console Output or Web Preview */}
+        {/* Right Pane: Console Output | Web Preview | AI Agent (Qwen) */}
         <div
-          className={`w-full md:w-[45%] lg:w-[42%] xl:w-[40%] flex flex-col overflow-hidden ${
-            mobileTab === "output" ? "flex" : "hidden md:flex"
+          className={`w-full md:w-[48%] lg:w-[45%] xl:w-[43%] flex flex-col overflow-hidden ${
+            mobileTab !== "editor" ? "flex" : "hidden md:flex"
           }`}
         >
-          {currentLangConfig.isWebPreview ? (
-            <WebPreview html={htmlFile} css={cssFile} javascript={jsFile} />
-          ) : (
-            <IOPanel
-              stdin={stdin}
-              onStdinChange={setStdin}
-              stdout={stdout}
-              stderr={stderr}
-              output={output}
-              stats={stats}
-              isRunning={isRunning}
-              onClear={clearOutput}
-            />
-          )}
+          {/* Right Pane Tab Bar */}
+          <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-[#0B0F17] px-3 py-1.5 text-xs transition-colors shrink-0">
+            <div className="flex items-center gap-1.5">
+              {!currentLangConfig.isWebPreview && (
+                <button
+                  onClick={() => {
+                    setRightPaneTab("output");
+                    setMobileTab("output");
+                  }}
+                  className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-semibold transition-colors ${
+                    rightPaneTab === "output"
+                      ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm border border-slate-200/80 dark:border-slate-700"
+                      : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  }`}
+                >
+                  <Terminal className="h-3.5 w-3.5 text-orange-500" />
+                  <span>Output</span>
+                </button>
+              )}
+
+              {currentLangConfig.isWebPreview && (
+                <button
+                  onClick={() => {
+                    setRightPaneTab("preview");
+                    setMobileTab("output");
+                  }}
+                  className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-semibold transition-colors ${
+                    rightPaneTab === "preview"
+                      ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm border border-slate-200/80 dark:border-slate-700"
+                      : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  }`}
+                >
+                  <Eye className="h-3.5 w-3.5 text-amber-500" />
+                  <span>Preview</span>
+                </button>
+              )}
+
+              <button
+                onClick={() => {
+                  setRightPaneTab("ai");
+                  setMobileTab("ai");
+                }}
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-bold transition-all ${
+                  rightPaneTab === "ai"
+                    ? "bg-blue-600 text-white shadow-sm"
+                    : "text-blue-600 dark:text-blue-400 hover:bg-blue-500/10"
+                }`}
+              >
+                <Sparkles className="h-3.5 w-3.5 text-blue-400 fill-current" />
+                <span>AI Agent</span>
+                <span className="text-[9px] font-mono font-semibold px-1 py-0.2 rounded bg-blue-500/20 text-blue-800 dark:text-blue-200">
+                  Qwen
+                </span>
+              </button>
+            </div>
+          </div>
+
+          {/* Tab Content: AI Agent or Output / Preview */}
+          <div className="flex-1 overflow-hidden">
+            {rightPaneTab === "ai" ? (
+              <AiAgentPanel
+                currentLanguage={language}
+                activeFileName={activeFile.name}
+                currentCode={activeFile.content}
+                allFiles={currentFiles.map((f) => ({ name: f.name, content: f.content }))}
+                onApplyCode={(newCode, targetFileName) => {
+                  setPreviousCodeBackup(activeFile.content);
+                  handleContentChange(newCode);
+                }}
+                onRestoreCode={
+                  previousCodeBackup
+                    ? () => {
+                        handleContentChange(previousCodeBackup);
+                        setPreviousCodeBackup(null);
+                      }
+                    : undefined
+                }
+              />
+            ) : currentLangConfig.isWebPreview ? (
+              <WebPreview html={htmlFile} css={cssFile} javascript={jsFile} />
+            ) : (
+              <IOPanel
+                stdin={stdin}
+                onStdinChange={setStdin}
+                stdout={stdout}
+                stderr={stderr}
+                output={output}
+                stats={stats}
+                isRunning={isRunning}
+                onClear={clearOutput}
+              />
+            )}
+          </div>
         </div>
       </div>
 
