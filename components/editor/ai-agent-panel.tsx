@@ -431,7 +431,12 @@ export function AiAgentPanel({
                 <div className="text-[11px] text-slate-500 dark:text-slate-400 flex flex-wrap items-center gap-2 pt-0.5">
                   <span>{msg.steps.length} steps</span>
                   <span>·</span>
-                  <span>Edited {msg.modifiedFile || activeFileName}</span>
+                  <span>
+                    Edited{" "}
+                    {msg.multiFileUpdates && Object.keys(msg.multiFileUpdates).length > 1
+                      ? Object.keys(msg.multiFileUpdates).join(", ")
+                      : msg.modifiedFile || activeFileName}
+                  </span>
                   {msg.tokens && (
                     <>
                       <span>·</span>
@@ -471,7 +476,9 @@ export function AiAgentPanel({
                     >
                       <span className="h-2 w-2 rounded-full bg-amber-500 animate-pulse"></span>
                       <span className="text-slate-800 dark:text-slate-200 font-semibold underline decoration-dotted">
-                        1 file changed
+                        {msg.multiFileUpdates && Object.keys(msg.multiFileUpdates).length > 1
+                          ? `${Object.keys(msg.multiFileUpdates).length} files changed`
+                          : "1 file changed"}
                       </span>
                       <span className="text-emerald-500 font-mono font-bold">
                         +{msg.diffSummary?.added || 16}
