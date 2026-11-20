@@ -339,8 +339,11 @@ export function AiAgentPanel({
       {/* Top Header with 3D Glowing Iridescent Orb matching Screenshot */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 dark:border-slate-800/80 bg-slate-50/80 dark:bg-[#0B0F17]/90">
         <div className="flex items-center gap-2.5">
-          {/* Animated 3D Iridescent Orb matching Image 4 */}
-          <AiOrb size="md" />
+          {/* Animated 3D Iridescent Orb with orb-ui live reactive states */}
+          <AiOrb
+            size="md"
+            state={isLoading ? "thinking" : isListening ? "listening" : "idle"}
+          />
 
           <div>
             <div className="flex items-center gap-2">
