@@ -124,15 +124,24 @@ export default function InternshipPage() {
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
-              <a href="#apply">
+              <a
+                href="https://skyrovix.in"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Button variant="primary" size="lg" className="shadow-glow font-bold gap-2">
-                  <span>Apply for Internship</span>
+                  <span>Go to skyrovix.in Portal</span>
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </a>
-              <Link href="/editor">
+              <a href="#apply">
                 <Button variant="secondary" size="lg" className="font-semibold gap-2">
-                  <span>Practice on SkyroCodeX</span>
+                  <span>Fast Apply on Page</span>
+                </Button>
+              </a>
+              <Link href="/editor">
+                <Button variant="ghost" size="lg" className="font-semibold gap-2 text-slate-700 dark:text-slate-300">
+                  <span>Open IDE</span>
                   <Code2 className="h-4 w-4 text-orange-500" />
                 </Button>
               </Link>
@@ -393,3 +402,4 @@ export default function InternshipPage() {
     </div>
   );
 }
+

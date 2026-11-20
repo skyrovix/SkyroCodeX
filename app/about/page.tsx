@@ -129,18 +129,18 @@ export default function AboutPage() {
               </p>
 
               <div className="flex flex-wrap gap-4">
-                <Link href="/internship">
+                <a href="https://skyrovix.in" target="_blank" rel="noopener noreferrer">
                   <Button variant="primary" className="font-bold gap-2">
                     <Briefcase className="h-4 w-4" />
-                    <span>Skyrovix Internship</span>
+                    <span>Skyrovix Internship (skyrovix.in)</span>
                   </Button>
-                </Link>
-                <Link href="/courses">
+                </a>
+                <a href="https://skyrovix.online" target="_blank" rel="noopener noreferrer">
                   <Button variant="secondary" className="font-bold gap-2">
                     <GraduationCap className="h-4 w-4 text-orange-500" />
-                    <span>Skyrovix Courses</span>
+                    <span>Skyrovix Courses (skyrovix.online)</span>
                   </Button>
-                </Link>
+                </a>
                 <Link href="/contact">
                   <Button variant="outline" className="font-bold">
                     <span>Contact Us</span>

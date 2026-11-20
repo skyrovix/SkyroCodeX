@@ -127,6 +127,25 @@ export default function CoursesPage() {
               Industry-crafted courses with real-time browser compilers, automated test evaluations, and career-advancing certifications from Skyrovix.
             </p>
 
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+              <a
+                href="https://skyrovix.online"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button variant="primary" size="md" className="shadow-glow font-bold gap-2">
+                  <span>Visit skyrovix.online Platform</span>
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </a>
+              <Link href="/editor">
+                <Button variant="secondary" size="md" className="font-semibold gap-2">
+                  <span>Open SkyroCodeX IDE</span>
+                  <Code2 className="h-4 w-4 text-orange-500" />
+                </Button>
+              </Link>
+            </div>
+
             {/* Filter pills */}
             <div className="flex flex-wrap items-center justify-center gap-2 pt-6">
               {[
@@ -275,3 +294,4 @@ export default function CoursesPage() {
     </div>
   );
 }
+

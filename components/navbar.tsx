@@ -27,6 +27,7 @@ import {
   Sparkles,
   Info,
   ArrowRight,
+  ExternalLink,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dropdown } from "@/components/ui/dropdown";
@@ -208,50 +209,60 @@ export function Navbar({
                   </div>
 
                   {/* Sub-item 1: Skyrovix Internship */}
-                  <Link
-                    href="/internship"
+                  <a
+                    href="https://skyrovix.in"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-orange-500/10 dark:hover:bg-orange-500/15 transition-colors group"
                   >
                     <div className="p-2 rounded-lg bg-orange-500/10 text-orange-600 dark:text-orange-400 mt-0.5 group-hover:scale-110 transition-transform">
                       <Briefcase className="h-4 w-4" />
                     </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-orange-600 dark:group-hover:text-orange-400">
-                          Skyrovix Internship
-                        </span>
-                        <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-orange-500/15 text-orange-600 dark:text-orange-400">
-                          2026
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-orange-600 dark:group-hover:text-orange-400">
+                            Skyrovix Internship
+                          </span>
+                          <ExternalLink className="h-3 w-3 text-slate-400 group-hover:text-orange-500 transition-colors" />
+                        </div>
+                        <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-orange-500/15 text-orange-600 dark:text-orange-400 font-mono">
+                          skyrovix.in
                         </span>
                       </div>
                       <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">
                         Real-world software engineering cohorts with live mentorship.
                       </p>
                     </div>
-                  </Link>
+                  </a>
 
                   {/* Sub-item 2: Skyrovix Courses */}
-                  <Link
-                    href="/courses"
+                  <a
+                    href="https://skyrovix.online"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-orange-500/10 dark:hover:bg-orange-500/15 transition-colors group"
                   >
                     <div className="p-2 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 mt-0.5 group-hover:scale-110 transition-transform">
                       <GraduationCap className="h-4 w-4" />
                     </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-orange-600 dark:group-hover:text-orange-400">
-                          Skyrovix Courses
-                        </span>
-                        <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">
-                          Active
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-orange-600 dark:group-hover:text-orange-400">
+                            Skyrovix Courses
+                          </span>
+                          <ExternalLink className="h-3 w-3 text-slate-400 group-hover:text-orange-500 transition-colors" />
+                        </div>
+                        <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-mono">
+                          skyrovix.online
                         </span>
                       </div>
                       <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">
                         Full-Stack, Python AI, and DSA with browser compilers.
                       </p>
                     </div>
-                  </Link>
+                  </a>
                 </div>
               )}
             </div>
@@ -456,35 +467,37 @@ export function Navbar({
             <div className="px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
               Our Product
             </div>
-            <Link
-              href="/internship"
-              className={`flex items-center justify-between px-3 py-2 rounded-xl text-sm font-semibold transition-all ${
-                pathname === "/internship"
-                  ? "bg-[#FF5722] text-white font-bold"
-                  : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
-              }`}
+            <a
+              href="https://skyrovix.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between px-3 py-2 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
             >
               <div className="flex items-center gap-2.5">
                 <Briefcase className="h-4 w-4 text-orange-500" />
                 <span>Skyrovix Internship</span>
               </div>
-              <ArrowRight className="h-3.5 w-3.5 opacity-60" />
-            </Link>
+              <div className="flex items-center gap-1.5 text-xs text-orange-600 dark:text-orange-400 font-mono font-bold">
+                <span>skyrovix.in</span>
+                <ExternalLink className="h-3.5 w-3.5" />
+              </div>
+            </a>
 
-            <Link
-              href="/courses"
-              className={`flex items-center justify-between px-3 py-2 rounded-xl text-sm font-semibold transition-all ${
-                pathname === "/courses"
-                  ? "bg-[#FF5722] text-white font-bold"
-                  : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
-              }`}
+            <a
+              href="https://skyrovix.online"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between px-3 py-2 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
             >
               <div className="flex items-center gap-2.5">
                 <GraduationCap className="h-4 w-4 text-amber-500" />
                 <span>Skyrovix Courses</span>
               </div>
-              <ArrowRight className="h-3.5 w-3.5 opacity-60" />
-            </Link>
+              <div className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-mono font-bold">
+                <span>skyrovix.online</span>
+                <ExternalLink className="h-3.5 w-3.5" />
+              </div>
+            </a>
           </div>
 
           <Link

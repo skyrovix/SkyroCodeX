@@ -518,11 +518,18 @@ export default function LandingPage() {
                     <span>Try Challenge Runner</span>
                   </Button>
                 </Link>
-                <Link href="/about">
-                  <Button variant="secondary" className="font-semibold">
-                    <span>Learn About Skyrovix</span>
+                <a href="https://skyrovix.in" target="_blank" rel="noopener noreferrer">
+                  <Button variant="secondary" className="font-semibold gap-1.5">
+                    <span>Skyrovix Internship</span>
+                    <ExternalLink className="h-3.5 w-3.5 text-orange-500" />
                   </Button>
-                </Link>
+                </a>
+                <a href="https://skyrovix.online" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" className="font-semibold gap-1.5">
+                    <span>Skyrovix Courses</span>
+                    <ExternalLink className="h-3.5 w-3.5 text-orange-500" />
+                  </Button>
+                </a>
               </div>
             </div>
           </div>

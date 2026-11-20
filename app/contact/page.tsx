@@ -216,27 +216,31 @@ export default function ContactPage() {
                   <span>Explore Skyrovix</span>
                 </h3>
                 <div className="space-y-2 text-xs">
-                  <Link
-                    href="/internship"
+                  <a
+                    href="https://skyrovix.in"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                   >
                     <div className="flex items-center gap-2">
                       <Briefcase className="h-4 w-4 text-orange-500" />
-                      <span className="font-semibold">Skyrovix Internship</span>
+                      <span className="font-semibold">Skyrovix Internship (skyrovix.in)</span>
                     </div>
                     <span className="text-orange-500 font-bold">&rarr;</span>
-                  </Link>
+                  </a>
 
-                  <Link
-                    href="/courses"
+                  <a
+                    href="https://skyrovix.online"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                   >
                     <div className="flex items-center gap-2">
                       <GraduationCap className="h-4 w-4 text-amber-500" />
-                      <span className="font-semibold">Skyrovix Courses</span>
+                      <span className="font-semibold">Skyrovix Courses (skyrovix.online)</span>
                     </div>
                     <span className="text-orange-500 font-bold">&rarr;</span>
-                  </Link>
+                  </a>
 
                   <Link
                     href="/editor"

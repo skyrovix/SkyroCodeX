@@ -177,16 +177,26 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/internship" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center gap-1">
+                <a
+                  href="https://skyrovix.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center gap-1 group"
+                >
                   <span>Skyrovix Internship</span>
-                  <ArrowUpRight className="h-3 w-3 text-orange-500" />
-                </Link>
+                  <ArrowUpRight className="h-3 w-3 text-orange-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </a>
               </li>
               <li>
-                <Link href="/courses" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center gap-1">
+                <a
+                  href="https://skyrovix.online"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center gap-1 group"
+                >
                   <span>Skyrovix Courses</span>
-                  <ArrowUpRight className="h-3 w-3 text-orange-500" />
-                </Link>
+                  <ArrowUpRight className="h-3 w-3 text-orange-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </a>
               </li>
               <li>
                 <Link href="/contact" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
