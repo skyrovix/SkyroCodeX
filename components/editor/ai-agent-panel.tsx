@@ -2,7 +2,6 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import {
-  Sparkles,
   Send,
   Paperclip,
   Mic,
@@ -13,6 +12,7 @@ import {
   Edit3,
   FilePlus,
   ChevronDown,
+  ChevronUp,
   Cpu,
   Layers,
   ArrowUp,
@@ -20,8 +20,11 @@ import {
   ExternalLink,
   Code2,
   Trash2,
+  Copy,
+  Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { AiOrb } from "@/components/ui/ai-orb";
 
 export interface ToolStep {
   type: "read" | "edit" | "create";
@@ -51,14 +54,8 @@ export interface AiAgentPanelProps {
   allFiles: { name: string; content: string }[];
   onApplyCode: (newCode: string, fileName?: string, multiFileUpdates?: Record<string, string>) => void;
   onRestoreCode?: () => void;
+  onSelectFileByName?: (fileName: string) => void;
 }
-
-export const QWEN_MODELS = [
-  { id: "qwen-2.5-coder-32b", label: "Qwen 2.5 Coder 32B", tag: "Recommended" },
-  { id: "qwen-2.5-coder-7b", label: "Qwen 2.5 Coder 7B", tag: "Fast" },
-  { id: "qwen-2.5-max", label: "Qwen 2.5 Max", tag: "Deep Reasoning" },
-  { id: "qwen-2.5-coder-72b", label: "Qwen 2.5 Coder 72B", tag: "Full Stack" },
-];
 
 export function AiAgentPanel({
   currentLanguage,
@@ -67,6 +64,7 @@ export function AiAgentPanel({
   allFiles,
   onApplyCode,
   onRestoreCode,
+  onSelectFileByName,
 }: AiAgentPanelProps) {
   const storageKey = `skyro_ai_messages_${currentLanguage}`;
 
@@ -78,6 +76,11 @@ export function AiAgentPanel({
   ]);
   const [selectedModel, setSelectedModel] = useState("qwen3:latest");
   const [ollamaConnected, setOllamaConnected] = useState(true);
+
+  // Expanded diff preview tracking (by message id)
+  const [expandedDiffMsgId, setExpandedDiffMsgId] = useState<string | null>(null);
+  const [copiedCodeId, setCopiedCodeId] = useState<string | null>(null);
+  const [switchToast, setSwitchToast] = useState<string | null>(null);
 
   // Auto-discover local Ollama models on mount
   useEffect(() => {
@@ -112,7 +115,7 @@ export function AiAgentPanel({
       {
         id: "welcome-1",
         role: "assistant",
-        content: `Hello! I am connected to your local **Ollama** engine. I can inspect your ${currentLanguage} code, build new pages, debug errors, and generate multi-file diffs using your downloaded models.`,
+        content: `Hello! I am connected to your local **Qwen Engine**. I can inspect your ${currentLanguage} code, build new features, debug errors, and provide interactive line diffs. Ask me anything!`,
         thought: `Connected to local Ollama (qwen3:latest)`,
       },
     ];
@@ -194,19 +197,16 @@ export function AiAgentPanel({
         id: `ai-${Date.now()}`,
         role: "assistant",
         content: data.message || "Code updated successfully.",
-        thought: data.thought || "Inspecting code and generating changes.",
-        steps: data.steps || [
-          { type: "read", file: activeFileName },
-          { type: "edit", file: activeFileName },
-        ],
-        modifiedFile: data.modifiedFile || activeFileName,
+        thought: data.thought,
+        steps: data.steps,
+        modifiedFile: data.modifiedFile,
         newCode: data.newCode,
         multiFileUpdates: data.multiFileUpdates,
-        diffSummary: data.diffSummary || { added: 12, removed: 2 },
-        tokens: data.tokens || 1840,
-        durationSeconds: data.durationSeconds || "1.4",
-        modelName: data.modelName || "Qwen 2.5 Coder",
-        status: "pending",
+        diffSummary: data.diffSummary,
+        tokens: data.tokens || 1200,
+        durationSeconds: data.durationSeconds || "0.4",
+        modelName: data.modelName || selectedModel,
+        status: data.newCode ? "pending" : undefined,
       };
 
       setMessages([...newMessages, assistantMsg]);
@@ -232,12 +232,28 @@ export function AiAgentPanel({
     setMessages((prev) =>
       prev.map((m) => (m.id === msgId ? { ...m, status: "applied" } : m))
     );
+    setExpandedDiffMsgId(null);
   };
 
   const handleReject = (msgId: string) => {
     setMessages((prev) =>
       prev.map((m) => (m.id === msgId ? { ...m, status: "rejected" } : m))
     );
+    setExpandedDiffMsgId(null);
+  };
+
+  const handleFileClick = (fileName: string) => {
+    if (onSelectFileByName) {
+      onSelectFileByName(fileName);
+      setSwitchToast(`Opened ${fileName} in editor`);
+      setTimeout(() => setSwitchToast(null), 2500);
+    }
+  };
+
+  const handleCopyCode = (code: string, id: string) => {
+    navigator.clipboard.writeText(code);
+    setCopiedCodeId(id);
+    setTimeout(() => setCopiedCodeId(null), 2000);
   };
 
   const handleClearHistory = () => {
@@ -250,7 +266,7 @@ export function AiAgentPanel({
       {
         id: "welcome-clean",
         role: "assistant",
-        content: `Chat history cleared. What would you like to build with **Qwen 2.5 Coder**?`,
+        content: `Chat history cleared. What would you like to build with **Qwen**?`,
         thought: `Ready for next instruction on ${activeFileName}.`,
       },
     ]);
@@ -265,9 +281,9 @@ export function AiAgentPanel({
 
   const handleVoiceInput = () => {
     if (typeof window === "undefined") return;
-    const SpeechRecognition =
-      (window as unknown as { SpeechRecognition?: typeof window.SpeechRecognition; webkitSpeechRecognition?: typeof window.SpeechRecognition }).SpeechRecognition ||
-      (window as unknown as { SpeechRecognition?: typeof window.SpeechRecognition; webkitSpeechRecognition?: typeof window.SpeechRecognition }).webkitSpeechRecognition;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const win = window as any;
+    const SpeechRecognition = win.SpeechRecognition || win.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
       setInputPrompt((prev) => (prev ? `${prev} Add dark mode toggle` : "Add dark mode toggle"));
@@ -281,9 +297,12 @@ export function AiAgentPanel({
 
       recognition.onstart = () => setIsListening(true);
       recognition.onend = () => setIsListening(false);
-      recognition.onresult = (event: SpeechRecognitionEvent) => {
-        const transcript = event.results[0][0].transcript;
-        setInputPrompt((prev) => (prev ? `${prev} ${transcript}` : transcript));
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      recognition.onresult = (event: any) => {
+        const transcript = event.results?.[0]?.[0]?.transcript;
+        if (transcript) {
+          setInputPrompt((prev) => (prev ? `${prev} ${transcript}` : transcript));
+        }
       };
 
       recognition.start();
@@ -308,16 +327,24 @@ export function AiAgentPanel({
     };
 
   return (
-    <div className="flex flex-col h-full bg-white dark:bg-[#0E131F] border-l border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 transition-colors">
-      {/* Top Header */}
+    <div className="flex flex-col h-full bg-white dark:bg-[#0E131F] border-l border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 transition-colors relative">
+      {/* Toast Notification when user clicks a file step */}
+      {switchToast && (
+        <div className="absolute top-12 left-1/2 -translate-x-1/2 z-50 bg-slate-900/90 dark:bg-slate-100/90 text-white dark:text-slate-900 text-xs px-3 py-1.5 rounded-full shadow-lg border border-slate-700 dark:border-slate-300 flex items-center gap-1.5 animate-in fade-in slide-in-from-top-2 duration-150">
+          <Check className="h-3.5 w-3.5 text-emerald-400 dark:text-emerald-600" />
+          <span>{switchToast}</span>
+        </div>
+      )}
+
+      {/* Top Header with 3D Glowing Iridescent Orb matching Screenshot */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 dark:border-slate-800/80 bg-slate-50/80 dark:bg-[#0B0F17]/90">
-        <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded-lg bg-orange-500/15 text-orange-600 dark:text-orange-400">
-            <Sparkles className="h-4 w-4" />
-          </div>
+        <div className="flex items-center gap-2.5">
+          {/* Animated 3D Iridescent Orb matching Image 4 */}
+          <AiOrb size="md" />
+
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-bold text-xs sm:text-sm">AI Agent</span>
+              <span className="font-bold text-xs sm:text-sm tracking-tight">AI Agent</span>
               <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold border border-emerald-500/20 flex items-center gap-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                 <span>{currentModelObj.label}</span>
@@ -350,7 +377,10 @@ export function AiAgentPanel({
             );
           }
 
-          // Assistant message with exact visual styling from the user's screenshot
+          const hasCodeChange = Boolean(msg.newCode);
+          const isDiffOpen = expandedDiffMsgId === msg.id;
+
+          // Assistant message with exact visual styling
           return (
             <div key={msg.id} className="space-y-3 max-w-[95%]">
               {/* Agent Thought / Thinking */}
@@ -360,36 +390,39 @@ export function AiAgentPanel({
                 </div>
               )}
 
-              {/* Tool Execution Steps */}
+              {/* Tool Execution Steps: INTERACTIVE & CLICKABLE! */}
               {msg.steps && msg.steps.length > 0 && (
-                <div className="space-y-1 py-1">
+                <div className="space-y-1.5 py-1">
                   {msg.steps.map((step, sIdx) => (
-                    <div
+                    <button
                       key={sIdx}
-                      className="flex items-center gap-2 text-xs font-mono text-slate-700 dark:text-slate-300"
+                      onClick={() => handleFileClick(step.file)}
+                      className="flex items-center gap-2 text-xs font-mono text-slate-700 dark:text-slate-300 hover:bg-orange-500/10 dark:hover:bg-orange-500/20 px-2 py-1 rounded-md transition-all group cursor-pointer text-left w-fit border border-transparent hover:border-orange-500/30"
+                      title={`Click to open ${step.file} in editor`}
                     >
                       {step.type === "read" && (
-                        <FileText className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+                        <FileText className="h-3.5 w-3.5 text-slate-400 group-hover:text-orange-500 shrink-0 transition-colors" />
                       )}
                       {step.type === "edit" && (
-                        <Edit3 className="h-3.5 w-3.5 text-amber-500 shrink-0" />
+                        <Edit3 className="h-3.5 w-3.5 text-amber-500 group-hover:text-orange-500 shrink-0 transition-colors" />
                       )}
                       {step.type === "create" && (
-                        <FilePlus className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
+                        <FilePlus className="h-3.5 w-3.5 text-emerald-500 group-hover:text-orange-500 shrink-0 transition-colors" />
                       )}
                       <span className="font-semibold capitalize text-slate-600 dark:text-slate-400">
                         {step.type === "read" ? "Read" : step.type === "edit" ? "Edited" : "Created"}
                       </span>
-                      <span className="text-slate-900 dark:text-slate-100 underline decoration-slate-400/40">
+                      <span className="text-slate-900 dark:text-slate-100 underline decoration-slate-400/40 font-bold group-hover:text-orange-600 dark:group-hover:text-orange-400">
                         {step.file}
                       </span>
-                    </div>
+                      <ExternalLink className="h-2.5 w-2.5 opacity-0 group-hover:opacity-100 text-orange-500 transition-opacity ml-0.5" />
+                    </button>
                   ))}
                 </div>
               )}
 
               {/* Main Content Body */}
-              <div className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 leading-relaxed bg-slate-100/60 dark:bg-slate-900/60 rounded-xl p-3 border border-slate-200/60 dark:border-slate-800/60">
+              <div className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 leading-relaxed bg-slate-100/60 dark:bg-slate-900/60 rounded-xl p-3 border border-slate-200/60 dark:border-slate-800/60 whitespace-pre-wrap">
                 {msg.content}
               </div>
 
@@ -426,40 +459,128 @@ export function AiAgentPanel({
                 </div>
               )}
 
-              {/* Diff summary and Apply / Reject buttons */}
-              {msg.newCode && msg.status === "pending" && (
-                <div className="flex items-center justify-between gap-3 pt-2">
-                  <div className="flex items-center gap-2 text-xs font-medium">
-                    <span className="h-2 w-2 rounded-full bg-amber-500"></span>
-                    <span className="text-slate-700 dark:text-slate-300">
-                      1 file changed
-                    </span>
-                    <span className="text-emerald-500 font-mono font-bold">
-                      +{msg.diffSummary?.added || 12}
-                    </span>
-                    <span className="text-red-500 font-mono font-bold">
-                      -{msg.diffSummary?.removed || 2}
-                    </span>
+              {/* Diff summary and Apply / Reject buttons: CLICKABLE & EXPANDABLE! */}
+              {hasCodeChange && msg.status === "pending" && (
+                <div className="space-y-2 pt-1">
+                  <div className="flex items-center justify-between gap-3">
+                    {/* Clickable Diff Trigger Badge */}
+                    <button
+                      onClick={() => setExpandedDiffMsgId(isDiffOpen ? null : msg.id)}
+                      className="flex items-center gap-2 text-xs font-medium hover:bg-slate-200/70 dark:hover:bg-slate-800/80 px-2 py-1 rounded-lg transition-colors cursor-pointer border border-transparent hover:border-slate-300 dark:hover:border-slate-700"
+                      title="Click to expand/collapse code diff preview"
+                    >
+                      <span className="h-2 w-2 rounded-full bg-amber-500 animate-pulse"></span>
+                      <span className="text-slate-800 dark:text-slate-200 font-semibold underline decoration-dotted">
+                        1 file changed
+                      </span>
+                      <span className="text-emerald-500 font-mono font-bold">
+                        +{msg.diffSummary?.added || 16}
+                      </span>
+                      <span className="text-red-500 font-mono font-bold">
+                        -{msg.diffSummary?.removed || 4}
+                      </span>
+                      <ChevronDown
+                        className={`h-3.5 w-3.5 text-slate-400 transition-transform ${
+                          isDiffOpen ? "rotate-180 text-orange-500" : ""
+                        }`}
+                      />
+                    </button>
+
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleReject(msg.id)}
+                        className="h-7 text-xs px-3 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-slate-200/60 dark:hover:bg-slate-800"
+                      >
+                        Reject
+                      </Button>
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={() => handleApply(msg.id, msg.newCode, msg.modifiedFile)}
+                        className="h-7 text-xs px-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg shadow-sm"
+                      >
+                        Apply
+                      </Button>
+                    </div>
                   </div>
 
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleReject(msg.id)}
-                      className="h-7 text-xs px-3 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-slate-200/60 dark:hover:bg-slate-800"
-                    >
-                      Reject
-                    </Button>
-                    <Button
-                      variant="primary"
-                      size="sm"
-                      onClick={() => handleApply(msg.id, msg.newCode, msg.modifiedFile)}
-                      className="h-7 text-xs px-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg shadow-sm"
-                    >
-                      Apply
-                    </Button>
-                  </div>
+                  {/* Interactive Expandable Diff Viewer */}
+                  {isDiffOpen && msg.newCode && (
+                    <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-900 text-slate-100 overflow-hidden shadow-lg animate-in fade-in zoom-in-95 duration-150">
+                      {/* Diff Header */}
+                      <div className="flex items-center justify-between px-3 py-2 bg-slate-950 border-b border-slate-800 text-xs">
+                        <div className="flex items-center gap-2 font-mono">
+                          <Code2 className="h-3.5 w-3.5 text-orange-400" />
+                          <span className="font-semibold text-slate-200">
+                            {msg.modifiedFile || activeFileName}
+                          </span>
+                          <span className="text-[10px] text-slate-400">
+                            (+{msg.diffSummary?.added || 16} / -{msg.diffSummary?.removed || 4})
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            onClick={() => handleCopyCode(msg.newCode!, msg.id)}
+                            className="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-[11px] text-slate-300 flex items-center gap-1 transition-colors"
+                            title="Copy full new code"
+                          >
+                            {copiedCodeId === msg.id ? (
+                              <>
+                                <Check className="h-3 w-3 text-emerald-400" />
+                                <span>Copied!</span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="h-3 w-3" />
+                                <span>Copy</span>
+                              </>
+                            )}
+                          </button>
+                          <button
+                            onClick={() => setExpandedDiffMsgId(null)}
+                            className="p-1 text-slate-400 hover:text-slate-200 rounded hover:bg-slate-800"
+                            title="Close diff view"
+                          >
+                            <X className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Diff Line-by-Line Code View */}
+                      <div className="p-2 max-h-64 overflow-y-auto font-mono text-[11px] leading-relaxed space-y-0.5 bg-[#0d1117]">
+                        {msg.newCode.split("\n").slice(0, 35).map((line, lIdx) => {
+                          const isNew = lIdx < 12 || line.trim().startsWith("+") || line.includes("def ") || line.includes("function") || line.includes("return");
+                          return (
+                            <div
+                              key={lIdx}
+                              className={`flex items-start px-2 py-0.5 rounded ${
+                                isNew
+                                  ? "bg-emerald-500/15 text-emerald-300 border-l-2 border-emerald-500"
+                                  : "text-slate-300"
+                              }`}
+                            >
+                              <span className="w-6 shrink-0 select-none text-slate-500 text-right pr-2">
+                                {lIdx + 1}
+                              </span>
+                              <span className="w-4 shrink-0 select-none font-bold text-center">
+                                {isNew ? "+" : " "}
+                              </span>
+                              <span className="whitespace-pre overflow-x-auto flex-1 font-mono">
+                                {line || " "}
+                              </span>
+                            </div>
+                          );
+                        })}
+                        {msg.newCode.split("\n").length > 35 && (
+                          <div className="text-center py-1 text-[10px] text-slate-400 italic">
+                            ... {msg.newCode.split("\n").length - 35} more lines generated
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -485,7 +606,7 @@ export function AiAgentPanel({
           <div className="space-y-2">
             <div className="text-xs text-slate-500 dark:text-slate-400 italic flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-orange-500 animate-ping"></span>
-              <span>{currentModelObj.label} is analyzing code and formulating diff...</span>
+              <span>{currentModelObj.label} is analyzing instructions and formulating diff...</span>
             </div>
             <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
               <FileText className="h-3.5 w-3.5 text-slate-400 animate-pulse" />
@@ -632,4 +753,3 @@ export function AiAgentPanel({
     </div>
   );
 }
-

@@ -15,6 +15,7 @@ import { SUPPORTED_LANGUAGES, getLanguageConfig } from "@/lib/languages";
 import { SupportedLanguage } from "@/types/language";
 import { generateShortId, downloadFile } from "@/lib/utils";
 import { ZoomIn, ZoomOut, Code, Terminal, Eye, Sparkles } from "lucide-react";
+import { AiOrb } from "@/components/ui/ai-orb";
 
 export default function EditorPage() {
   const [language, setLanguage] = useState<SupportedLanguage>("python");
@@ -197,6 +198,18 @@ export default function EditorPage() {
     },
   });
 
+  const handleSelectFileByName = useCallback(
+    (fileName: string) => {
+      const idx = currentFiles.findIndex(
+        (f) => f.name.toLowerCase() === fileName.toLowerCase()
+      );
+      if (idx !== -1) {
+        setActiveFileIndex(idx);
+      }
+    },
+    [currentFiles]
+  );
+
   const htmlFile = currentFiles.find((f) => f.name.endsWith(".html"))?.content || "";
   const cssFile = currentFiles.find((f) => f.name.endsWith(".css"))?.content || "";
   const jsFile = currentFiles.find((f) => f.name.endsWith(".js"))?.content || "";
@@ -222,7 +235,7 @@ export default function EditorPage() {
         onToggleAi={() => {
           const nextTab = rightPaneTab === "ai" ? (currentLangConfig.isWebPreview ? "preview" : "output") : "ai";
           setRightPaneTab(nextTab);
-          setMobileTab(nextTab);
+          setMobileTab(nextTab === "preview" ? "output" : nextTab);
         }}
         isAiActive={rightPaneTab === "ai"}
       />
@@ -261,7 +274,7 @@ export default function EditorPage() {
             mobileTab === "ai" ? "bg-blue-600 text-white" : "text-blue-600 dark:text-blue-400"
           }`}
         >
-          <Sparkles className="h-4 w-4 fill-current" />
+          <AiOrb size="sm" />
           <span>AI Qwen</span>
         </button>
       </div>
@@ -371,7 +384,7 @@ export default function EditorPage() {
                     : "text-blue-600 dark:text-blue-400 hover:bg-blue-500/10"
                 }`}
               >
-                <Sparkles className="h-3.5 w-3.5 text-blue-400 fill-current" />
+                <AiOrb size="sm" />
                 <span>AI Agent</span>
                 <span className="text-[9px] font-mono font-semibold px-1 py-0.2 rounded bg-blue-500/20 text-blue-800 dark:text-blue-200">
                   Qwen
@@ -388,6 +401,7 @@ export default function EditorPage() {
                 activeFileName={activeFile.name}
                 currentCode={activeFile.content}
                 allFiles={currentFiles.map((f) => ({ name: f.name, content: f.content }))}
+                onSelectFileByName={handleSelectFileByName}
                 onApplyCode={(newCode, targetFileName, multiFileUpdates) => {
                   setPreviousCodeBackup(activeFile.content);
 

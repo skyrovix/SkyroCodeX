@@ -31,6 +31,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dropdown } from "@/components/ui/dropdown";
+import { AiOrb } from "@/components/ui/ai-orb";
 import { LANGUAGE_LIST } from "@/lib/languages";
 import { SupportedLanguage } from "@/types/language";
 
@@ -333,7 +334,7 @@ export function Navbar({
                 }`}
                 title="Toggle Qwen AI Agent Panel"
               >
-                <Sparkles className="h-3.5 w-3.5 text-blue-400 fill-current" />
+                <AiOrb size="sm" />
                 <span>AI Agent</span>
                 <span className="hidden sm:inline-block text-[9px] font-mono px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-700 dark:text-blue-300">
                   Qwen
