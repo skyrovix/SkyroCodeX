@@ -94,6 +94,28 @@ export default function EditorPage() {
     });
   };
 
+  const handleUpdateFileContent = (newContent: string, fileName?: string) => {
+    setFilesMap((prev) => {
+      const langFiles = prev[language] ? [...prev[language]] : [...currentFiles];
+      const targetIdx = fileName
+        ? langFiles.findIndex((f) => f.name.toLowerCase() === fileName.toLowerCase())
+        : activeFileIndex;
+
+      const idxToUpdate = targetIdx >= 0 ? targetIdx : activeFileIndex;
+
+      if (langFiles[idxToUpdate]) {
+        langFiles[idxToUpdate] = {
+          ...langFiles[idxToUpdate],
+          content: newContent,
+        };
+      }
+      return {
+        ...prev,
+        [language]: langFiles,
+      };
+    });
+  };
+
   // Execution handler
   const handleRun = useCallback(async () => {
     setRightPaneTab(currentLangConfig.isWebPreview ? "preview" : "output");
@@ -358,17 +380,39 @@ export default function EditorPage() {
             </div>
           </div>
 
-          {/* Tab Content: AI Agent or Output / Preview */}
-          <div className="flex-1 overflow-hidden">
-            {rightPaneTab === "ai" ? (
+          {/* Tab Content: Keep BOTH AI Agent and Output/Preview mounted in DOM to prevent conversation wipe */}
+          <div className="flex-1 overflow-hidden relative">
+            <div className={`h-full w-full ${rightPaneTab === "ai" ? "block" : "hidden"}`}>
               <AiAgentPanel
                 currentLanguage={language}
                 activeFileName={activeFile.name}
                 currentCode={activeFile.content}
                 allFiles={currentFiles.map((f) => ({ name: f.name, content: f.content }))}
-                onApplyCode={(newCode, targetFileName) => {
+                onApplyCode={(newCode, targetFileName, multiFileUpdates) => {
                   setPreviousCodeBackup(activeFile.content);
-                  handleContentChange(newCode);
+
+                  if (multiFileUpdates && Object.keys(multiFileUpdates).length > 0) {
+                    setFilesMap((prev) => {
+                      const langFiles = prev[language] ? [...prev[language]] : [...currentFiles];
+                      const updated = langFiles.map((f) => {
+                        if (multiFileUpdates[f.name]) {
+                          return { ...f, content: multiFileUpdates[f.name] };
+                        }
+                        return f;
+                      });
+                      return { ...prev, [language]: updated };
+                    });
+                  } else {
+                    handleUpdateFileContent(newCode, targetFileName);
+                  }
+
+                  // If web preview, switch to preview tab so user sees their new page immediately!
+                  if (currentLangConfig.isWebPreview) {
+                    setTimeout(() => {
+                      setRightPaneTab("preview");
+                      setMobileTab("output");
+                    }, 400);
+                  }
                 }}
                 onRestoreCode={
                   previousCodeBackup
@@ -379,20 +423,24 @@ export default function EditorPage() {
                     : undefined
                 }
               />
-            ) : currentLangConfig.isWebPreview ? (
-              <WebPreview html={htmlFile} css={cssFile} javascript={jsFile} />
-            ) : (
-              <IOPanel
-                stdin={stdin}
-                onStdinChange={setStdin}
-                stdout={stdout}
-                stderr={stderr}
-                output={output}
-                stats={stats}
-                isRunning={isRunning}
-                onClear={clearOutput}
-              />
-            )}
+            </div>
+
+            <div className={`h-full w-full ${rightPaneTab !== "ai" ? "block" : "hidden"}`}>
+              {currentLangConfig.isWebPreview ? (
+                <WebPreview html={htmlFile} css={cssFile} javascript={jsFile} />
+              ) : (
+                <IOPanel
+                  stdin={stdin}
+                  onStdinChange={setStdin}
+                  stdout={stdout}
+                  stderr={stderr}
+                  output={output}
+                  stats={stats}
+                  isRunning={isRunning}
+                  onClear={clearOutput}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>

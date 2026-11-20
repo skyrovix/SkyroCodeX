@@ -36,6 +36,7 @@ export interface AgentMessage {
   steps?: ToolStep[];
   modifiedFile?: string;
   newCode?: string;
+  multiFileUpdates?: Record<string, string>;
   diffSummary?: { added: number; removed: number };
   tokens?: number;
   durationSeconds?: string;
@@ -48,7 +49,7 @@ export interface AiAgentPanelProps {
   activeFileName: string;
   currentCode: string;
   allFiles: { name: string; content: string }[];
-  onApplyCode: (newCode: string, fileName?: string) => void;
+  onApplyCode: (newCode: string, fileName?: string, multiFileUpdates?: Record<string, string>) => void;
   onRestoreCode?: () => void;
 }
 
@@ -67,14 +68,37 @@ export function AiAgentPanel({
   onApplyCode,
   onRestoreCode,
 }: AiAgentPanelProps) {
-  const [messages, setMessages] = useState<AgentMessage[]>([
-    {
-      id: "welcome-1",
-      role: "assistant",
-      content: `Hello! I am **Qwen 2.5 Coder**, your AI agent embedded in SkyroCodeX. I can inspect your ${currentLanguage} code, debug runtime errors, optimize performance, and write features with step-by-step diffs.`,
-      thought: `Ready to assist with ${activeFileName} (${currentLanguage})`,
-    },
-  ]);
+  const storageKey = `skyro_ai_messages_${currentLanguage}`;
+
+  const [messages, setMessages] = useState<AgentMessage[]>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const saved = localStorage.getItem(`skyro_ai_messages_${currentLanguage}`);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch {}
+    }
+    return [
+      {
+        id: "welcome-1",
+        role: "assistant",
+        content: `Hello! I am **Qwen 2.5 Coder**, your AI agent embedded in SkyroCodeX. I can inspect your ${currentLanguage} code, debug runtime errors, optimize performance, and write features with step-by-step diffs.`,
+        thought: `Ready to assist with ${activeFileName} (${currentLanguage})`,
+      },
+    ];
+  });
+
+  // Persist messages across page reloads
+  useEffect(() => {
+    if (typeof window !== "undefined" && messages.length > 0) {
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(messages));
+      } catch {}
+    }
+  }, [messages, storageKey]);
+
   const [inputPrompt, setInputPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [selectedModel, setSelectedModel] = useState("qwen-2.5-coder-32b");
@@ -150,6 +174,7 @@ export function AiAgentPanel({
         ],
         modifiedFile: data.modifiedFile || activeFileName,
         newCode: data.newCode,
+        multiFileUpdates: data.multiFileUpdates,
         diffSummary: data.diffSummary || { added: 12, removed: 2 },
         tokens: data.tokens || 1840,
         durationSeconds: data.durationSeconds || "1.4",
@@ -175,7 +200,8 @@ export function AiAgentPanel({
 
   const handleApply = (msgId: string, newCode?: string, fileToUpdate?: string) => {
     if (!newCode) return;
-    onApplyCode(newCode, fileToUpdate || activeFileName);
+    const msg = messages.find((m) => m.id === msgId);
+    onApplyCode(newCode, fileToUpdate || activeFileName, msg?.multiFileUpdates);
     setMessages((prev) =>
       prev.map((m) => (m.id === msgId ? { ...m, status: "applied" } : m))
     );
@@ -188,6 +214,11 @@ export function AiAgentPanel({
   };
 
   const handleClearHistory = () => {
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.removeItem(storageKey);
+      } catch {}
+    }
     setMessages([
       {
         id: "welcome-clean",
@@ -556,3 +587,4 @@ export function AiAgentPanel({
     </div>
   );
 }
+
