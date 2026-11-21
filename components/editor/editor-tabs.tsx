@@ -52,32 +52,34 @@ export function EditorTabs({
   };
 
   return (
-    <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-[#0D121F] px-2 select-none overflow-x-auto scrollbar-none transition-colors">
-      <div className="flex items-center gap-1">
+    <div className="h-9 flex items-center select-none overflow-x-auto scrollbar-none transition-colors">
+      <div className="h-full flex items-center">
         {files.map((file, idx) => {
           const isActive = idx === activeFileIndex;
           return (
             <div
-              key={file.name}
+              key={`${file.name}-${idx}`}
               onClick={() => onSelectFile(idx)}
               className={cn(
-                "group flex items-center gap-2 rounded-t-md px-3.5 py-2 text-xs font-mono transition-colors cursor-pointer border-t-2 border-r border-slate-200/60 dark:border-slate-800/60",
+                "group h-full flex items-center gap-2 px-3.5 text-xs font-mono transition-colors cursor-pointer border-r border-slate-200/80 dark:border-slate-800 border-t-2",
                 isActive
                   ? "bg-white dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 border-t-[#FF5722] font-semibold shadow-sm"
-                  : "bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-200/60 dark:hover:bg-slate-900/60 hover:text-slate-900 dark:hover:text-slate-200 border-t-transparent"
+                  : "bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-900/50 hover:text-slate-900 dark:hover:text-slate-200 border-t-transparent"
               )}
             >
               {getFileIcon(file.name)}
-              <span className="truncate max-w-[120px]">{file.name}</span>
+              <span className="truncate max-w-[130px]">{file.name}</span>
 
-              {files.length > 1 && onCloseFile && (
+              {/* Close Button - Always visible matching OneCompiler style */}
+              {onCloseFile && (
                 <button
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
                     onCloseFile(idx);
                   }}
-                  className="rounded p-0.5 opacity-60 group-hover:opacity-100 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 transition-opacity"
+                  className="rounded p-0.5 ml-0.5 text-slate-400 hover:text-rose-500 hover:bg-slate-200/60 dark:hover:bg-slate-800 transition-colors"
+                  title={files.length > 1 ? `Close ${file.name}` : `Reset / clear ${file.name}`}
                 >
                   <X className="h-3 w-3" />
                 </button>
@@ -86,12 +88,13 @@ export function EditorTabs({
           );
         })}
 
+        {/* Plus Button - Styled matching OneCompiler tab */}
         {onAddFile && (
           <button
             type="button"
             onClick={onAddFile}
-            className="flex items-center gap-1 rounded-md px-2 py-1 text-xs text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-800 dark:hover:text-slate-200 transition-colors ml-1"
-            title="Add new file"
+            className="h-full min-w-[38px] px-3.5 flex items-center justify-center text-xs text-slate-500 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-slate-100 border-r border-slate-200/80 dark:border-slate-800 transition-colors"
+            title="Add new file (+)"
           >
             <Plus className="h-3.5 w-3.5" />
           </button>

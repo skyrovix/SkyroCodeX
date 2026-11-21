@@ -9,6 +9,7 @@ import { IOPanel } from "@/components/editor/io-panel";
 import { WebPreview } from "@/components/editor/web-preview";
 import { ShortcutsModal } from "@/components/editor/shortcuts-modal";
 import { ShareModal } from "@/components/editor/share-modal";
+import { NewFileDialog } from "@/components/editor/new-file-dialog";
 import { useCodeRunner } from "@/hooks/use-code-runner";
 import { useHotkeys } from "@/hooks/use-hotkeys";
 import { SUPPORTED_LANGUAGES, getLanguageConfig } from "@/lib/languages";
@@ -28,6 +29,8 @@ import {
   ShieldCheck,
   Clock,
   Cpu,
+  Plus,
+  X,
 } from "lucide-react";
 
 function EditorContent() {
@@ -44,6 +47,8 @@ function EditorContent() {
   const [stdin, setStdin] = useState<string>("");
   const [activeFileIndex, setActiveFileIndex] = useState<number>(0);
   const [activeSidebarItem, setActiveSidebarItem] = useState<"files" | "search">("files");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isNewFileDialogOpen, setIsNewFileDialogOpen] = useState(false);
 
   // Sync if query param changes dynamically
   useEffect(() => {
@@ -141,6 +146,56 @@ function EditorContent() {
       currentFiles.map((f) => ({ name: f.name, content: f.content }))
     );
   }, [currentLangConfig, activeFile, stdin, currentFiles, runCode]);
+
+  // Open new file dialog
+  const handleAddFile = () => {
+    setIsNewFileDialogOpen(true);
+  };
+
+  // Create new file from dialog
+  const handleCreateFile = (newFileName: string) => {
+    const trimmed = newFileName.trim();
+    if (!trimmed) return;
+    if (currentFiles.some((f) => f.name.toLowerCase() === trimmed.toLowerCase())) return;
+
+    const newFile: EditorFile = {
+      name: trimmed,
+      language: currentLangConfig.monacoLang,
+      content: `# ${trimmed}\n`,
+    };
+
+    setFilesMap((prev) => ({
+      ...prev,
+      [language]: [...currentFiles, newFile],
+    }));
+    setActiveFileIndex(currentFiles.length);
+  };
+
+  // Close file handler (or reset single file)
+  const handleCloseFile = (indexToClose: number) => {
+    if (currentFiles.length <= 1) {
+      const fileToClose = currentFiles[0];
+      if (confirm(`Do you want to reset "${fileToClose.name}" to starter code?`)) {
+        handleContentChange(currentLangConfig.starterCode);
+      }
+      return;
+    }
+
+    const fileToClose = currentFiles[indexToClose];
+    if (!confirm(`Are you sure you want to close "${fileToClose.name}"?`)) return;
+
+    setFilesMap((prev) => {
+      const updated = currentFiles.filter((_, idx) => idx !== indexToClose);
+      return {
+        ...prev,
+        [language]: updated,
+      };
+    });
+
+    if (activeFileIndex >= indexToClose) {
+      setActiveFileIndex(Math.max(0, activeFileIndex - 1));
+    }
+  };
 
   // Reset to starter template
   const handleReset = () => {
@@ -264,15 +319,22 @@ function EditorContent() {
           {/* Top Activity Icons */}
           <div className="flex flex-col items-center gap-1 w-full">
             <button
-              onClick={() => setActiveSidebarItem("files")}
+              onClick={() => {
+                if (isSidebarOpen && activeSidebarItem === "files") {
+                  setIsSidebarOpen(false);
+                } else {
+                  setActiveSidebarItem("files");
+                  setIsSidebarOpen(true);
+                }
+              }}
               className={`w-full py-2.5 flex items-center justify-center transition-colors relative ${
-                activeSidebarItem === "files"
+                activeSidebarItem === "files" && isSidebarOpen
                   ? "text-[#FF5722] bg-white/80 dark:bg-slate-900/80 shadow-sm"
                   : "text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
               }`}
-              title="File Explorer"
+              title="File Explorer (Toggle)"
             >
-              {activeSidebarItem === "files" && (
+              {activeSidebarItem === "files" && isSidebarOpen && (
                 <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#FF5722]" />
               )}
               <Files className="h-4 w-4" />
@@ -319,6 +381,59 @@ function EditorContent() {
           </div>
         </div>
 
+        {/* Collapsible File Explorer Drawer */}
+        {isSidebarOpen && activeSidebarItem === "files" && (
+          <div className="w-52 border-r border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-[#0A0E17] flex flex-col shrink-0 select-none animate-in slide-in-from-left duration-150">
+            <div className="flex items-center justify-between px-3 py-2 border-b border-slate-200 dark:border-slate-800 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+              <span>Project Files</span>
+              <button
+                onClick={() => setIsNewFileDialogOpen(true)}
+                className="p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
+                title="Add New File (+)"
+              >
+                <Plus className="h-3.5 w-3.5" />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto py-1">
+              {currentFiles.map((f, idx) => {
+                const isActive = idx === activeFileIndex;
+                return (
+                  <div
+                    key={`${f.name}-${idx}`}
+                    onClick={() => setActiveFileIndex(idx)}
+                    className={`group flex items-center justify-between px-3 py-1.5 text-xs font-mono cursor-pointer transition-colors ${
+                      isActive
+                        ? "bg-orange-500/10 text-orange-600 dark:text-orange-400 font-bold"
+                        : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-white"
+                    }`}
+                  >
+                    <span className="truncate">{f.name}</span>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCloseFile(idx);
+                      }}
+                      className="opacity-0 group-hover:opacity-100 p-0.5 rounded text-slate-400 hover:text-rose-500 transition-opacity"
+                      title={currentFiles.length > 1 ? "Close file" : "Reset file"}
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </div>
+                );
+              })}
+
+              <button
+                onClick={() => setIsNewFileDialogOpen(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 mt-2 text-xs text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-500/10 rounded-lg mx-2 font-medium border border-dashed border-orange-300 dark:border-orange-500/30 transition-colors w-[calc(100%-1rem)]"
+              >
+                <Plus className="h-3.5 w-3.5" />
+                <span>Add Page / File</span>
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Left Pane: Code Editor */}
         <div
           className={`flex flex-1 flex-col overflow-hidden border-r border-slate-200 dark:border-slate-800/80 ${
@@ -326,11 +441,13 @@ function EditorContent() {
           }`}
         >
           {/* Editor Header Toolbar (Tabs + Font controls) */}
-          <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-[#0D121F] pr-3 transition-colors">
+          <div className="h-9 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-[#0D121F] pr-3 transition-colors">
             <EditorTabs
               files={currentFiles}
               activeFileIndex={activeFileIndex}
               onSelectFile={(idx) => setActiveFileIndex(idx)}
+              onAddFile={handleAddFile}
+              onCloseFile={handleCloseFile}
             />
 
             {/* Font Size & Info */}
@@ -451,6 +568,13 @@ function EditorContent() {
         isOpen={isShareOpen}
         onClose={() => setIsShareOpen(false)}
         shortId={currentShortId}
+      />
+      <NewFileDialog
+        isOpen={isNewFileDialogOpen}
+        onClose={() => setIsNewFileDialogOpen(false)}
+        onAddFile={handleCreateFile}
+        defaultExtension={currentLangConfig.defaultFileName.split(".").pop() || "txt"}
+        existingFiles={currentFiles.map((f) => f.name)}
       />
     </div>
   );

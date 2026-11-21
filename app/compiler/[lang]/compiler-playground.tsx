@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { NewFileDialog } from "@/components/editor/new-file-dialog";
 import {
   PythonIcon,
   JavaScriptIcon,
@@ -28,6 +29,8 @@ import {
   Layers,
   Sparkles,
   ArrowDownLeft,
+  Plus,
+  X,
 } from "lucide-react";
 
 interface CompilerPlaygroundProps {
@@ -43,16 +46,6 @@ export function CompilerPlayground({
   initialCode,
   isWebPreview = false,
 }: CompilerPlaygroundProps) {
-  const [code, setCode] = useState(initialCode);
-  const [stdin, setStdin] = useState("");
-  const [activeTab, setActiveTab] = useState<"console" | "stdin">("console");
-  const [output, setOutput] = useState<string>("");
-  const [stderr, setStderr] = useState<string>("");
-  const [isRunning, setIsRunning] = useState(false);
-  const [timeMs, setTimeMs] = useState<number | null>(null);
-  const [copied, setCopied] = useState(false);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
   // Default file name per language
   const getFileName = (id: string) => {
     switch (id) {
@@ -83,27 +76,86 @@ export function CompilerPlayground({
   const getLanguageIcon = (id: string) => {
     switch (id) {
       case "python":
-        return <PythonIcon className="h-4 w-4 shrink-0" />;
+        return <PythonIcon className="h-3.5 w-3.5 shrink-0" />;
       case "javascript":
-        return <JavaScriptIcon className="h-4 w-4 shrink-0" />;
+        return <JavaScriptIcon className="h-3.5 w-3.5 shrink-0" />;
       case "cpp":
-        return <CppIcon className="h-4 w-4 shrink-0" />;
+        return <CppIcon className="h-3.5 w-3.5 shrink-0" />;
       case "java":
-        return <JavaIcon className="h-4 w-4 shrink-0" />;
+        return <JavaIcon className="h-3.5 w-3.5 shrink-0" />;
       case "c":
-        return <CIcon className="h-4 w-4 shrink-0" />;
+        return <CIcon className="h-3.5 w-3.5 shrink-0" />;
       case "go":
-        return <GoIcon className="h-4 w-4 shrink-0" />;
+        return <GoIcon className="h-3.5 w-3.5 shrink-0" />;
       case "php":
-        return <PhpIcon className="h-4 w-4 shrink-0" />;
+        return <PhpIcon className="h-3.5 w-3.5 shrink-0" />;
       case "sql":
-        return <SqlIcon className="h-4 w-4 shrink-0" />;
+        return <SqlIcon className="h-3.5 w-3.5 shrink-0" />;
       case "web":
-        return <HtmlIcon className="h-4 w-4 shrink-0" />;
+        return <HtmlIcon className="h-3.5 w-3.5 shrink-0" />;
       default:
-        return <Terminal className="h-4 w-4 text-orange-500" />;
+        return <Terminal className="h-3.5 w-3.5 text-orange-500" />;
     }
   };
+
+  // Multi-file tabs state
+  const [files, setFiles] = useState<Array<{ name: string; content: string }>>([
+    { name: getFileName(languageId), content: initialCode },
+  ]);
+  const [activeFileIndex, setActiveFileIndex] = useState(0);
+
+  const activeFile = files[activeFileIndex] || files[0];
+
+  const handleContentChange = (newContent: string) => {
+    setFiles((prev) => {
+      const updated = [...prev];
+      if (updated[activeFileIndex]) {
+        updated[activeFileIndex] = { ...updated[activeFileIndex], content: newContent };
+      }
+      return updated;
+    });
+  };
+
+  const [isNewFileDialogOpen, setIsNewFileDialogOpen] = useState(false);
+
+  const handleAddPlaygroundFile = () => {
+    setIsNewFileDialogOpen(true);
+  };
+
+  const handleCreatePlaygroundFile = (newFileName: string) => {
+    const trimmed = newFileName.trim();
+    if (!trimmed) return;
+    if (files.some((f) => f.name.toLowerCase() === trimmed.toLowerCase())) return;
+
+    setFiles((prev) => [...prev, { name: trimmed, content: `# ${trimmed}\n` }]);
+    setActiveFileIndex(files.length);
+  };
+
+  const handleClosePlaygroundFile = (idxToClose: number) => {
+    if (files.length <= 1) {
+      if (confirm(`Do you want to reset "${files[0].name}" to starter code?`)) {
+        handleContentChange(initialCode);
+      }
+      return;
+    }
+
+    const fileToClose = files[idxToClose];
+    if (!confirm(`Are you sure you want to close "${fileToClose.name}"?`)) return;
+
+    setFiles((prev) => prev.filter((_, idx) => idx !== idxToClose));
+    if (activeFileIndex >= idxToClose) {
+      setActiveFileIndex(Math.max(0, activeFileIndex - 1));
+    }
+  };
+
+  const [stdin, setStdin] = useState("");
+  const [activeTab, setActiveTab] = useState<"console" | "stdin">("console");
+  const [output, setOutput] = useState<string>("");
+  const [stderr, setStderr] = useState<string>("");
+  const [isRunning, setIsRunning] = useState(false);
+  const [timeMs, setTimeMs] = useState<number | null>(null);
+  const [copied, setCopied] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Execution handler
   const handleRun = async () => {
@@ -124,8 +176,9 @@ export function CompilerPlayground({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           language: languageId,
-          code,
+          code: activeFile.content,
           stdin,
+          files,
         }),
       });
 
@@ -148,7 +201,8 @@ export function CompilerPlayground({
 
   // Reset code to starter template
   const handleReset = () => {
-    setCode(initialCode);
+    setFiles([{ name: getFileName(languageId), content: initialCode }]);
+    setActiveFileIndex(0);
     setStdin("");
     setOutput("");
     setStderr("");
@@ -174,17 +228,17 @@ export function CompilerPlayground({
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [code, stdin, languageId]);
+  }, [activeFile, stdin, languageId, files]);
 
   // Calculate line numbers
-  const linesCount = code.split("\n").length;
+  const linesCount = activeFile.content.split("\n").length;
   const lineNumbers = Array.from({ length: Math.max(linesCount, 12) }, (_, i) => i + 1);
 
   return (
     <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] shadow-xl overflow-hidden transition-all">
       {/* Top Header Bar (OneCompiler Style) */}
       <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-2.5 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0D121F] text-xs">
-        {/* Left: Window Dots & Active File Tab */}
+        {/* Left: Window Dots & File Tabs with Add Tab (+) Button */}
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5">
             <span className="h-3 w-3 rounded-full bg-rose-500/90" />
@@ -192,10 +246,46 @@ export function CompilerPlayground({
             <span className="h-3 w-3 rounded-full bg-emerald-500/90" />
           </div>
 
-          <div className="flex items-center gap-2 px-3 py-1 rounded-lg bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700/80 shadow-sm text-xs font-mono font-semibold text-slate-800 dark:text-slate-100">
-            {getLanguageIcon(languageId)}
-            <span>{getFileName(languageId)}</span>
-            <span className="text-[10px] text-slate-400 font-sans font-normal ml-1">UTF-8</span>
+          {/* Tab Strip with [+] Add Page Button (Matching Image 2) */}
+          <div className="flex items-center rounded-lg border border-slate-200/90 dark:border-slate-700/80 bg-white dark:bg-slate-900 overflow-hidden shadow-sm">
+            {files.map((file, idx) => {
+              const isActive = idx === activeFileIndex;
+              return (
+                <div
+                  key={`${file.name}-${idx}`}
+                  onClick={() => setActiveFileIndex(idx)}
+                  className={`flex items-center gap-2 px-3 py-1.5 text-xs font-mono cursor-pointer transition-colors border-r border-slate-200 dark:border-slate-800 ${
+                    isActive
+                      ? "bg-slate-100 dark:bg-slate-800 font-bold text-slate-900 dark:text-white"
+                      : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50"
+                  }`}
+                >
+                  {getLanguageIcon(languageId)}
+                  <span className="truncate max-w-[120px]">{file.name}</span>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleClosePlaygroundFile(idx);
+                    }}
+                    className="rounded p-0.5 ml-0.5 text-slate-400 hover:text-rose-500 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                    title={files.length > 1 ? `Close ${file.name}` : `Reset ${file.name}`}
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </div>
+              );
+            })}
+
+            {/* + Add File / Page Button */}
+            <button
+              type="button"
+              onClick={handleAddPlaygroundFile}
+              className="flex items-center justify-center px-2.5 py-1.5 text-xs text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              title="Add file (+)"
+            >
+              <Plus className="h-3.5 w-3.5" />
+            </button>
           </div>
         </div>
 
@@ -245,8 +335,8 @@ export function CompilerPlayground({
         <div className="lg:col-span-7 flex flex-col bg-white dark:bg-[#0B0F19] min-h-[360px]">
           {/* Subheader */}
           <div className="px-4 py-1.5 bg-slate-50/70 dark:bg-slate-900/40 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-[11px] font-mono text-slate-400">
-            <span>SOURCE CODE ({languageName.toUpperCase()})</span>
-            <span>Editable · Tab Size: 4</span>
+            <span>FILE: {activeFile.name.toUpperCase()}</span>
+            <span>Editable · UTF-8</span>
           </div>
 
           {/* Line Numbers & Code Textarea */}
@@ -261,8 +351,8 @@ export function CompilerPlayground({
             {/* Editable Code Field */}
             <textarea
               ref={textareaRef}
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
+              value={activeFile.content}
+              onChange={(e) => handleContentChange(e.target.value)}
               spellCheck={false}
               rows={16}
               className="flex-1 p-3 font-mono text-xs sm:text-sm bg-transparent text-slate-900 dark:text-slate-100 resize-none focus:outline-none leading-relaxed selection:bg-orange-500/30 whitespace-pre"
@@ -298,7 +388,7 @@ export function CompilerPlayground({
                   }`}
                 >
                   <ArrowDownLeft className="h-3.5 w-3.5" />
-                  <span>Input (stdin)</span>
+                  <span>I/O (stdin)</span>
                   {stdin.trim() && <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />}
                 </button>
               </div>
@@ -414,6 +504,15 @@ export function CompilerPlayground({
           </div>
         </div>
       </div>
+
+      {/* New File Modal */}
+      <NewFileDialog
+        isOpen={isNewFileDialogOpen}
+        onClose={() => setIsNewFileDialogOpen(false)}
+        onAddFile={handleCreatePlaygroundFile}
+        defaultExtension={getFileName(languageId).split(".").pop() || "txt"}
+        existingFiles={files.map((f) => f.name)}
+      />
     </div>
   );
 }
