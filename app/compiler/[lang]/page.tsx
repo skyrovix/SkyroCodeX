@@ -435,3 +435,4 @@ export default async function CompilerPage({ params }: PageProps) {
     </div>
   );
 }
+

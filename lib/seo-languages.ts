@@ -503,3 +503,4 @@ export const ALL_SEO_LANGUAGES = Object.values(SEO_LANGUAGES_MAP);
 export function getLanguageSeoData(id: string): LanguageSeoData {
   return SEO_LANGUAGES_MAP[id as SupportedLanguage] || SEO_LANGUAGES_MAP.python;
 }
+
