@@ -22,6 +22,7 @@ import {
   PhpIcon,
   SqlIcon,
   HtmlIcon,
+  CssIcon,
   GoIcon,
 } from "@/components/icons/language-icons";
 import {
@@ -44,6 +45,10 @@ function getLanguageIcon(id: string, className = "h-4 w-4 shrink-0") {
       return <PythonIcon className={className} />;
     case "javascript":
       return <JavaScriptIcon className={className} />;
+    case "html":
+      return <HtmlIcon className={className} />;
+    case "css":
+      return <CssIcon className={className} />;
     case "cpp":
       return <CppIcon className={className} />;
     case "java":

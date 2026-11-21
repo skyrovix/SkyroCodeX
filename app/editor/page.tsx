@@ -261,9 +261,15 @@ function EditorContent() {
     },
   });
 
-  const htmlFile = currentFiles.find((f) => f.name.endsWith(".html"))?.content || "";
-  const cssFile = currentFiles.find((f) => f.name.endsWith(".css"))?.content || "";
-  const jsFile = currentFiles.find((f) => f.name.endsWith(".js"))?.content || "";
+  const htmlFile =
+    currentFiles.find((f) => f.name.endsWith(".html"))?.content ||
+    (language === "html" ? activeFile.content : "");
+  const cssFile =
+    currentFiles.find((f) => f.name.endsWith(".css"))?.content ||
+    (language === "css" ? activeFile.content : "");
+  const jsFile =
+    currentFiles.find((f) => f.name.endsWith(".js"))?.content ||
+    (language === "javascript" ? activeFile.content : "");
 
   return (
     <div className="flex h-screen w-screen flex-col overflow-hidden bg-slate-50 dark:bg-[#0B0F17] text-slate-900 dark:text-slate-100 transition-colors">

@@ -1,6 +1,8 @@
 export type SupportedLanguage =
   | "python"
   | "javascript"
+  | "html"
+  | "css"
   | "java"
   | "c"
   | "cpp"

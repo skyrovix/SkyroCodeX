@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { NewFileDialog } from "@/components/editor/new-file-dialog";
+import { WebPreview } from "@/components/editor/web-preview";
 import {
   PythonIcon,
   JavaScriptIcon,
@@ -13,6 +14,7 @@ import {
   PhpIcon,
   SqlIcon,
   HtmlIcon,
+  CssIcon,
   GoIcon,
 } from "@/components/icons/language-icons";
 import {
@@ -53,6 +55,10 @@ export function CompilerPlayground({
         return "main.py";
       case "javascript":
         return "index.js";
+      case "html":
+        return "index.html";
+      case "css":
+        return "styles.css";
       case "cpp":
         return "main.cpp";
       case "java":
@@ -79,6 +85,10 @@ export function CompilerPlayground({
         return <PythonIcon className="h-3.5 w-3.5 shrink-0" />;
       case "javascript":
         return <JavaScriptIcon className="h-3.5 w-3.5 shrink-0" />;
+      case "html":
+        return <HtmlIcon className="h-3.5 w-3.5 shrink-0" />;
+      case "css":
+        return <CssIcon className="h-3.5 w-3.5 shrink-0" />;
       case "cpp":
         return <CppIcon className="h-3.5 w-3.5 shrink-0" />;
       case "java":
@@ -160,7 +170,8 @@ export function CompilerPlayground({
   // Execution handler
   const handleRun = async () => {
     if (isWebPreview) {
-      window.location.href = `/editor?lang=${languageId}`;
+      setIsRunning(true);
+      setTimeout(() => setIsRunning(false), 300);
       return;
     }
 
@@ -233,6 +244,15 @@ export function CompilerPlayground({
   // Calculate line numbers
   const linesCount = activeFile.content.split("\n").length;
   const lineNumbers = Array.from({ length: Math.max(linesCount, 12) }, (_, i) => i + 1);
+
+  const htmlContent =
+    files.find((f) => f.name.endsWith(".html"))?.content ||
+    (languageId === "html" ? activeFile.content : "");
+  const cssContent =
+    files.find((f) => f.name.endsWith(".css"))?.content ||
+    (languageId === "css" ? activeFile.content : "");
+  const jsContent =
+    files.find((f) => f.name.endsWith(".js"))?.content || "";
 
   return (
     <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] shadow-xl overflow-hidden transition-all">
@@ -360,148 +380,156 @@ export function CompilerPlayground({
           </div>
         </div>
 
-        {/* Right Column (OneCompiler-Style Live Console) - lg:col-span-5 */}
-        <div className="lg:col-span-5 flex flex-col bg-slate-50 dark:bg-[#070A10] min-h-[360px] justify-between">
-          <div>
-            {/* Console Toolbar Tabs */}
-            <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 px-3 py-1.5 bg-slate-100/70 dark:bg-slate-900/60">
-              <div className="flex items-center gap-1">
-                <button
-                  onClick={() => setActiveTab("console")}
-                  className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-colors ${
-                    activeTab === "console"
-                      ? "bg-white dark:bg-slate-800 text-orange-600 dark:text-orange-400 font-bold shadow-sm"
-                      : "text-slate-500 hover:text-slate-900 dark:hover:text-slate-300"
-                  }`}
-                >
-                  <Terminal className="h-3.5 w-3.5" />
-                  <span>Console</span>
-                  {(output || stderr) && <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />}
-                </button>
-
-                <button
-                  onClick={() => setActiveTab("stdin")}
-                  className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-colors ${
-                    activeTab === "stdin"
-                      ? "bg-white dark:bg-slate-800 text-orange-600 dark:text-orange-400 font-bold shadow-sm"
-                      : "text-slate-500 hover:text-slate-900 dark:hover:text-slate-300"
-                  }`}
-                >
-                  <ArrowDownLeft className="h-3.5 w-3.5" />
-                  <span>I/O (stdin)</span>
-                  {stdin.trim() && <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />}
-                </button>
-              </div>
-
-              {/* Copy / Clear Buttons */}
-              <div className="flex items-center gap-1">
-                {(output || stderr) && (
-                  <button
-                    onClick={handleCopyOutput}
-                    className="p-1 rounded text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
-                    title="Copy output"
-                  >
-                    {copied ? <Check className="h-3.5 w-3.5 text-emerald-500" /> : <Copy className="h-3.5 w-3.5" />}
-                  </button>
-                )}
-                {(output || stderr) && (
-                  <button
-                    onClick={() => {
-                      setOutput("");
-                      setStderr("");
-                      setTimeMs(null);
-                    }}
-                    className="text-[11px] font-mono text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 px-1.5 py-0.5"
-                  >
-                    Clear
-                  </button>
-                )}
-              </div>
+        {/* Right Column: Live Web Preview for HTML/CSS/Web, or OneCompiler Live Console */}
+        <div className="lg:col-span-5 flex flex-col bg-slate-50 dark:bg-[#070A10] min-h-[360px] justify-between overflow-hidden">
+          {isWebPreview ? (
+            <div className="flex-1 w-full h-full min-h-[360px]">
+              <WebPreview html={htmlContent} css={cssContent} javascript={jsContent} />
             </div>
+          ) : (
+            <>
+              <div>
+                {/* Console Toolbar Tabs */}
+                <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 px-3 py-1.5 bg-slate-100/70 dark:bg-slate-900/60">
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => setActiveTab("console")}
+                      className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-colors ${
+                        activeTab === "console"
+                          ? "bg-white dark:bg-slate-800 text-orange-600 dark:text-orange-400 font-bold shadow-sm"
+                          : "text-slate-500 hover:text-slate-900 dark:hover:text-slate-300"
+                      }`}
+                    >
+                      <Terminal className="h-3.5 w-3.5" />
+                      <span>Console</span>
+                      {(output || stderr) && <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />}
+                    </button>
 
-            {/* Tab 1: Live Console Content */}
-            {activeTab === "console" && (
-              <div className="p-4 font-mono text-xs overflow-auto">
-                {/* Running State */}
-                {isRunning && (
-                  <div className="flex items-center gap-2 text-orange-500 animate-pulse py-2">
-                    <span className="h-2 w-2 rounded-full bg-orange-500 animate-ping" />
-                    <span>Compiling and executing in isolated container sandbox...</span>
+                    <button
+                      onClick={() => setActiveTab("stdin")}
+                      className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-colors ${
+                        activeTab === "stdin"
+                          ? "bg-white dark:bg-slate-800 text-orange-600 dark:text-orange-400 font-bold shadow-sm"
+                          : "text-slate-500 hover:text-slate-900 dark:hover:text-slate-300"
+                      }`}
+                    >
+                      <ArrowDownLeft className="h-3.5 w-3.5" />
+                      <span>I/O (stdin)</span>
+                      {stdin.trim() && <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />}
+                    </button>
+                  </div>
+
+                  {/* Copy / Clear Buttons */}
+                  <div className="flex items-center gap-1">
+                    {(output || stderr) && (
+                      <button
+                        onClick={handleCopyOutput}
+                        className="p-1 rounded text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
+                        title="Copy output"
+                      >
+                        {copied ? <Check className="h-3.5 w-3.5 text-emerald-500" /> : <Copy className="h-3.5 w-3.5" />}
+                      </button>
+                    )}
+                    {(output || stderr) && (
+                      <button
+                        onClick={() => {
+                          setOutput("");
+                          setStderr("");
+                          setTimeMs(null);
+                        }}
+                        className="text-[11px] font-mono text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 px-1.5 py-0.5"
+                      >
+                        Clear
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Tab 1: Live Console Content */}
+                {activeTab === "console" && (
+                  <div className="p-4 font-mono text-xs overflow-auto">
+                    {/* Running State */}
+                    {isRunning && (
+                      <div className="flex items-center gap-2 text-orange-500 animate-pulse py-2">
+                        <span className="h-2 w-2 rounded-full bg-orange-500 animate-ping" />
+                        <span>Compiling and executing in isolated container sandbox...</span>
+                      </div>
+                    )}
+
+                    {/* Empty State (Iconic OneCompiler Watermark) */}
+                    {!isRunning && !output && !stderr && (
+                      <div className="flex flex-col items-center justify-center text-center py-16 text-slate-400 dark:text-slate-500 select-none">
+                        <div className="h-14 w-14 rounded-2xl bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 flex items-center justify-center mb-3 shadow-sm text-slate-400 dark:text-slate-500">
+                          <Terminal className="h-7 w-7 text-orange-500" />
+                        </div>
+                        <div className="font-bold text-sm text-slate-800 dark:text-slate-200">Live Console</div>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-[220px]">
+                          Click <span className="text-orange-500 font-semibold">Run</span> or press <kbd className="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-[10px]">Ctrl+Enter</kbd> to execute
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Stdout Output */}
+                    {!isRunning && output && (
+                      <pre className="whitespace-pre-wrap text-slate-800 dark:text-slate-100 font-mono leading-relaxed select-text">
+                        {output}
+                      </pre>
+                    )}
+
+                    {/* Stderr Output */}
+                    {!isRunning && stderr && (
+                      <div className="mt-2 p-2.5 rounded-lg bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/50 text-rose-600 dark:text-rose-400 select-text">
+                        <div className="font-bold mb-1">Standard Error:</div>
+                        <pre className="whitespace-pre-wrap font-mono">{stderr}</pre>
+                      </div>
+                    )}
                   </div>
                 )}
 
-                {/* Empty State (Iconic OneCompiler Watermark) */}
-                {!isRunning && !output && !stderr && (
-                  <div className="flex flex-col items-center justify-center text-center py-16 text-slate-400 dark:text-slate-500 select-none">
-                    <div className="h-14 w-14 rounded-2xl bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 flex items-center justify-center mb-3 shadow-sm text-slate-400 dark:text-slate-500">
-                      <Terminal className="h-7 w-7 text-orange-500" />
-                    </div>
-                    <div className="font-bold text-sm text-slate-800 dark:text-slate-200">Live Console</div>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-[220px]">
-                      Click <span className="text-orange-500 font-semibold">Run</span> or press <kbd className="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-[10px]">Ctrl+Enter</kbd> to execute
-                    </p>
-                  </div>
-                )}
-
-                {/* Stdout Output */}
-                {!isRunning && output && (
-                  <pre className="whitespace-pre-wrap text-slate-800 dark:text-slate-100 font-mono leading-relaxed select-text">
-                    {output}
-                  </pre>
-                )}
-
-                {/* Stderr Output */}
-                {!isRunning && stderr && (
-                  <div className="mt-2 p-2.5 rounded-lg bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/50 text-rose-600 dark:text-rose-400 select-text">
-                    <div className="font-bold mb-1">Standard Error:</div>
-                    <pre className="whitespace-pre-wrap font-mono">{stderr}</pre>
+                {/* Tab 2: Standard Input (stdin) */}
+                {activeTab === "stdin" && (
+                  <div className="p-3">
+                    <label className="block text-[11px] font-sans font-medium text-slate-600 dark:text-slate-400 mb-1">
+                      Pass custom standard input line-by-line to your program:
+                    </label>
+                    <textarea
+                      value={stdin}
+                      onChange={(e) => setStdin(e.target.value)}
+                      rows={8}
+                      placeholder={"e.g.\n5\n10 20 30 40 50"}
+                      className="w-full p-2.5 font-mono text-xs rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-orange-500 resize-none"
+                    />
                   </div>
                 )}
               </div>
-            )}
 
-            {/* Tab 2: Standard Input (stdin) */}
-            {activeTab === "stdin" && (
-              <div className="p-3">
-                <label className="block text-[11px] font-sans font-medium text-slate-600 dark:text-slate-400 mb-1">
-                  Pass custom standard input line-by-line to your program:
-                </label>
-                <textarea
-                  value={stdin}
-                  onChange={(e) => setStdin(e.target.value)}
-                  rows={8}
-                  placeholder={"e.g.\n5\n10 20 30 40 50"}
-                  className="w-full p-2.5 font-mono text-xs rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-orange-500 resize-none"
-                />
+              {/* Bottom Execution Status Footer (OneCompiler Style) */}
+              <div className="flex items-center justify-between border-t border-slate-200 dark:border-slate-800/80 bg-white dark:bg-[#0D121F] px-4 py-2 text-[11px] font-mono text-slate-500">
+                <div className="flex items-center gap-3">
+                  <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-semibold">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <span>Ready</span>
+                  </span>
+
+                  {timeMs !== null && (
+                    <span className="flex items-center gap-1 text-slate-600 dark:text-slate-300">
+                      <Clock className="h-3 w-3 text-orange-500" />
+                      <span>{timeMs}ms</span>
+                    </span>
+                  )}
+
+                  <span className="hidden sm:flex items-center gap-1 text-slate-400">
+                    <Cpu className="h-3 w-3 text-amber-500" />
+                    <span>256MB Cap</span>
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-1 text-slate-400 text-[10px]">
+                  <span>Judge0 Isolated Engine</span>
+                </div>
               </div>
-            )}
-          </div>
-
-          {/* Bottom Execution Status Footer (OneCompiler Style) */}
-          <div className="flex items-center justify-between border-t border-slate-200 dark:border-slate-800/80 bg-white dark:bg-[#0D121F] px-4 py-2 text-[11px] font-mono text-slate-500">
-            <div className="flex items-center gap-3">
-              <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-semibold">
-                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span>Ready</span>
-              </span>
-
-              {timeMs !== null && (
-                <span className="flex items-center gap-1 text-slate-600 dark:text-slate-300">
-                  <Clock className="h-3 w-3 text-orange-500" />
-                  <span>{timeMs}ms</span>
-                </span>
-              )}
-
-              <span className="hidden sm:flex items-center gap-1 text-slate-400">
-                <Cpu className="h-3 w-3 text-amber-500" />
-                <span>256MB Cap</span>
-              </span>
-            </div>
-
-            <div className="flex items-center gap-1 text-slate-400 text-[10px]">
-              <span>Judge0 Isolated Engine</span>
-            </div>
-          </div>
+            </>
+          )}
         </div>
       </div>
 

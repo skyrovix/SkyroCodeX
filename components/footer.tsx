@@ -87,6 +87,18 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/compiler/html" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
+                  <span>HTML5 Live Editor</span>
+                  <span className="text-[10px] font-mono text-slate-400">HTML5</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/compiler/css" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
+                  <span>CSS3 Live Sandbox</span>
+                  <span className="text-[10px] font-mono text-slate-400">CSS3</span>
+                </Link>
+              </li>
+              <li>
                 <Link href="/compiler/cpp" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
                   <span>C++ (G++) Compiler</span>
                   <span className="text-[10px] font-mono text-slate-400">GCC 10</span>
@@ -120,12 +132,6 @@ export function Footer() {
                 <Link href="/compiler/sql" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
                   <span>SQL SQLite Sandbox</span>
                   <span className="text-[10px] font-mono text-slate-400">v3.36</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/compiler/web" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
-                  <span>Web (HTML / CSS / JS)</span>
-                  <span className="text-[10px] font-mono text-slate-400">Live</span>
                 </Link>
               </li>
             </ul>
@@ -274,7 +280,7 @@ export function Footer() {
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 font-mono text-[11px] font-semibold">
               <span className="h-2 w-2 rounded-full bg-emerald-500 animate-ping"></span>
-              <span>All 9+ Runtimes Operational</span>
+              <span>All 10+ Runtimes Operational</span>
             </div>
             <span className="text-slate-400 hidden md:inline">•</span>
             <span className="text-slate-500 hidden md:inline">Response Time: &lt; 25ms</span>

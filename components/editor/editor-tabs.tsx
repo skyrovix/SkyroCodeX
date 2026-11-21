@@ -12,6 +12,7 @@ import {
   PhpIcon,
   SqlIcon,
   HtmlIcon,
+  CssIcon,
   GoIcon,
 } from "@/components/icons/language-icons";
 
@@ -39,7 +40,7 @@ export function EditorTabs({
   const getFileIcon = (fileName: string) => {
     const lower = fileName.toLowerCase();
     if (lower.endsWith(".html") || lower.endsWith(".htm")) return <HtmlIcon className="h-3.5 w-3.5 shrink-0" />;
-    if (lower.endsWith(".css")) return <span className="text-blue-500 font-bold text-[10px] font-mono">#</span>;
+    if (lower.endsWith(".css")) return <CssIcon className="h-3.5 w-3.5 shrink-0" />;
     if (lower.endsWith(".js") || lower.endsWith(".ts")) return <JavaScriptIcon className="h-3.5 w-3.5 shrink-0" />;
     if (lower.endsWith(".py")) return <PythonIcon className="h-3.5 w-3.5 shrink-0" />;
     if (lower.endsWith(".java")) return <JavaIcon className="h-3.5 w-3.5 shrink-0" />;

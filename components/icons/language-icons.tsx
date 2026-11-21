@@ -98,7 +98,19 @@ export function HtmlIcon({ className = "h-4 w-4 shrink-0", ...props }: IconProps
   );
 }
 
-// 9. Official Go Logo
+// 9. Official CSS3 Logo
+export function CssIcon({ className = "h-4 w-4 shrink-0", ...props }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <path fill="#1572B6" d="M19.3 115.3L8.4 0h111.2l-10.9 115.3-44.7 12.7z" />
+      <path fill="#33A9DC" d="M64 116.8l36.3-10.3 9.1-96.1H64z" />
+      <path fill="#EBEBEB" d="M64 54.7H47.6l-1.2-13.9H64V26.9H32.4l3.5 41.7H64zM64 89.4l-15.6-4.2-1-11.2H33.5l1.9 22.3L64 104.2z" />
+      <path fill="#FFF" d="M64 54.7v13.9h14.7l-1.4 15.6-13.3 3.6v14l26.4-7.3 3.6-40.2h-30zm0-27.8v13.9h31.2l1.2-13.9z" />
+    </svg>
+  );
+}
+
+// 10. Official Go Logo
 export function GoIcon({ className = "h-4 w-4 shrink-0", ...props }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" {...props}>

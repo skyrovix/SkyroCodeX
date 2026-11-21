@@ -450,6 +450,128 @@ export const SEO_LANGUAGES_MAP: Record<SupportedLanguage, LanguageSeoData> = {
     ],
   },
 
+  html: {
+    id: "html",
+    name: "HTML5",
+    version: "HTML5",
+    seoTitle: "Online HTML Compiler & Editor with Live Preview | SkyroCodeX",
+    metaDescription:
+      "Run, edit, and preview HTML5 code online in real time with SkyroCodeX by Skyrovix. Instant sandboxed iframe rendering, DOM inspection, responsive mobile preview, and zero setup.",
+    keywords: [
+      "online html compiler",
+      "html editor online",
+      "run html online",
+      "html5 runner in browser",
+      "live html preview",
+      "html sandbox",
+      "learn html5 online",
+      "skyrovix html compiler",
+      "frontend html playground",
+    ],
+    headline: "Online HTML5 Compiler & Live Browser Sandbox",
+    subheadline:
+      "Write modern HTML5 markup and preview rendered output live in an isolated browser sandbox with sub-millisecond hot reloading.",
+    tagline: "Modern HTML5 semantic elements, forms, and live visual output with zero configuration.",
+    runtimeSpec: {
+      engine: "Sandboxed Web Browser Iframe",
+      version: "HTML5 W3C Standard",
+      timeout: "Instant Client-side",
+      memoryLimit: "Client Managed",
+      isolation: "Sandboxed Iframe (allow-scripts)",
+    },
+    features: [
+      "Real-time visual rendering inside an isolated browser iframe sandbox",
+      "Full HTML5 semantic tag support (<header>, <nav>, <main>, <section>, <article>, <footer>)",
+      "Instant DOM manipulation and embedded style/script execution",
+      "Responsive mobile and desktop layout testing with one-click refresh",
+      "One-click snippet sharing and permanent URL generation",
+    ],
+    useCases: [
+      "Testing HTML5 structure, semantic tags, tables, and web forms",
+      "University frontend web development coursework & student assignments",
+      "Quick prototyping of UI components, landing sections, and email templates",
+      "Demonstrating frontend concepts without installing VS Code or local servers",
+    ],
+    faqs: [
+      {
+        question: "How do I run HTML code online with SkyroCodeX?",
+        answer:
+          "Type or paste your HTML markup in the Monaco editor. The live preview updates automatically in real-time, or you can click 'Run' to force an immediate refresh.",
+      },
+      {
+        question: "Can I use CSS and JavaScript inside my HTML?",
+        answer:
+          "Yes! You can include inline <style> and <script> tags directly, or click the '+' button to add separate styles.css and script.js files to your project.",
+      },
+      {
+        question: "Is this online HTML editor free to use?",
+        answer:
+          "Yes, SkyroCodeX is 100% free with unlimited previews, zero sign-in required, and instant snippet sharing.",
+      },
+    ],
+  },
+
+  css: {
+    id: "css",
+    name: "CSS3",
+    version: "CSS3",
+    seoTitle: "Online CSS Compiler & Live Style Editor | SkyroCodeX",
+    metaDescription:
+      "Write, test, and debug modern CSS3 online in real-time with SkyroCodeX. Test Flexbox, CSS Grid, keyframe animations, gradients, and responsive styles with instant live preview.",
+    keywords: [
+      "online css compiler",
+      "css editor online",
+      "css3 playground",
+      "live css preview",
+      "test css in browser",
+      "css grid tester",
+      "flexbox playground online",
+      "css keyframes animation online",
+      "skyrovix css compiler",
+    ],
+    headline: "Online CSS3 Compiler & Live Stylesheet Sandbox",
+    subheadline:
+      "Experiment with modern CSS3 styles, Flexbox, Grid, keyframe animations, and custom properties with instant visual output.",
+    tagline: "Modern CSS3 engine with instant live styling, gradients, transitions, and keyframe animations.",
+    runtimeSpec: {
+      engine: "Live Browser CSSOM Engine",
+      version: "CSS3 / Modern CSS",
+      timeout: "Instant Client-side",
+      memoryLimit: "Client Managed",
+      isolation: "Sandboxed Preview",
+    },
+    features: [
+      "Instant visual updates as you type CSS rules, selectors, and variables",
+      "Full CSS3 support: Flexbox, CSS Grid, CSS Variables (:root), transforms, and @keyframes animations",
+      "Modern color models (hex, rgb, hsl, oklch) and gradient backgrounds",
+      "Works seamlessly with HTML markup in multi-tab mode",
+      "One-click snippet sharing for sharing stylesheets and animations",
+    ],
+    useCases: [
+      "Prototyping CSS animations, hover effects, and cards",
+      "Mastering and debugging Flexbox and CSS Grid layouts",
+      "Testing CSS custom properties and color palettes",
+      "Sharing isolated CSS bugs and component styles",
+    ],
+    faqs: [
+      {
+        question: "How does the live CSS compiler work?",
+        answer:
+          "As you write CSS in the editor, your styles are dynamically applied to the live preview window in real time, giving you instant visual feedback.",
+      },
+      {
+        question: "Does it support modern CSS like Flexbox, Grid, and @keyframes?",
+        answer:
+          "Yes! All modern CSS3 features including Flexbox, CSS Grid, custom properties (CSS variables), gradients, and keyframe animations are fully supported.",
+      },
+      {
+        question: "Can I link my CSS to custom HTML?",
+        answer:
+          "Yes! Click the '+' button in the tab bar to add an index.html file, and your CSS will automatically style that HTML in the live preview.",
+      },
+    ],
+  },
+
   web: {
     id: "web",
     name: "Web (HTML / CSS / JS)",

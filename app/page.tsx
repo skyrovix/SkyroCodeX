@@ -15,6 +15,7 @@ import {
   PhpIcon,
   SqlIcon,
   HtmlIcon,
+  CssIcon,
   GoIcon,
 } from "@/components/icons/language-icons";
 import {
@@ -257,7 +258,7 @@ export default function LandingPage() {
                     className="rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 font-semibold px-6 py-3.5 h-12 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 text-sm sm:text-base gap-2 hover:scale-[1.02] transition-transform"
                   >
                     <span className="text-orange-500 font-mono font-bold">&lt;/&gt;</span>
-                    <span>Explore 9+ Compilers</span>
+                    <span>Explore 10+ Compilers</span>
                   </Button>
                 </Link>
               </div>
@@ -269,9 +270,9 @@ export default function LandingPage() {
                   {[
                     { id: "python", name: "Python", version: "3.10", icon: <PythonIcon /> },
                     { id: "javascript", name: "JavaScript", version: "(Node 18)", icon: <JavaScriptIcon /> },
+                    { id: "html", name: "HTML", version: "5", icon: <HtmlIcon /> },
+                    { id: "css", name: "CSS", version: "3", icon: <CssIcon /> },
                     { id: "cpp", name: "C++", version: "(G++ 10)", icon: <CppIcon /> },
-                    { id: "java", name: "Java", version: "(OpenJDK 15)", icon: <JavaIcon /> },
-                    { id: "c", name: "C", version: "(GCC 10)", icon: <CIcon /> },
                   ].map((item) => (
                     <Link
                       key={item.id}
@@ -294,9 +295,11 @@ export default function LandingPage() {
                 {/* Row 2 */}
                 <div className="flex flex-wrap items-center gap-2">
                   {[
+                    { id: "java", name: "Java", version: "(OpenJDK 15)", icon: <JavaIcon /> },
+                    { id: "c", name: "C", version: "(GCC 10)", icon: <CIcon /> },
+                    { id: "go", name: "Go", version: "1.16", icon: <GoIcon /> },
                     { id: "php", name: "PHP", version: "8.2", icon: <PhpIcon /> },
                     { id: "sql", name: "SQL", version: "(SQLite)", icon: <SqlIcon /> },
-                    { id: "web", name: "HTML / CSS / JS", version: "", icon: <HtmlIcon /> },
                   ].map((item) => (
                     <Link
                       key={item.id}
@@ -497,7 +500,7 @@ export default function LandingPage() {
                 </div>
                 <div>
                   <span className="block text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-tight">
-                    9+
+                    10+
                   </span>
                   <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium">
                     Compiler Runtimes

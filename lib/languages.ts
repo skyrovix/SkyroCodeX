@@ -269,6 +269,147 @@ SELECT * FROM developers ORDER BY snippets_created DESC;
 `,
   },
 
+  html: {
+    id: "html",
+    name: "HTML5",
+    version: "5",
+    monacoLang: "html",
+    fileExtension: ".html",
+    defaultFileName: "index.html",
+    isWebPreview: true,
+    starterCode: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkyroCodeX HTML5 Playground</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #0b0f19;
+      color: #f8fafc;
+    }
+    .card {
+      text-align: center;
+      padding: 2.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border-radius: 1rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      max-width: 420px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: rgba(249, 115, 22, 0.15);
+      color: #fb923c;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: 1px solid rgba(249, 115, 22, 0.35);
+      margin-bottom: 1rem;
+    }
+    h1 {
+      margin: 0 0 0.5rem;
+      font-size: 2.2rem;
+      background: linear-gradient(to right, #ff5722, #f59e0b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p { color: #94a3b8; font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="badge">Skyrovix HTML5 Engine</span>
+    <h1>Hello, World!</h1>
+    <p>Live, instant HTML5 sandbox rendering by SkyroCodeX.</p>
+  </div>
+</body>
+</html>`,
+  },
+
+  css: {
+    id: "css",
+    name: "CSS3",
+    version: "3",
+    monacoLang: "css",
+    fileExtension: ".css",
+    defaultFileName: "styles.css",
+    isWebPreview: true,
+    starterCode: `/* SkyroCodeX - Modern CSS3 Playground */
+:root {
+  --primary: #ff5722;
+  --accent: #f59e0b;
+  --bg-dark: #0b0f19;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, #1e1b4b 0%, var(--bg-dark) 100%);
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #fff;
+}
+
+.card {
+  position: relative;
+  padding: 3rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.5rem;
+  text-align: center;
+  animation: float 4s ease-in-out infinite;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  margin-bottom: 1rem;
+}
+
+.gradient-text {
+  margin: 0 0 0.5rem;
+  font-size: 2.2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+`,
+  },
+
   web: {
     id: "web",
     name: "Web (HTML / CSS / JS)",
