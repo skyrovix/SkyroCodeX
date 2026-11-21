@@ -7,6 +7,17 @@ import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { LANGUAGE_LIST, getLanguageConfig } from "@/lib/languages";
 import {
+  PythonIcon,
+  JavaScriptIcon,
+  CppIcon,
+  JavaIcon,
+  CIcon,
+  PhpIcon,
+  SqlIcon,
+  HtmlIcon,
+  GoIcon,
+} from "@/components/icons/language-icons";
+import {
   Zap,
   ShieldCheck,
   Share2,
@@ -28,64 +39,6 @@ import {
   RotateCw,
   Settings,
 } from "lucide-react";
-
-// Crisp inline language icons matching the design
-const PythonIcon = () => (
-  <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none">
-    <path
-      d="M11.9 2c-3.1 0-4.9.4-4.9 2.2v1.8h5v.6H5.2C3.4 6.6 2 8.4 2 11.2c0 2.5 1.4 4.4 3.7 4.5v-2.2c0-2.4 2.1-2.4 2.1-2.4h5v-.6h-7c-2 0-2.5-1.5-2.5-2.5 0-2.2 1.8-3.4 5.6-3.4 3.5 0 3.5 1.5 3.5 2.5v1.2h2V4.2C17.4 2.4 15 2 11.9 2z"
-      fill="#3776AB"
-    />
-    <path
-      d="M12.1 22c3.1 0 4.9-.4 4.9-2.2v-1.8h-5v-.6h6.8c1.8 0 3.2-1.8 3.2-4.6 0-2.5-1.4-4.4-3.7-4.5v2.2c0 2.4-2.1 2.4-2.1 2.4h-5v.6h7c2 0 2.5 1.5 2.5 2.5 0 2.2-1.8 3.4-5.6 3.4-3.5 0-3.5-1.5-3.5-2.5v-1.2h-2v4.2c0 1.8 2.4 2.2 5.5 2.2z"
-      fill="#FFD43B"
-    />
-    <circle cx="8.8" cy="4.5" r=".7" fill="#fff" />
-    <circle cx="15.2" cy="19.5" r=".7" fill="#fff" />
-  </svg>
-);
-
-const JavaScriptIcon = () => (
-  <div className="h-4 w-4 shrink-0 rounded bg-[#F7DF1E] flex items-center justify-center font-mono font-bold text-[9px] text-black leading-none">
-    JS
-  </div>
-);
-
-const CppIcon = () => (
-  <div className="h-4 w-4 shrink-0 rounded bg-blue-600 flex items-center justify-center font-mono font-bold text-[8px] text-white leading-none">
-    C++
-  </div>
-);
-
-const JavaIcon = () => (
-  <div className="h-4 w-4 shrink-0 rounded bg-orange-600 flex items-center justify-center font-mono font-bold text-[9px] text-white leading-none">
-    ☕
-  </div>
-);
-
-const CIcon = () => (
-  <div className="h-4 w-4 shrink-0 rounded bg-sky-600 flex items-center justify-center font-mono font-bold text-[9px] text-white leading-none">
-    C
-  </div>
-);
-
-const PhpIcon = () => (
-  <div className="h-4 w-4 shrink-0 rounded-full bg-indigo-700 flex items-center justify-center font-mono font-bold text-[7px] text-white leading-none px-0.5">
-    PHP
-  </div>
-);
-
-const SqlIcon = () => (
-  <div className="h-4 w-4 shrink-0 rounded bg-amber-500 flex items-center justify-center font-mono font-bold text-[8px] text-white leading-none">
-    SQL
-  </div>
-);
-
-const HtmlIcon = () => (
-  <div className="h-4 w-4 shrink-0 rounded bg-orange-500 flex items-center justify-center font-mono font-bold text-[8px] text-white leading-none">
-    &lt;&gt;
-  </div>
-);
 
 export default function LandingPage() {
   // Interactive Hero Playground state
@@ -208,22 +161,26 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-24">
-        {/* Ambient Radiant Glow Backgrounds (Peach left, Violet right) */}
-        <div className="absolute top-0 left-0 w-[550px] h-[550px] bg-[radial-gradient(circle,rgba(255,145,77,0.18)_0%,transparent_70%)] -z-10 pointer-events-none blur-3xl" />
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(168,85,247,0.18)_0%,transparent_70%)] -z-10 pointer-events-none blur-3xl" />
+        {/* Soft Ambient Mesh Glow Backgrounds (Peach/Amber on left, Radiant Violet on right) */}
+        <div className="absolute top-0 left-[-5%] w-[650px] h-[580px] bg-gradient-to-br from-orange-400/20 via-amber-400/15 to-transparent blur-[130px] rounded-full pointer-events-none -z-10" />
+        <div className="absolute top-0 right-[-5%] w-[680px] h-[600px] bg-gradient-to-bl from-purple-600/20 via-indigo-500/15 to-transparent blur-[130px] rounded-full pointer-events-none -z-10" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-orange-500/5 dark:bg-purple-500/5 blur-[120px] rounded-full pointer-events-none -z-10" />
+
+        {/* Subtle Ambient Dot Grid Pattern */}
+        <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] dark:bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none -z-20 opacity-50" />
 
         {/* Perspective Grid Floor at Bottom */}
-        <div className="absolute bottom-0 inset-x-0 h-44 bg-[linear-gradient(to_right,rgba(148,163,184,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.08)_1px,transparent_1px)] bg-[size:36px_36px] [transform:perspective(500px)_rotateX(60deg)] pointer-events-none origin-bottom opacity-70 -z-10" />
+        <div className="absolute bottom-0 inset-x-0 h-48 bg-[linear-gradient(to_right,rgba(148,163,184,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.1)_1px,transparent_1px)] bg-[size:36px_36px] [transform:perspective(500px)_rotateX(60deg)] pointer-events-none origin-bottom opacity-75 -z-10" />
 
-        {/* Decorative Dot Matrices */}
-        <div className="absolute top-10 left-6 sm:left-12 grid grid-cols-4 gap-2 opacity-25 pointer-events-none -z-10">
-          {Array.from({ length: 16 }).map((_, i) => (
-            <span key={i} className="h-1.5 w-1.5 rounded-full bg-slate-400 dark:bg-slate-600" />
+        {/* Decorative Dot Matrices in Top Corners */}
+        <div className="absolute top-10 left-6 sm:left-12 grid grid-cols-5 gap-2 opacity-35 pointer-events-none -z-10">
+          {Array.from({ length: 25 }).map((_, i) => (
+            <span key={i} className="h-1 w-1 rounded-full bg-slate-400 dark:bg-slate-600" />
           ))}
         </div>
-        <div className="absolute top-10 right-6 sm:right-12 grid grid-cols-4 gap-2 opacity-25 pointer-events-none -z-10">
-          {Array.from({ length: 16 }).map((_, i) => (
-            <span key={i} className="h-1.5 w-1.5 rounded-full bg-slate-400 dark:bg-slate-600" />
+        <div className="absolute top-10 right-6 sm:right-12 grid grid-cols-5 gap-2 opacity-35 pointer-events-none -z-10">
+          {Array.from({ length: 25 }).map((_, i) => (
+            <span key={i} className="h-1 w-1 rounded-full bg-slate-400 dark:bg-slate-600" />
           ))}
         </div>
 
@@ -380,23 +337,36 @@ export default function LandingPage() {
             </div>
 
             {/* Right Column: 3D Perspective IDE Window Mockup & Floating Badges */}
-            <div className="lg:col-span-5 relative mt-6 lg:mt-0">
+            <div className="lg:col-span-5 relative mt-8 lg:mt-0 px-2 sm:px-4">
               {/* Glowing Orbital Ring behind the window */}
               <div className="absolute -inset-4 sm:-inset-6 rounded-[50px] border-2 border-orange-500/25 dark:border-orange-500/30 rotate-3 blur-[0.5px] pointer-events-none -z-10" />
 
               {/* Floating 3D Badge 1: </> Top Left */}
-              <div className="absolute -top-6 -left-6 z-20 hidden sm:flex items-center justify-center h-14 w-14 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-600 to-purple-700 text-white font-mono font-black text-xl shadow-xl shadow-purple-500/35 -rotate-12 hover:rotate-0 hover:scale-110 transition-all cursor-default select-none border border-white/20">
+              <div className="absolute -top-7 -left-5 z-20 hidden sm:flex items-center justify-center h-14 w-14 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-600 to-purple-700 text-white font-mono font-black text-xl shadow-2xl shadow-purple-500/40 -rotate-12 hover:rotate-0 hover:scale-110 transition-all cursor-default select-none border border-white/20 animate-float">
                 &lt;/&gt;
               </div>
 
               {/* Floating 3D Badge 2: ⚡ Top Right */}
-              <div className="absolute -top-4 -right-4 z-20 hidden sm:flex items-center justify-center h-12 w-12 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-xl shadow-amber-500/20 rotate-6 hover:rotate-0 hover:scale-110 transition-all cursor-default select-none p-2.5">
-                <Zap className="h-6 w-6 text-amber-500 fill-amber-500" />
+              <div className="absolute -top-5 -right-4 z-20 hidden sm:flex items-center justify-center h-13 w-13 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-2xl shadow-amber-500/25 rotate-6 hover:rotate-0 hover:scale-110 transition-all cursor-default select-none p-2.5 animate-float-delayed">
+                <Zap className="h-7 w-7 text-amber-500 fill-amber-500" />
               </div>
 
               {/* Floating 3D Badge 3: ☁️ Bottom Right */}
-              <div className="absolute -bottom-5 -right-5 z-20 hidden sm:flex items-center justify-center h-14 w-14 rounded-2xl bg-gradient-to-br from-purple-500 via-purple-600 to-indigo-700 text-white shadow-xl shadow-purple-500/35 rotate-12 hover:rotate-0 hover:scale-110 transition-all cursor-default select-none border border-white/20">
+              <div className="absolute -bottom-6 -right-5 z-20 hidden sm:flex items-center justify-center h-14 w-14 rounded-2xl bg-gradient-to-br from-purple-500 via-purple-600 to-indigo-700 text-white shadow-2xl shadow-purple-500/40 rotate-12 hover:rotate-0 hover:scale-110 transition-all cursor-default select-none border border-white/20 animate-float">
                 <Cloud className="h-7 w-7 fill-white/20" />
+              </div>
+
+              {/* Floating 3D Pill 4: < 25ms Execution Latency Bottom Left */}
+              <div className="absolute -bottom-4 -left-6 z-20 hidden sm:flex items-center gap-2 rounded-full border border-slate-200/90 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl px-3.5 py-1.5 shadow-xl animate-float-delayed text-xs">
+                <Zap className="h-3.5 w-3.5 text-orange-500 fill-orange-500" />
+                <span className="font-bold text-orange-600 dark:text-orange-400 font-mono">&lt; 25ms</span>
+                <span className="text-[11px] text-slate-500 dark:text-slate-400">Execution</span>
+              </div>
+
+              {/* Floating 3D Pill 5: Isolated Sandbox Top */}
+              <div className="absolute -top-4 right-14 z-20 hidden md:flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/15 backdrop-blur-xl px-3 py-1 shadow-lg text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 animate-float-slow">
+                <ShieldCheck className="h-3.5 w-3.5" />
+                <span>Isolated Sandbox</span>
               </div>
 
               {/* 3D Tilted Window Chassis */}
@@ -420,7 +390,7 @@ export default function LandingPage() {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={handleHeroRun}
-                      className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold shadow-md shadow-purple-500/30 transition-all"
+                      className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold shadow-md shadow-purple-500/30 transition-all hover:scale-105"
                     >
                       <Play className="h-3 w-3 fill-white" />
                       <span>Run</span>
@@ -470,27 +440,31 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                {/* Window Bottom Inset Panel */}
-                <div className="border-t border-slate-800/80 bg-[#0D121F] p-3">
-                  {/* Tabs */}
-                  <div className="flex items-center gap-4 text-xs font-medium text-slate-400 px-2 pb-2">
-                    <span className="text-purple-400 font-bold border-b-2 border-purple-500 pb-0.5">
-                      Output
-                    </span>
-                    <span className="hover:text-slate-200 cursor-pointer">Input</span>
-                    <span className="hover:text-slate-200 cursor-pointer">Preview</span>
+                {/* Authentic Terminal Console Output Panel (Clean Developer Style) */}
+                <div className="border-t border-slate-800/80 bg-[#0A0E18] p-3 text-left">
+                  {/* Console Header Tabs */}
+                  <div className="flex items-center justify-between px-1 pb-2 text-xs font-mono border-b border-slate-800/70 mb-2">
+                    <div className="flex items-center gap-3">
+                      <span className="text-orange-400 font-bold flex items-center gap-1.5 border-b-2 border-orange-500 pb-0.5">
+                        <Terminal className="h-3 w-3" />
+                        <span>Console Output</span>
+                      </span>
+                      <span className="text-slate-500 hover:text-slate-300 cursor-pointer">Input (stdin)</span>
+                      <span className="text-slate-500 hover:text-slate-300 cursor-pointer">Preview</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-[10px] text-emerald-400 font-semibold">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      <span>Container Ready</span>
+                    </div>
                   </div>
 
-                  {/* Inset Rocket Card */}
-                  <div className="rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 text-center shadow-inner">
-                    <div className="flex justify-center mb-1 text-2xl animate-bounce">
-                      🚀
-                    </div>
-                    <div className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white">
-                      Your Code is Running!
-                    </div>
-                    <div className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 font-medium">
-                      Build. Learn. Innovate.
+                  {/* Terminal Execution Trace */}
+                  <div className="space-y-1 font-mono text-[11px] px-1 py-1">
+                    <p className="text-slate-500">$ python main.py</p>
+                    <p className="text-emerald-400 font-bold font-mono">Hello, Skyrovix!</p>
+                    <div className="pt-2 border-t border-slate-800/60 mt-2 flex items-center justify-between text-[10px] text-slate-500">
+                      <span className="text-emerald-400 font-semibold">Status: Exit code 0</span>
+                      <span className="text-slate-400 font-mono">12ms · 14.2 MB · Judge0 Engine</span>
                     </div>
                   </div>
                 </div>

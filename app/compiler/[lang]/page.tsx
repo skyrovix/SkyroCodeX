@@ -14,6 +14,17 @@ import { SUPPORTED_LANGUAGES, getLanguageConfig } from "@/lib/languages";
 import { SupportedLanguage } from "@/types/language";
 import { CompilerPlayground } from "./compiler-playground";
 import {
+  PythonIcon,
+  JavaScriptIcon,
+  CppIcon,
+  JavaIcon,
+  CIcon,
+  PhpIcon,
+  SqlIcon,
+  HtmlIcon,
+  GoIcon,
+} from "@/components/icons/language-icons";
+import {
   Terminal,
   Cpu,
   ShieldCheck,
@@ -26,6 +37,31 @@ import {
   Layers,
   Code2,
 } from "lucide-react";
+
+function getLanguageIcon(id: string, className = "h-4 w-4 shrink-0") {
+  switch (id) {
+    case "python":
+      return <PythonIcon className={className} />;
+    case "javascript":
+      return <JavaScriptIcon className={className} />;
+    case "cpp":
+      return <CppIcon className={className} />;
+    case "java":
+      return <JavaIcon className={className} />;
+    case "c":
+      return <CIcon className={className} />;
+    case "go":
+      return <GoIcon className={className} />;
+    case "php":
+      return <PhpIcon className={className} />;
+    case "sql":
+      return <SqlIcon className={className} />;
+    case "web":
+      return <HtmlIcon className={className} />;
+    default:
+      return <Terminal className={className} />;
+  }
+}
 
 interface PageProps {
   params: Promise<{
@@ -199,8 +235,8 @@ export default async function CompilerPage({ params }: PageProps) {
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
               <div className="space-y-3 max-w-2xl">
                 <div className="flex flex-wrap items-center gap-2">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/25 text-orange-600 dark:text-orange-400 text-xs font-bold">
-                    <Terminal className="h-3.5 w-3.5" />
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/25 text-orange-600 dark:text-orange-400 text-xs font-bold">
+                    {getLanguageIcon(seo.id)}
                     <span>Official {seo.name} Compiler</span>
                   </div>
                   <span className="px-2.5 py-0.5 rounded-full bg-slate-200 dark:bg-slate-800 text-[11px] font-mono font-semibold text-slate-700 dark:text-slate-300">
@@ -411,7 +447,8 @@ export default async function CompilerPage({ params }: PageProps) {
                   className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-orange-500/50 hover:shadow-sm transition-all group flex flex-col justify-between"
                 >
                   <div>
-                    <div className="flex items-center justify-between mb-1">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      {getLanguageIcon(other.id)}
                       <span className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
                         {other.name}
                       </span>

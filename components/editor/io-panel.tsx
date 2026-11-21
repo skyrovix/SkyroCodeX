@@ -138,8 +138,14 @@ export function IOPanel({
               )}
 
               {!isRunning && !output && (
-                <div className="text-slate-400 dark:text-slate-600 italic py-4 select-none">
-                  Press &ldquo;Run&rdquo; (or Ctrl+Enter) to execute the code and see output here.
+                <div className="h-full flex flex-col items-center justify-center text-center py-16 select-none">
+                  <div className="h-14 w-14 rounded-2xl bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 flex items-center justify-center mb-3 shadow-sm text-slate-400 dark:text-slate-500">
+                    <Terminal className="h-7 w-7 text-orange-500" />
+                  </div>
+                  <div className="font-bold text-sm text-slate-800 dark:text-slate-200">Live Console</div>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-[220px]">
+                    Click <span className="text-orange-500 font-semibold">Run</span> or press <kbd className="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-[10px]">Ctrl+Enter</kbd> to execute
+                  </p>
                 </div>
               )}
 
