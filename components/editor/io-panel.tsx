@@ -86,7 +86,7 @@ export function IOPanel({
             }`}
           >
             <Terminal className="h-3.5 w-3.5 text-orange-500" />
-            <span>Output</span>
+            <span>Console</span>
             {stderr && <span className="h-1.5 w-1.5 rounded-full bg-rose-500"></span>}
           </button>
 
@@ -99,7 +99,7 @@ export function IOPanel({
             }`}
           >
             <ArrowDownLeft className="h-3.5 w-3.5 text-amber-500" />
-            <span>Input (stdin)</span>
+            <span>I/O (stdin)</span>
             {stdin.trim().length > 0 && <span className="h-1.5 w-1.5 rounded-full bg-orange-500"></span>}
           </button>
         </div>

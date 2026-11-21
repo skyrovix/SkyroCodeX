@@ -14,7 +14,21 @@ import { useHotkeys } from "@/hooks/use-hotkeys";
 import { SUPPORTED_LANGUAGES, getLanguageConfig } from "@/lib/languages";
 import { SupportedLanguage } from "@/types/language";
 import { generateShortId, downloadFile } from "@/lib/utils";
-import { ZoomIn, ZoomOut, Code, Terminal, Eye } from "lucide-react";
+import {
+  ZoomIn,
+  ZoomOut,
+  Code,
+  Terminal,
+  Eye,
+  Files,
+  Search,
+  Settings,
+  Keyboard,
+  Wifi,
+  ShieldCheck,
+  Clock,
+  Cpu,
+} from "lucide-react";
 
 function EditorContent() {
   const searchParams = useSearchParams();
@@ -29,6 +43,7 @@ function EditorContent() {
   const [fontSize, setFontSize] = useState<number>(14);
   const [stdin, setStdin] = useState<string>("");
   const [activeFileIndex, setActiveFileIndex] = useState<number>(0);
+  const [activeSidebarItem, setActiveSidebarItem] = useState<"files" | "search">("files");
 
   // Sync if query param changes dynamically
   useEffect(() => {
@@ -242,8 +257,68 @@ function EditorContent() {
         </button>
       </div>
 
-      {/* Main Split-Pane Workspace */}
+      {/* Main Split-Pane Workspace with Left Activity Bar */}
       <div className="flex flex-1 overflow-hidden">
+        {/* Left Vertical Activity Bar (OneCompiler / VS Code style) */}
+        <div className="hidden sm:flex w-12 flex-col justify-between border-r border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-[#080C14] py-2 items-center shrink-0 select-none">
+          {/* Top Activity Icons */}
+          <div className="flex flex-col items-center gap-1 w-full">
+            <button
+              onClick={() => setActiveSidebarItem("files")}
+              className={`w-full py-2.5 flex items-center justify-center transition-colors relative ${
+                activeSidebarItem === "files"
+                  ? "text-[#FF5722] bg-white/80 dark:bg-slate-900/80 shadow-sm"
+                  : "text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+              }`}
+              title="File Explorer"
+            >
+              {activeSidebarItem === "files" && (
+                <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#FF5722]" />
+              )}
+              <Files className="h-4 w-4" />
+            </button>
+
+            <button
+              onClick={() => {
+                setActiveSidebarItem("search");
+                // Focus editor
+                const el = document.querySelector(".monaco-editor textarea") as HTMLElement;
+                if (el) el.focus();
+              }}
+              className={`w-full py-2.5 flex items-center justify-center transition-colors relative ${
+                activeSidebarItem === "search"
+                  ? "text-[#FF5722] bg-white/80 dark:bg-slate-900/80 shadow-sm"
+                  : "text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+              }`}
+              title="Search in Code"
+            >
+              {activeSidebarItem === "search" && (
+                <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#FF5722]" />
+              )}
+              <Search className="h-4 w-4" />
+            </button>
+          </div>
+
+          {/* Bottom Activity Icons */}
+          <div className="flex flex-col items-center gap-1 w-full">
+            <button
+              onClick={() => setIsShortcutsOpen(true)}
+              className="w-full py-2.5 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+              title="Keyboard Shortcuts (Ctrl+K)"
+            >
+              <Keyboard className="h-4 w-4" />
+            </button>
+
+            <button
+              onClick={() => setIsShortcutsOpen(true)}
+              className="w-full py-2.5 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+              title="Editor Settings"
+            >
+              <Settings className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+
         {/* Left Pane: Code Editor */}
         <div
           className={`flex flex-1 flex-col overflow-hidden border-r border-slate-200 dark:border-slate-800/80 ${
@@ -251,7 +326,7 @@ function EditorContent() {
           }`}
         >
           {/* Editor Header Toolbar (Tabs + Font controls) */}
-          <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-[#0B0F17] pr-3 transition-colors">
+          <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-[#0D121F] pr-3 transition-colors">
             <EditorTabs
               files={currentFiles}
               activeFileIndex={activeFileIndex}
@@ -260,7 +335,7 @@ function EditorContent() {
 
             {/* Font Size & Info */}
             <div className="flex items-center gap-1 text-slate-500 dark:text-slate-400">
-              <span className="text-[11px] font-mono mr-1 hidden sm:inline uppercase font-semibold text-orange-600 dark:text-orange-400">
+              <span className="text-[11px] font-mono mr-1 hidden sm:inline uppercase font-bold text-orange-600 dark:text-orange-400">
                 {activeFile.language}
               </span>
               <button
@@ -293,51 +368,12 @@ function EditorContent() {
           </div>
         </div>
 
-        {/* Right Pane: Console Output | Web Preview | AI Agent (Qwen) */}
+        {/* Right Pane: Console Output | Web Preview | AI Agent */}
         <div
           className={`w-full md:w-[48%] lg:w-[45%] xl:w-[43%] flex flex-col overflow-hidden ${
             mobileTab !== "editor" ? "flex" : "hidden md:flex"
           }`}
         >
-          {/* Right Pane Tab Bar */}
-          <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-[#0B0F17] px-3 py-1.5 text-xs transition-colors shrink-0">
-            <div className="flex items-center gap-1.5">
-              {!currentLangConfig.isWebPreview && (
-                <button
-                  onClick={() => {
-                    setRightPaneTab("output");
-                    setMobileTab("output");
-                  }}
-                  className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-semibold transition-colors ${
-                    rightPaneTab === "output"
-                      ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm border border-slate-200/80 dark:border-slate-700"
-                      : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                  }`}
-                >
-                  <Terminal className="h-3.5 w-3.5 text-orange-500" />
-                  <span>Output</span>
-                </button>
-              )}
-
-              {currentLangConfig.isWebPreview && (
-                <button
-                  onClick={() => {
-                    setRightPaneTab("preview");
-                    setMobileTab("output");
-                  }}
-                  className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-semibold transition-colors ${
-                    rightPaneTab === "preview"
-                      ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm border border-slate-200/80 dark:border-slate-700"
-                      : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                  }`}
-                >
-                  <Eye className="h-3.5 w-3.5 text-amber-500" />
-                  <span>Preview</span>
-                </button>
-              )}
-            </div>
-          </div>
-
           {/* Tab Content */}
           <div className="flex-1 overflow-hidden">
             {currentLangConfig.isWebPreview ? (
@@ -355,6 +391,57 @@ function EditorContent() {
               />
             )}
           </div>
+        </div>
+      </div>
+
+      {/* Bottom Status Bar (Signature OneCompiler IDE Footer) */}
+      <div className="flex items-center justify-between border-t border-slate-200 dark:border-slate-800 bg-slate-100/95 dark:bg-[#080C14] px-3 py-1 text-[11px] font-mono text-slate-500 dark:text-slate-400 shrink-0 select-none">
+        {/* Left Status Group */}
+        <div className="flex items-center gap-3">
+          <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-semibold">
+            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Ready</span>
+          </span>
+
+          <span
+            onClick={() => {
+              const outTab = currentLangConfig.isWebPreview ? "preview" : "output";
+              setRightPaneTab(outTab);
+              setMobileTab("output");
+            }}
+            className="flex items-center gap-1 text-slate-600 dark:text-slate-300 hover:text-[#FF5722] cursor-pointer"
+          >
+            <Terminal className="h-3 w-3 text-orange-500" />
+            <span>Terminal</span>
+          </span>
+
+          {stats.timeMs !== undefined && (
+            <span className="hidden sm:flex items-center gap-1 text-slate-500 dark:text-slate-400">
+              <Clock className="h-3 w-3 text-amber-500" />
+              <span>{stats.timeMs}ms</span>
+            </span>
+          )}
+
+          {stats.memoryKb !== undefined && (
+            <span className="hidden sm:flex items-center gap-1 text-slate-500 dark:text-slate-400">
+              <Cpu className="h-3 w-3 text-blue-500" />
+              <span>{Math.round(stats.memoryKb / 1024 * 10) / 10} MB</span>
+            </span>
+          )}
+        </div>
+
+        {/* Right Status Group */}
+        <div className="flex items-center gap-3 text-slate-400 dark:text-slate-500">
+          <span className="hidden sm:inline">UTF-8</span>
+          <span className="hidden md:flex items-center gap-1">
+            <ShieldCheck className="h-3 w-3 text-emerald-500" />
+            <span>256MB Sandbox</span>
+          </span>
+          <span className="hidden lg:inline">Judge0 Engine</span>
+          <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-semibold">
+            <Wifi className="h-3 w-3" />
+            <span className="hidden sm:inline">Connected</span>
+          </span>
         </div>
       </div>
 

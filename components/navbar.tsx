@@ -29,6 +29,42 @@ import {
   ArrowRight,
   ExternalLink,
 } from "lucide-react";
+import {
+  PythonIcon,
+  JavaScriptIcon,
+  CppIcon,
+  JavaIcon,
+  CIcon,
+  PhpIcon,
+  SqlIcon,
+  HtmlIcon,
+  GoIcon,
+} from "@/components/icons/language-icons";
+
+function getLanguageIcon(id: string) {
+  switch (id) {
+    case "python":
+      return <PythonIcon className="h-3.5 w-3.5 shrink-0" />;
+    case "javascript":
+      return <JavaScriptIcon className="h-3.5 w-3.5 shrink-0" />;
+    case "cpp":
+      return <CppIcon className="h-3.5 w-3.5 shrink-0" />;
+    case "java":
+      return <JavaIcon className="h-3.5 w-3.5 shrink-0" />;
+    case "c":
+      return <CIcon className="h-3.5 w-3.5 shrink-0" />;
+    case "go":
+      return <GoIcon className="h-3.5 w-3.5 shrink-0" />;
+    case "php":
+      return <PhpIcon className="h-3.5 w-3.5 shrink-0" />;
+    case "sql":
+      return <SqlIcon className="h-3.5 w-3.5 shrink-0" />;
+    case "web":
+      return <HtmlIcon className="h-3.5 w-3.5 shrink-0" />;
+    default:
+      return <Terminal className="h-3.5 w-3.5 text-orange-500" />;
+  }
+}
 import { Button } from "@/components/ui/button";
 import { Dropdown } from "@/components/ui/dropdown";
 import { LANGUAGE_LIST } from "@/lib/languages";
@@ -91,6 +127,7 @@ export function Navbar({
     id: lang.id,
     label: lang.name,
     badge: lang.version,
+    icon: getLanguageIcon(lang.id),
   }));
 
   const handleCopyClick = () => {
@@ -136,15 +173,33 @@ export function Navbar({
             </span>
           </Link>
 
-          {/* Editor Language Selector */}
-          {isEditor && onLanguageChange && (
-            <div className="ml-1 sm:ml-3">
-              <Dropdown
-                items={languageDropdownItems}
-                selectedId={currentLanguage}
-                onSelect={(id) => onLanguageChange(id as SupportedLanguage)}
-                buttonClassName="h-8 py-1 px-2.5 text-xs bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700/80 font-medium"
-              />
+          {/* Editor Language Selector & Prominent Run Button (OneCompiler Style) */}
+          {isEditor && (
+            <div className="flex items-center gap-2 ml-2 sm:ml-4">
+              {onLanguageChange && (
+                <Dropdown
+                  items={languageDropdownItems}
+                  selectedId={currentLanguage}
+                  onSelect={(id) => onLanguageChange(id as SupportedLanguage)}
+                  buttonClassName="h-8 py-1 px-3 text-xs bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700/80 font-semibold"
+                />
+              )}
+
+              {onRun && (
+                <Button
+                  size="sm"
+                  onClick={onRun}
+                  isLoading={isRunning}
+                  className="font-bold shadow-md shadow-orange-500/25 bg-gradient-to-r from-orange-500 via-rose-500 to-purple-600 hover:opacity-95 text-white border-0 px-3.5 h-8 text-xs gap-1.5"
+                  title="Execute code (Ctrl+Enter)"
+                >
+                  {!isRunning && <Play className="h-3.5 w-3.5 fill-white text-white" />}
+                  <span>Run</span>
+                  <span className="hidden md:inline-block ml-1 text-[10px] opacity-80 font-mono px-1 py-0.2 bg-white/20 rounded">
+                    Ctrl+↵
+                  </span>
+                </Button>
+              )}
             </div>
           )}
         </div>
@@ -298,26 +353,8 @@ export function Navbar({
         {/* Center / Editor Actions (When on /editor) */}
         {isEditor && (
           <div className="flex items-center gap-1.5 sm:gap-2">
-            {/* Run Button with Flame Orange Glow */}
-            {onRun && (
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={onRun}
-                isLoading={isRunning}
-                className="font-bold shadow-glow px-3.5 h-8 text-xs"
-                title="Execute code (Ctrl+Enter)"
-              >
-                {!isRunning && <Play className="h-3.5 w-3.5 fill-current mr-1" />}
-                <span>Run</span>
-                <span className="hidden md:inline-block ml-1.5 text-[10px] opacity-80 font-mono px-1 py-0.2 bg-white/20 rounded">
-                  Ctrl+↵
-                </span>
-              </Button>
-            )}
-
-            {/* Quick Actions */}
-            <div className="hidden sm:flex items-center gap-1 border-l border-slate-200 dark:border-slate-800 pl-2">
+            {/* Quick Actions Toolbar */}
+            <div className="flex items-center gap-1">
               {onReset && (
                 <Button
                   variant="ghost"
