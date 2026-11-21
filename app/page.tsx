@@ -23,7 +23,69 @@ import {
   Laptop,
   Users,
   Code2,
+  Cloud,
+  Maximize2,
+  RotateCw,
+  Settings,
 } from "lucide-react";
+
+// Crisp inline language icons matching the design
+const PythonIcon = () => (
+  <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M11.9 2c-3.1 0-4.9.4-4.9 2.2v1.8h5v.6H5.2C3.4 6.6 2 8.4 2 11.2c0 2.5 1.4 4.4 3.7 4.5v-2.2c0-2.4 2.1-2.4 2.1-2.4h5v-.6h-7c-2 0-2.5-1.5-2.5-2.5 0-2.2 1.8-3.4 5.6-3.4 3.5 0 3.5 1.5 3.5 2.5v1.2h2V4.2C17.4 2.4 15 2 11.9 2z"
+      fill="#3776AB"
+    />
+    <path
+      d="M12.1 22c3.1 0 4.9-.4 4.9-2.2v-1.8h-5v-.6h6.8c1.8 0 3.2-1.8 3.2-4.6 0-2.5-1.4-4.4-3.7-4.5v2.2c0 2.4-2.1 2.4-2.1 2.4h-5v.6h7c2 0 2.5 1.5 2.5 2.5 0 2.2-1.8 3.4-5.6 3.4-3.5 0-3.5-1.5-3.5-2.5v-1.2h-2v4.2c0 1.8 2.4 2.2 5.5 2.2z"
+      fill="#FFD43B"
+    />
+    <circle cx="8.8" cy="4.5" r=".7" fill="#fff" />
+    <circle cx="15.2" cy="19.5" r=".7" fill="#fff" />
+  </svg>
+);
+
+const JavaScriptIcon = () => (
+  <div className="h-4 w-4 shrink-0 rounded bg-[#F7DF1E] flex items-center justify-center font-mono font-bold text-[9px] text-black leading-none">
+    JS
+  </div>
+);
+
+const CppIcon = () => (
+  <div className="h-4 w-4 shrink-0 rounded bg-blue-600 flex items-center justify-center font-mono font-bold text-[8px] text-white leading-none">
+    C++
+  </div>
+);
+
+const JavaIcon = () => (
+  <div className="h-4 w-4 shrink-0 rounded bg-orange-600 flex items-center justify-center font-mono font-bold text-[9px] text-white leading-none">
+    ☕
+  </div>
+);
+
+const CIcon = () => (
+  <div className="h-4 w-4 shrink-0 rounded bg-sky-600 flex items-center justify-center font-mono font-bold text-[9px] text-white leading-none">
+    C
+  </div>
+);
+
+const PhpIcon = () => (
+  <div className="h-4 w-4 shrink-0 rounded-full bg-indigo-700 flex items-center justify-center font-mono font-bold text-[7px] text-white leading-none px-0.5">
+    PHP
+  </div>
+);
+
+const SqlIcon = () => (
+  <div className="h-4 w-4 shrink-0 rounded bg-amber-500 flex items-center justify-center font-mono font-bold text-[8px] text-white leading-none">
+    SQL
+  </div>
+);
+
+const HtmlIcon = () => (
+  <div className="h-4 w-4 shrink-0 rounded bg-orange-500 flex items-center justify-center font-mono font-bold text-[8px] text-white leading-none">
+    &lt;&gt;
+  </div>
+);
 
 export default function LandingPage() {
   // Interactive Hero Playground state
@@ -145,82 +207,359 @@ export default function LandingPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-12 pb-20 md:pt-20 md:pb-28">
-        {/* Ambient Flame Glow Background */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-gradient-to-tr from-orange-600/20 via-amber-500/15 to-orange-400/10 blur-[150px] -z-10 rounded-full pointer-events-none" />
+      <section className="relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-24">
+        {/* Ambient Radiant Glow Backgrounds (Peach left, Violet right) */}
+        <div className="absolute top-0 left-0 w-[550px] h-[550px] bg-[radial-gradient(circle,rgba(255,145,77,0.18)_0%,transparent_70%)] -z-10 pointer-events-none blur-3xl" />
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(168,85,247,0.18)_0%,transparent_70%)] -z-10 pointer-events-none blur-3xl" />
 
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          {/* Official Brand Wordmark Presentation */}
-          <div className="flex justify-center mb-6">
-            <div className="relative group p-2">
-              <img
-                src="/logo-wordmark-dark.png"
-                alt="SkyroCodeX"
-                className="hidden dark:block h-12 sm:h-16 w-auto object-contain filter drop-shadow-[0_8px_24px_rgba(255,87,34,0.35)]"
-              />
-              <img
-                src="/logo-wordmark-light.png"
-                alt="SkyroCodeX"
-                className="block dark:hidden h-12 sm:h-16 w-auto object-contain filter drop-shadow-[0_8px_20px_rgba(255,87,34,0.25)]"
-              />
+        {/* Perspective Grid Floor at Bottom */}
+        <div className="absolute bottom-0 inset-x-0 h-44 bg-[linear-gradient(to_right,rgba(148,163,184,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.08)_1px,transparent_1px)] bg-[size:36px_36px] [transform:perspective(500px)_rotateX(60deg)] pointer-events-none origin-bottom opacity-70 -z-10" />
+
+        {/* Decorative Dot Matrices */}
+        <div className="absolute top-10 left-6 sm:left-12 grid grid-cols-4 gap-2 opacity-25 pointer-events-none -z-10">
+          {Array.from({ length: 16 }).map((_, i) => (
+            <span key={i} className="h-1.5 w-1.5 rounded-full bg-slate-400 dark:bg-slate-600" />
+          ))}
+        </div>
+        <div className="absolute top-10 right-6 sm:right-12 grid grid-cols-4 gap-2 opacity-25 pointer-events-none -z-10">
+          {Array.from({ length: 16 }).map((_, i) => (
+            <span key={i} className="h-1.5 w-1.5 rounded-full bg-slate-400 dark:bg-slate-600" />
+          ))}
+        </div>
+
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* 2-Column Split Hero Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+            
+            {/* Left Column: Headline, Description, CTAs, Language Showcase, Trust Signals */}
+            <div className="lg:col-span-7 text-left space-y-6">
+              
+              {/* Top Floating Badge */}
+              <div className="inline-flex items-center gap-2 rounded-full border border-orange-200/80 dark:border-orange-500/25 bg-orange-50/80 dark:bg-orange-500/10 px-4 py-1.5 text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-sm backdrop-blur-md">
+                <Sparkles className="h-3.5 w-3.5 text-orange-500 fill-orange-500" />
+                <span>Next-Generation Cloud IDE &amp; Compilers by Skyrovix</span>
+                <span className="rounded-full bg-purple-100 dark:bg-purple-900/50 px-2 py-0.5 text-[10px] font-mono font-bold text-purple-700 dark:text-purple-300">
+                  v2.0
+                </span>
+              </div>
+
+              {/* Main Headline with Brush Underline Flourish */}
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.08]">
+                Code. Run. Share.{" "}
+                <span className="relative inline-block">
+                  <span className="bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 bg-clip-text text-transparent">
+                    Instantly.
+                  </span>
+                  {/* Subtle curved brush flourish underline */}
+                  <svg
+                    className="absolute -bottom-2.5 left-0 w-full h-3 text-orange-500"
+                    viewBox="0 0 260 18"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3 13C60 4 150 2 257 11C180 8 95 7 15 15"
+                      stroke="url(#hero-brush-gradient)"
+                      strokeWidth="3.5"
+                      strokeLinecap="round"
+                    />
+                    <defs>
+                      <linearGradient id="hero-brush-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#f97316" />
+                        <stop offset="50%" stopColor="#f59e0b" />
+                        <stop offset="100%" stopColor="#ea580c" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </span>
+              </h1>
+
+              {/* Subtitle */}
+              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed">
+                The ultra-fast, sandboxed online code compiler and IDE with Monaco Editor,
+                live web preview, multi-language support, and zero setup required.
+              </p>
+
+              {/* Call to Action Buttons */}
+              <div className="flex flex-wrap items-center gap-3.5 pt-1">
+                <Link href="/editor">
+                  <Button
+                    size="lg"
+                    className="rounded-full bg-gradient-to-r from-orange-500 via-rose-500 to-purple-600 hover:opacity-95 text-white font-bold px-7 py-3.5 h-12 shadow-lg shadow-orange-500/25 text-sm sm:text-base gap-2.5 border-0 hover:scale-[1.02] transition-transform"
+                  >
+                    <Play className="h-4 w-4 fill-white text-white" />
+                    <span>Start Coding Now</span>
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </Link>
+
+                <Link href="/editor">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 font-semibold px-6 py-3.5 h-12 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 text-sm sm:text-base gap-2 hover:scale-[1.02] transition-transform"
+                  >
+                    <span className="text-orange-500 font-mono font-bold">&lt;/&gt;</span>
+                    <span>Explore 9+ Compilers</span>
+                  </Button>
+                </Link>
+              </div>
+
+              {/* Supported Languages Showcase Grid (2 Rows with Official Style) */}
+              <div className="space-y-2 pt-2">
+                {/* Row 1 */}
+                <div className="flex flex-wrap items-center gap-2">
+                  {[
+                    { id: "python", name: "Python", version: "3.10", icon: <PythonIcon /> },
+                    { id: "javascript", name: "JavaScript", version: "(Node 18)", icon: <JavaScriptIcon /> },
+                    { id: "cpp", name: "C++", version: "(G++ 10)", icon: <CppIcon /> },
+                    { id: "java", name: "Java", version: "(OpenJDK 15)", icon: <JavaIcon /> },
+                    { id: "c", name: "C", version: "(GCC 10)", icon: <CIcon /> },
+                  ].map((item) => (
+                    <Link
+                      key={item.id}
+                      href={`/compiler/${item.id}`}
+                      className="inline-flex items-center gap-2 rounded-full bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 px-3 py-1.5 shadow-sm hover:shadow-md hover:border-orange-500/50 hover:scale-105 transition-all group"
+                    >
+                      {item.icon}
+                      <div className="flex flex-col text-left leading-tight">
+                        <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 group-hover:text-orange-500 transition-colors">
+                          {item.name}
+                        </span>
+                        <span className="text-[9px] font-mono text-slate-400 dark:text-slate-500">
+                          {item.version}
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+
+                {/* Row 2 */}
+                <div className="flex flex-wrap items-center gap-2">
+                  {[
+                    { id: "php", name: "PHP", version: "8.2", icon: <PhpIcon /> },
+                    { id: "sql", name: "SQL", version: "(SQLite)", icon: <SqlIcon /> },
+                    { id: "web", name: "HTML / CSS / JS", version: "", icon: <HtmlIcon /> },
+                  ].map((item) => (
+                    <Link
+                      key={item.id}
+                      href={`/compiler/${item.id}`}
+                      className="inline-flex items-center gap-2 rounded-full bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 px-3 py-1.5 shadow-sm hover:shadow-md hover:border-orange-500/50 hover:scale-105 transition-all group"
+                    >
+                      {item.icon}
+                      <div className="flex flex-col text-left leading-tight">
+                        <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 group-hover:text-orange-500 transition-colors">
+                          {item.name}
+                        </span>
+                        {item.version && (
+                          <span className="text-[9px] font-mono text-slate-400 dark:text-slate-500">
+                            {item.version}
+                          </span>
+                        )}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Trust Signals */}
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-medium text-slate-600 dark:text-slate-400 pt-1">
+                <div className="flex items-center gap-2">
+                  <Zap className="h-4 w-4 text-purple-600 dark:text-purple-400 fill-purple-600 dark:fill-purple-400" />
+                  <span>Zero local configuration</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
+                  <span>100% Free &amp; Unlimited</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Cloud className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+                  <span>No account required</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: 3D Perspective IDE Window Mockup & Floating Badges */}
+            <div className="lg:col-span-5 relative mt-6 lg:mt-0">
+              {/* Glowing Orbital Ring behind the window */}
+              <div className="absolute -inset-4 sm:-inset-6 rounded-[50px] border-2 border-orange-500/25 dark:border-orange-500/30 rotate-3 blur-[0.5px] pointer-events-none -z-10" />
+
+              {/* Floating 3D Badge 1: </> Top Left */}
+              <div className="absolute -top-6 -left-6 z-20 hidden sm:flex items-center justify-center h-14 w-14 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-600 to-purple-700 text-white font-mono font-black text-xl shadow-xl shadow-purple-500/35 -rotate-12 hover:rotate-0 hover:scale-110 transition-all cursor-default select-none border border-white/20">
+                &lt;/&gt;
+              </div>
+
+              {/* Floating 3D Badge 2: ⚡ Top Right */}
+              <div className="absolute -top-4 -right-4 z-20 hidden sm:flex items-center justify-center h-12 w-12 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-xl shadow-amber-500/20 rotate-6 hover:rotate-0 hover:scale-110 transition-all cursor-default select-none p-2.5">
+                <Zap className="h-6 w-6 text-amber-500 fill-amber-500" />
+              </div>
+
+              {/* Floating 3D Badge 3: ☁️ Bottom Right */}
+              <div className="absolute -bottom-5 -right-5 z-20 hidden sm:flex items-center justify-center h-14 w-14 rounded-2xl bg-gradient-to-br from-purple-500 via-purple-600 to-indigo-700 text-white shadow-xl shadow-purple-500/35 rotate-12 hover:rotate-0 hover:scale-110 transition-all cursor-default select-none border border-white/20">
+                <Cloud className="h-7 w-7 fill-white/20" />
+              </div>
+
+              {/* 3D Tilted Window Chassis */}
+              <div className="relative rounded-2xl border border-slate-800/90 bg-[#0B0F19] text-slate-200 shadow-2xl overflow-hidden [transform:perspective(1200px)_rotateY(-5deg)_rotateX(2deg)] hover:[transform:none] transition-all duration-500">
+                {/* Window Topbar */}
+                <div className="flex items-center justify-between border-b border-slate-800/80 bg-[#0D121F] px-4 py-2.5">
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5">
+                      <span className="h-3 w-3 rounded-full bg-rose-500/90" />
+                      <span className="h-3 w-3 rounded-full bg-amber-500/90" />
+                      <span className="h-3 w-3 rounded-full bg-emerald-500/90" />
+                    </div>
+                    <span className="text-slate-500 text-xs ml-1 font-mono">&lt;</span>
+                    <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-800/90 border border-slate-700/80 text-xs font-mono text-slate-200">
+                      <PythonIcon />
+                      <span>main.py</span>
+                      <ChevronDown className="h-3 w-3 text-slate-400" />
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={handleHeroRun}
+                      className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold shadow-md shadow-purple-500/30 transition-all"
+                    >
+                      <Play className="h-3 w-3 fill-white" />
+                      <span>Run</span>
+                    </button>
+                    <Maximize2 className="h-3.5 w-3.5 text-slate-400 hover:text-white transition-colors cursor-pointer" />
+                    <RotateCw className="h-3.5 w-3.5 text-slate-400 hover:text-white transition-colors cursor-pointer" />
+                    <Settings className="h-3.5 w-3.5 text-slate-400 hover:text-white transition-colors cursor-pointer" />
+                  </div>
+                </div>
+
+                {/* Window Code Content */}
+                <div className="p-4 font-mono text-xs leading-relaxed bg-[#0B0F19]">
+                  <div className="grid grid-cols-[20px_1fr] gap-3">
+                    {/* Line numbers */}
+                    <div className="text-slate-600 select-none text-right space-y-1">
+                      <div>1</div>
+                      <div>2</div>
+                      <div>3</div>
+                      <div>4</div>
+                      <div>5</div>
+                      <div>6</div>
+                    </div>
+                    {/* Code Lines with Syntax Colors */}
+                    <div className="space-y-1 text-slate-200">
+                      <div>
+                        <span className="text-purple-400 font-semibold">def</span>{" "}
+                        <span className="text-blue-400 font-semibold">greet</span>(
+                        <span className="text-orange-300">name</span>):
+                      </div>
+                      <div className="pl-4">
+                        <span className="text-sky-400 font-semibold">print</span>(
+                        <span className="text-emerald-400">f&quot;Hello, &#123;name&#125;!&quot;</span>)
+                      </div>
+                      <div className="h-3" />
+                      <div>
+                        <span className="text-blue-400 font-semibold">greet</span>(
+                        <span className="text-emerald-400">&quot;Skyrovix&quot;</span>)
+                      </div>
+                      <div className="h-2" />
+                    </div>
+                  </div>
+
+                  {/* Inline Execution Output Banner */}
+                  <div className="mt-3 flex items-center gap-2 rounded-lg bg-emerald-950/70 border border-emerald-500/40 px-3 py-1.5 text-xs font-mono text-emerald-400">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+                    <span>Output: Hello, Skyrovix!</span>
+                  </div>
+                </div>
+
+                {/* Window Bottom Inset Panel */}
+                <div className="border-t border-slate-800/80 bg-[#0D121F] p-3">
+                  {/* Tabs */}
+                  <div className="flex items-center gap-4 text-xs font-medium text-slate-400 px-2 pb-2">
+                    <span className="text-purple-400 font-bold border-b-2 border-purple-500 pb-0.5">
+                      Output
+                    </span>
+                    <span className="hover:text-slate-200 cursor-pointer">Input</span>
+                    <span className="hover:text-slate-200 cursor-pointer">Preview</span>
+                  </div>
+
+                  {/* Inset Rocket Card */}
+                  <div className="rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 text-center shadow-inner">
+                    <div className="flex justify-center mb-1 text-2xl animate-bounce">
+                      🚀
+                    </div>
+                    <div className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white">
+                      Your Code is Running!
+                    </div>
+                    <div className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 font-medium">
+                      Build. Learn. Innovate.
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Skyrovix Badge */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-xs font-semibold text-orange-600 dark:text-orange-400 shadow-sm mb-6 animate-pulse-subtle">
-            <Sparkles className="h-3.5 w-3.5 text-orange-500" />
-            <span>Next-Generation Online IDE by Skyrovix</span>
-          </div>
+          {/* Unified Floating Stats Bar */}
+          <div className="mt-14 rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl p-5 shadow-xl">
+            <div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-200 dark:divide-slate-800">
+              {/* Metric 1 */}
+              <div className="flex items-center justify-center gap-3 p-3 text-left">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-orange-500/10 text-orange-500">
+                  <Zap className="h-5 w-5 fill-orange-500 text-orange-500" />
+                </div>
+                <div>
+                  <span className="block text-2xl sm:text-3xl font-black text-orange-600 dark:text-orange-400 leading-tight">
+                    &lt; 25ms
+                  </span>
+                  <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium">
+                    Execution Latency
+                  </span>
+                </div>
+              </div>
 
-          {/* Headline */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-slate-900 dark:text-white max-w-4xl mx-auto leading-[1.12]">
-            Code. Run. Share.{" "}
-            <span className="bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 bg-clip-text text-transparent">
-              Instantly.
-            </span>
-          </h1>
+              {/* Metric 2 */}
+              <div className="flex items-center justify-center gap-3 p-3 text-left">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400">
+                  <Layers className="h-5 w-5" />
+                </div>
+                <div>
+                  <span className="block text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-tight">
+                    9+
+                  </span>
+                  <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium">
+                    Compiler Runtimes
+                  </span>
+                </div>
+              </div>
 
-          {/* Subtitle */}
-          <p className="mt-6 text-base sm:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            The ultra-fast, sandboxed online code compiler and IDE with Monaco Editor,
-            live web preview, multi-language support, and zero setup required.
-          </p>
+              {/* Metric 3 */}
+              <div className="flex items-center justify-center gap-3 p-3 text-left">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">
+                  <Users className="h-5 w-5" />
+                </div>
+                <div>
+                  <span className="block text-2xl sm:text-3xl font-black text-emerald-600 dark:text-emerald-400 leading-tight">
+                    100%
+                  </span>
+                  <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium">
+                    Isolated Containers
+                  </span>
+                </div>
+              </div>
 
-          {/* Call to action buttons */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/editor">
-              <Button size="lg" variant="primary" className="gap-2.5 px-8 shadow-glow text-base font-bold">
-                <Play className="h-4 w-4 fill-current" />
-                <span>Start Coding Now</span>
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </Link>
-
-            <Link href="#playground">
-              <Button size="lg" variant="secondary" className="gap-2 text-base font-semibold">
-                <Terminal className="h-4 w-4 text-orange-500" />
-                <span>Try Quick Playground</span>
-              </Button>
-            </Link>
-          </div>
-
-          {/* Live Platform Stats Counter */}
-          <div className="mt-14 mx-auto max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-4 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md shadow-lg">
-            <div className="text-center p-3">
-              <span className="block text-2xl sm:text-3xl font-black text-orange-600 dark:text-orange-400">&lt; 25ms</span>
-              <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium">Execution Latency</span>
-            </div>
-            <div className="text-center p-3">
-              <span className="block text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">9+</span>
-              <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium">Compiler Runtimes</span>
-            </div>
-            <div className="text-center p-3">
-              <span className="block text-2xl sm:text-3xl font-black text-emerald-600 dark:text-emerald-400">100%</span>
-              <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium">Isolated Containers</span>
-            </div>
-            <div className="text-center p-3">
-              <span className="block text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">0s</span>
-              <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium">Setup Time</span>
+              {/* Metric 4 */}
+              <div className="flex items-center justify-center gap-3 p-3 text-left">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400">
+                  <Clock className="h-5 w-5" />
+                </div>
+                <div>
+                  <span className="block text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-tight">
+                    0s
+                  </span>
+                  <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium">
+                    Setup Time
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
