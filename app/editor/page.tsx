@@ -6,7 +6,6 @@ import { CodeEditor } from "@/components/editor/code-editor";
 import { EditorTabs, EditorFile } from "@/components/editor/editor-tabs";
 import { IOPanel } from "@/components/editor/io-panel";
 import { WebPreview } from "@/components/editor/web-preview";
-import { AiAgentPanel } from "@/components/editor/ai-agent-panel";
 import { ShortcutsModal } from "@/components/editor/shortcuts-modal";
 import { ShareModal } from "@/components/editor/share-modal";
 import { useCodeRunner } from "@/hooks/use-code-runner";
@@ -14,8 +13,7 @@ import { useHotkeys } from "@/hooks/use-hotkeys";
 import { SUPPORTED_LANGUAGES, getLanguageConfig } from "@/lib/languages";
 import { SupportedLanguage } from "@/types/language";
 import { generateShortId, downloadFile } from "@/lib/utils";
-import { ZoomIn, ZoomOut, Code, Terminal, Eye, Sparkles } from "lucide-react";
-import { AiOrb } from "@/components/ui/ai-orb";
+import { ZoomIn, ZoomOut, Code, Terminal, Eye } from "lucide-react";
 
 export default function EditorPage() {
   const [language, setLanguage] = useState<SupportedLanguage>("python");
@@ -26,14 +24,11 @@ export default function EditorPage() {
   // Files state (supports multi-tab files like HTML/CSS/JS or multiple code tabs)
   const [filesMap, setFilesMap] = useState<Record<string, EditorFile[]>>({});
 
-  // Right pane tab switcher: "output" | "preview" | "ai"
-  const [rightPaneTab, setRightPaneTab] = useState<"output" | "preview" | "ai">("output");
+  // Right pane tab switcher: "output" | "preview"
+  const [rightPaneTab, setRightPaneTab] = useState<"output" | "preview">("output");
 
-  // Mobile layout tab switcher: "editor" | "output" | "ai"
-  const [mobileTab, setMobileTab] = useState<"editor" | "output" | "ai">("editor");
-
-  // Previous code backup for AI Restore function
-  const [previousCodeBackup, setPreviousCodeBackup] = useState<string | null>(null);
+  // Mobile layout tab switcher: "editor" | "output"
+  const [mobileTab, setMobileTab] = useState<"editor" | "output">("editor");
 
   // Modals
   const [isShortcutsOpen, setIsShortcutsOpen] = useState(false);
@@ -85,28 +80,6 @@ export default function EditorPage() {
       if (langFiles[activeFileIndex]) {
         langFiles[activeFileIndex] = {
           ...langFiles[activeFileIndex],
-          content: newContent,
-        };
-      }
-      return {
-        ...prev,
-        [language]: langFiles,
-      };
-    });
-  };
-
-  const handleUpdateFileContent = (newContent: string, fileName?: string) => {
-    setFilesMap((prev) => {
-      const langFiles = prev[language] ? [...prev[language]] : [...currentFiles];
-      const targetIdx = fileName
-        ? langFiles.findIndex((f) => f.name.toLowerCase() === fileName.toLowerCase())
-        : activeFileIndex;
-
-      const idxToUpdate = targetIdx >= 0 ? targetIdx : activeFileIndex;
-
-      if (langFiles[idxToUpdate]) {
-        langFiles[idxToUpdate] = {
-          ...langFiles[idxToUpdate],
           content: newContent,
         };
       }
@@ -198,18 +171,6 @@ export default function EditorPage() {
     },
   });
 
-  const handleSelectFileByName = useCallback(
-    (fileName: string) => {
-      const idx = currentFiles.findIndex(
-        (f) => f.name.toLowerCase() === fileName.toLowerCase()
-      );
-      if (idx !== -1) {
-        setActiveFileIndex(idx);
-      }
-    },
-    [currentFiles]
-  );
-
   const htmlFile = currentFiles.find((f) => f.name.endsWith(".html"))?.content || "";
   const cssFile = currentFiles.find((f) => f.name.endsWith(".css"))?.content || "";
   const jsFile = currentFiles.find((f) => f.name.endsWith(".js"))?.content || "";
@@ -232,12 +193,6 @@ export default function EditorPage() {
         onDownload={handleDownload}
         onShare={handleShare}
         onOpenShortcuts={() => setIsShortcutsOpen(true)}
-        onToggleAi={() => {
-          const nextTab = rightPaneTab === "ai" ? (currentLangConfig.isWebPreview ? "preview" : "output") : "ai";
-          setRightPaneTab(nextTab);
-          setMobileTab(nextTab === "preview" ? "output" : nextTab);
-        }}
-        isAiActive={rightPaneTab === "ai"}
       />
 
       {/* Mobile Tab Switcher */}
@@ -264,18 +219,6 @@ export default function EditorPage() {
           {currentLangConfig.isWebPreview ? <Eye className="h-4 w-4" /> : <Terminal className="h-4 w-4" />}
           <span>{currentLangConfig.isWebPreview ? "Preview" : "Console"}</span>
           {stats.status === "running" && <span className="h-2 w-2 rounded-full bg-orange-400 animate-ping"></span>}
-        </button>
-        <button
-          onClick={() => {
-            setRightPaneTab("ai");
-            setMobileTab("ai");
-          }}
-          className={`flex items-center gap-1.5 py-1 px-3 rounded font-bold ${
-            mobileTab === "ai" ? "bg-blue-600 text-white" : "text-blue-600 dark:text-blue-400"
-          }`}
-        >
-          <AiOrb size="sm" />
-          <span>AI Qwen</span>
         </button>
       </div>
 
@@ -372,89 +315,25 @@ export default function EditorPage() {
                   <span>Preview</span>
                 </button>
               )}
-
-              <button
-                onClick={() => {
-                  setRightPaneTab("ai");
-                  setMobileTab("ai");
-                }}
-                className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-bold transition-all ${
-                  rightPaneTab === "ai"
-                    ? "bg-blue-600 text-white shadow-sm"
-                    : "text-blue-600 dark:text-blue-400 hover:bg-blue-500/10"
-                }`}
-              >
-                <AiOrb size="sm" />
-                <span>AI Agent</span>
-                <span className="text-[9px] font-mono font-semibold px-1 py-0.2 rounded bg-blue-500/20 text-blue-800 dark:text-blue-200">
-                  Qwen
-                </span>
-              </button>
             </div>
           </div>
 
-          {/* Tab Content: Keep BOTH AI Agent and Output/Preview mounted in DOM to prevent conversation wipe */}
-          <div className="flex-1 overflow-hidden relative">
-            <div className={`h-full w-full ${rightPaneTab === "ai" ? "block" : "hidden"}`}>
-              <AiAgentPanel
-                currentLanguage={language}
-                activeFileName={activeFile.name}
-                currentCode={activeFile.content}
-                allFiles={currentFiles.map((f) => ({ name: f.name, content: f.content }))}
-                onSelectFileByName={handleSelectFileByName}
-                onApplyCode={(newCode, targetFileName, multiFileUpdates) => {
-                  setPreviousCodeBackup(activeFile.content);
-
-                  if (multiFileUpdates && Object.keys(multiFileUpdates).length > 0) {
-                    setFilesMap((prev) => {
-                      const langFiles = prev[language] ? [...prev[language]] : [...currentFiles];
-                      const updated = langFiles.map((f) => {
-                        if (multiFileUpdates[f.name]) {
-                          return { ...f, content: multiFileUpdates[f.name] };
-                        }
-                        return f;
-                      });
-                      return { ...prev, [language]: updated };
-                    });
-                  } else {
-                    handleUpdateFileContent(newCode, targetFileName);
-                  }
-
-                  // If web preview, switch to preview tab so user sees their new page immediately!
-                  if (currentLangConfig.isWebPreview) {
-                    setTimeout(() => {
-                      setRightPaneTab("preview");
-                      setMobileTab("output");
-                    }, 400);
-                  }
-                }}
-                onRestoreCode={
-                  previousCodeBackup
-                    ? () => {
-                        handleContentChange(previousCodeBackup);
-                        setPreviousCodeBackup(null);
-                      }
-                    : undefined
-                }
+          {/* Tab Content */}
+          <div className="flex-1 overflow-hidden">
+            {currentLangConfig.isWebPreview ? (
+              <WebPreview html={htmlFile} css={cssFile} javascript={jsFile} />
+            ) : (
+              <IOPanel
+                stdin={stdin}
+                onStdinChange={setStdin}
+                stdout={stdout}
+                stderr={stderr}
+                output={output}
+                stats={stats}
+                isRunning={isRunning}
+                onClear={clearOutput}
               />
-            </div>
-
-            <div className={`h-full w-full ${rightPaneTab !== "ai" ? "block" : "hidden"}`}>
-              {currentLangConfig.isWebPreview ? (
-                <WebPreview html={htmlFile} css={cssFile} javascript={jsFile} />
-              ) : (
-                <IOPanel
-                  stdin={stdin}
-                  onStdinChange={setStdin}
-                  stdout={stdout}
-                  stderr={stderr}
-                  output={output}
-                  stats={stats}
-                  isRunning={isRunning}
-                  onClear={clearOutput}
-                />
-              )}
-            </div>
+            )}
           </div>
         </div>
       </div>
