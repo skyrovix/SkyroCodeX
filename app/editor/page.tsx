@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useMemo, useCallback, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { Navbar } from "@/components/navbar";
 import { CodeEditor } from "@/components/editor/code-editor";
 import { EditorTabs, EditorFile } from "@/components/editor/editor-tabs";
@@ -15,11 +16,30 @@ import { SupportedLanguage } from "@/types/language";
 import { generateShortId, downloadFile } from "@/lib/utils";
 import { ZoomIn, ZoomOut, Code, Terminal, Eye } from "lucide-react";
 
-export default function EditorPage() {
-  const [language, setLanguage] = useState<SupportedLanguage>("python");
+function EditorContent() {
+  const searchParams = useSearchParams();
+  const langQuery = searchParams.get("lang");
+
+  const initialLang: SupportedLanguage =
+    langQuery && SUPPORTED_LANGUAGES[langQuery as SupportedLanguage]
+      ? (langQuery as SupportedLanguage)
+      : "python";
+
+  const [language, setLanguage] = useState<SupportedLanguage>(initialLang);
   const [fontSize, setFontSize] = useState<number>(14);
   const [stdin, setStdin] = useState<string>("");
   const [activeFileIndex, setActiveFileIndex] = useState<number>(0);
+
+  // Sync if query param changes dynamically
+  useEffect(() => {
+    if (langQuery && SUPPORTED_LANGUAGES[langQuery as SupportedLanguage]) {
+      const targetLang = langQuery as SupportedLanguage;
+      setLanguage(targetLang);
+      setActiveFileIndex(0);
+      const targetConfig = getLanguageConfig(targetLang);
+      setRightPaneTab(targetConfig.isWebPreview ? "preview" : "output");
+    }
+  }, [langQuery]);
 
   // Files state (supports multi-tab files like HTML/CSS/JS or multiple code tabs)
   const [filesMap, setFilesMap] = useState<Record<string, EditorFile[]>>({});
@@ -346,5 +366,22 @@ export default function EditorPage() {
         shortId={currentShortId}
       />
     </div>
+  );
+}
+
+export default function EditorPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex h-screen w-screen items-center justify-center bg-slate-50 dark:bg-[#0B0F17] text-slate-600 dark:text-slate-400 font-mono text-xs">
+          <div className="flex items-center gap-2">
+            <span className="h-3 w-3 rounded-full bg-orange-500 animate-ping"></span>
+            <span>Loading SkyroCodeX Editor...</span>
+          </div>
+        </div>
+      }
+    >
+      <EditorContent />
+    </Suspense>
   );
 }
