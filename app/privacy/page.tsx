@@ -24,7 +24,7 @@ export default function PrivacyPage() {
           </p>
 
           <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">3. Contact</h2>
-          <p>If you have any questions regarding privacy, please contact privacy@skyrovix.com.</p>
+          <p>If you have any questions regarding privacy, please contact contact@skyrovix.in.</p>
         </section>
       </main>
       <Footer />

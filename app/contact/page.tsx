@@ -182,23 +182,29 @@ export default function ContactPage() {
                 </h3>
                 <div className="space-y-4 text-xs">
                   <div>
-                    <div className="text-slate-400 uppercase tracking-wider font-semibold text-[10px]">General & Support</div>
-                    <a href="mailto:contact@skyrovix.com" className="font-medium text-orange-600 dark:text-orange-400 hover:underline">
-                      contact@skyrovix.com
+                    <div className="text-slate-400 uppercase tracking-wider font-semibold text-[10px]">General &amp; Support</div>
+                    <a href="mailto:contact@skyrovix.in" className="font-medium text-orange-600 dark:text-orange-400 hover:underline">
+                      contact@skyrovix.in
                     </a>
                   </div>
 
                   <div>
                     <div className="text-slate-400 uppercase tracking-wider font-semibold text-[10px]">Internship Admissions</div>
-                    <a href="mailto:internships@skyrovix.com" className="font-medium text-orange-600 dark:text-orange-400 hover:underline">
-                      internships@skyrovix.com
+                    <a
+                      href="https://skyrovix.in/internship"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-medium text-orange-600 dark:text-orange-400 hover:underline inline-flex items-center gap-1"
+                    >
+                      <span>skyrovix.in/internship</span>
+                      <Globe className="h-3 w-3" />
                     </a>
                   </div>
 
                   <div>
                     <div className="text-slate-400 uppercase tracking-wider font-semibold text-[10px]">Course Inquiries</div>
-                    <a href="mailto:courses@skyrovix.com" className="font-medium text-orange-600 dark:text-orange-400 hover:underline">
-                      courses@skyrovix.com
+                    <a href="mailto:support@skyrovix.in" className="font-medium text-orange-600 dark:text-orange-400 hover:underline">
+                      support@skyrovix.in
                     </a>
                   </div>
 

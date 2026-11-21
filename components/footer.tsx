@@ -52,7 +52,7 @@ export function Footer() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="developer@skyrovix.com"
+                  placeholder="developer@skyrovix.in"
                   required
                   className="flex-1 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
                 />
@@ -190,7 +190,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://skyrovix.in"
+                  href="https://skyrovix.in/internship"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center gap-1 group"
@@ -217,7 +217,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/about" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
-                  Security & Sandboxing
+                  Security &amp; Sandboxing
                 </Link>
               </li>
               <li>
@@ -231,6 +231,34 @@ export function Footer() {
                 </Link>
               </li>
             </ul>
+
+            {/* Direct Official Contact Channels */}
+            <div className="mt-4 pt-3.5 border-t border-slate-100 dark:border-slate-800/80 space-y-2 text-[11px]">
+              <div>
+                <span className="block text-[9px] font-bold text-slate-400 uppercase tracking-wider">General &amp; Support</span>
+                <a href="mailto:contact@skyrovix.in" className="font-medium text-orange-600 dark:text-orange-400 hover:underline">
+                  contact@skyrovix.in
+                </a>
+              </div>
+              <div>
+                <span className="block text-[9px] font-bold text-slate-400 uppercase tracking-wider">Internship Admissions</span>
+                <a
+                  href="https://skyrovix.in/internship"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-orange-600 dark:text-orange-400 hover:underline flex items-center gap-0.5"
+                >
+                  <span>skyrovix.in/internship</span>
+                  <ArrowUpRight className="h-2.5 w-2.5" />
+                </a>
+              </div>
+              <div>
+                <span className="block text-[9px] font-bold text-slate-400 uppercase tracking-wider">Course Inquiries</span>
+                <a href="mailto:support@skyrovix.in" className="font-medium text-orange-600 dark:text-orange-400 hover:underline">
+                  support@skyrovix.in
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 
