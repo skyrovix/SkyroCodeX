@@ -415,6 +415,7 @@ export default function LandingPage() {
                       <div>4</div>
                       <div>5</div>
                       <div>6</div>
+                      <div>7</div>
                     </div>
                     {/* Code Lines with Syntax Colors */}
                     <div className="space-y-1 text-slate-200">
@@ -427,19 +428,18 @@ export default function LandingPage() {
                         <span className="text-sky-400 font-semibold">print</span>(
                         <span className="text-emerald-400">f&quot;Hello, &#123;name&#125;!&quot;</span>)
                       </div>
-                      <div className="h-3" />
+                      <div className="h-2" />
                       <div>
+                        <span className="text-purple-400 font-semibold">if</span>{" "}
+                        <span className="text-orange-300">__name__</span> =={" "}
+                        <span className="text-emerald-400">&quot;__main__&quot;</span>:
+                      </div>
+                      <div className="pl-4">
                         <span className="text-blue-400 font-semibold">greet</span>(
                         <span className="text-emerald-400">&quot;Skyrovix&quot;</span>)
                       </div>
                       <div className="h-2" />
                     </div>
-                  </div>
-
-                  {/* Inline Execution Output Banner */}
-                  <div className="mt-3 flex items-center gap-2 rounded-lg bg-emerald-950/70 border border-emerald-500/40 px-3 py-1.5 text-xs font-mono text-emerald-400">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
-                    <span>Output: Hello, Skyrovix!</span>
                   </div>
                 </div>
 
