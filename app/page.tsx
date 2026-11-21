@@ -405,8 +405,8 @@ export default function LandingPage() {
                 </div>
 
                 {/* Window Code Content */}
-                <div className="p-4 font-mono text-xs leading-relaxed bg-[#0B0F19]">
-                  <div className="grid grid-cols-[20px_1fr] gap-3">
+                <div className="p-5 font-mono text-xs sm:text-[13px] leading-relaxed bg-[#0B0F19]">
+                  <div className="grid grid-cols-[24px_1fr] gap-3">
                     {/* Line numbers */}
                     <div className="text-slate-600 select-none text-right space-y-1">
                       <div>1</div>
@@ -416,58 +416,54 @@ export default function LandingPage() {
                       <div>5</div>
                       <div>6</div>
                       <div>7</div>
+                      <div>8</div>
+                      <div>9</div>
+                      <div>10</div>
                     </div>
                     {/* Code Lines with Syntax Colors */}
                     <div className="space-y-1 text-slate-200">
                       <div>
                         <span className="text-purple-400 font-semibold">def</span>{" "}
                         <span className="text-blue-400 font-semibold">greet</span>(
-                        <span className="text-orange-300">name</span>):
+                        <span className="text-orange-300">name: str</span>) -&gt;{" "}
+                        <span className="text-emerald-400">str</span>:
                       </div>
                       <div className="pl-4">
-                        <span className="text-sky-400 font-semibold">print</span>(
-                        <span className="text-emerald-400">f&quot;Hello, &#123;name&#125;!&quot;</span>)
+                        <span className="text-purple-400 font-semibold">return</span>{" "}
+                        <span className="text-emerald-400">f&quot;Hello, &#123;name&#125;! Welcome to SkyroCodeX.&quot;</span>
                       </div>
-                      <div className="h-2" />
+                      <div className="h-1.5" />
                       <div>
-                        <span className="text-purple-400 font-semibold">if</span>{" "}
-                        <span className="text-orange-300">__name__</span> =={" "}
-                        <span className="text-emerald-400">&quot;__main__&quot;</span>:
+                        <span className="text-purple-400 font-semibold">def</span>{" "}
+                        <span className="text-blue-400 font-semibold">fibonacci</span>(
+                        <span className="text-orange-300">n: int</span>) -&gt;{" "}
+                        <span className="text-emerald-400">list[int]</span>:
                       </div>
                       <div className="pl-4">
-                        <span className="text-blue-400 font-semibold">greet</span>(
-                        <span className="text-emerald-400">&quot;Skyrovix&quot;</span>)
+                        <span className="text-orange-300">sequence</span> = [0, 1]
                       </div>
-                      <div className="h-2" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Authentic Terminal Console Output Panel (Clean Developer Style) */}
-                <div className="border-t border-slate-800/80 bg-[#0A0E18] p-3 text-left">
-                  {/* Console Header Tabs */}
-                  <div className="flex items-center justify-between px-1 pb-2 text-xs font-mono border-b border-slate-800/70 mb-2">
-                    <div className="flex items-center gap-3">
-                      <span className="text-orange-400 font-bold flex items-center gap-1.5 border-b-2 border-orange-500 pb-0.5">
-                        <Terminal className="h-3 w-3" />
-                        <span>Console Output</span>
-                      </span>
-                      <span className="text-slate-500 hover:text-slate-300 cursor-pointer">Input (stdin)</span>
-                      <span className="text-slate-500 hover:text-slate-300 cursor-pointer">Preview</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 text-[10px] text-emerald-400 font-semibold">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      <span>Container Ready</span>
-                    </div>
-                  </div>
-
-                  {/* Terminal Execution Trace */}
-                  <div className="space-y-1 font-mono text-[11px] px-1 py-1">
-                    <p className="text-slate-500">$ python main.py</p>
-                    <p className="text-emerald-400 font-bold font-mono">Hello, Skyrovix!</p>
-                    <div className="pt-2 border-t border-slate-800/60 mt-2 flex items-center justify-between text-[10px] text-slate-500">
-                      <span className="text-emerald-400 font-semibold">Status: Exit code 0</span>
-                      <span className="text-slate-400 font-mono">12ms · 14.2 MB · Judge0 Engine</span>
+                      <div className="pl-4">
+                        <span className="text-purple-400 font-semibold">while</span>{" "}
+                        <span className="text-sky-400">len</span>(<span className="text-orange-300">sequence</span>) &lt;{" "}
+                        <span className="text-orange-300">n</span>:
+                      </div>
+                      <div className="pl-8">
+                        <span className="text-orange-300">sequence</span>.<span className="text-blue-400">append</span>(
+                        <span className="text-orange-300">sequence</span>[-1] +{" "}
+                        <span className="text-orange-300">sequence</span>[-2]
+                        )
+                      </div>
+                      <div className="pl-4">
+                        <span className="text-purple-400 font-semibold">return</span>{" "}
+                        <span className="text-orange-300">sequence</span>
+                      </div>
+                      <div className="h-1.5" />
+                      <div>
+                        <span className="text-sky-400 font-semibold">print</span>(
+                        <span className="text-blue-400 font-semibold">greet</span>(
+                        <span className="text-emerald-400">&quot;Skyrovix Developer&quot;</span>
+                        ))
+                      </div>
                     </div>
                   </div>
                 </div>
