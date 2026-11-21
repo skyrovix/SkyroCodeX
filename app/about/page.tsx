@@ -438,10 +438,17 @@ export default function AboutPage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               {/* Founder Profile Card */}
-              <div className="lg:col-span-4 p-6 sm:p-7 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm text-center space-y-4">
-                <div className="relative mx-auto w-24 h-24 sm:w-28 sm:h-28 rounded-full p-1 bg-gradient-to-tr from-orange-500 via-amber-400 to-orange-600 shadow-glow">
-                  <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center text-white font-black text-2xl sm:text-3xl tracking-wider">
-                    HS
+              <div className="lg:col-span-4 p-5 sm:p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm text-center space-y-4">
+                {/* Executive Founder Portrait */}
+                <div className="relative mx-auto w-full max-w-[280px] aspect-[4/5] rounded-2xl overflow-hidden shadow-lg border-2 border-orange-500/25 group">
+                  <img
+                    src="/founder.jpg"
+                    alt="Hariharan S. - Founder & Lead Developer of Skyrovix"
+                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute bottom-2.5 left-2.5 right-2.5 px-3 py-1.5 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 text-white text-[11px] font-semibold text-center">
+                    Hariharan S. · Founder &amp; Lead Developer
                   </div>
                 </div>
 
@@ -471,11 +478,11 @@ export default function AboutPage() {
                     href="https://www.linkedin.com/in/hariharan-s-92b566381"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#0077B5] hover:bg-[#006097] text-white text-xs font-bold shadow-sm transition-all"
+                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#0077B5] hover:bg-[#006097] text-white text-xs font-bold shadow-sm transition-all group"
                   >
                     <Linkedin className="h-4 w-4" />
                     <span>Connect on LinkedIn</span>
-                    <ExternalLink className="h-3 w-3 opacity-80" />
+                    <ExternalLink className="h-3 w-3 opacity-80 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </a>
                 </div>
               </div>
@@ -512,11 +519,23 @@ export default function AboutPage() {
                   <blockquote className="text-sm sm:text-base italic text-slate-800 dark:text-slate-200 leading-relaxed font-medium">
                     &ldquo;I started Skyrovix not just to build a company, but to create opportunities for students who are looking for a chance to learn, build, and prove their abilities. I believe every student deserves an opportunity to gain practical experience and move forward with confidence.&rdquo;
                   </blockquote>
-                  <div className="pt-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 text-xs text-slate-500 dark:text-slate-400">
-                    <span className="font-bold text-slate-900 dark:text-white">
-                      — Hariharan S., Founder &amp; Lead Developer
-                    </span>
-                    <span className="text-orange-600 dark:text-orange-400 font-semibold">
+                  <div className="pt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs border-t border-orange-500/15">
+                    <div className="flex items-center gap-2.5">
+                      <img
+                        src="/founder.jpg"
+                        alt="Hariharan S."
+                        className="h-9 w-9 rounded-full object-cover object-top border-2 border-orange-500/40 shadow-sm"
+                      />
+                      <div>
+                        <span className="block font-bold text-slate-900 dark:text-white">
+                          Hariharan S.
+                        </span>
+                        <span className="block text-[11px] text-slate-500 dark:text-slate-400">
+                          Founder &amp; Lead Developer
+                        </span>
+                      </div>
+                    </div>
+                    <span className="text-orange-600 dark:text-orange-400 font-semibold font-mono text-[11px] bg-orange-500/10 px-2.5 py-1 rounded-md w-fit">
                       Learn. Build. Experience. Grow.
                     </span>
                   </div>
