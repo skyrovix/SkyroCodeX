@@ -120,43 +120,118 @@ export default function LandingPage() {
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-24">
         {/* Soft Ambient Mesh Glow Backgrounds (Peach/Amber on left, Radiant Violet on right) */}
-        <div className="absolute top-0 left-[-5%] w-[650px] h-[580px] bg-gradient-to-br from-orange-400/20 via-amber-400/15 to-transparent blur-[130px] rounded-full pointer-events-none -z-10" />
-        <div className="absolute top-0 right-[-5%] w-[680px] h-[600px] bg-gradient-to-bl from-purple-600/20 via-indigo-500/15 to-transparent blur-[130px] rounded-full pointer-events-none -z-10" />
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-orange-500/5 dark:bg-purple-500/5 blur-[120px] rounded-full pointer-events-none -z-10" />
+        <div className="absolute -top-32 -left-28 w-[720px] h-[720px] bg-gradient-to-br from-orange-500/25 via-amber-400/20 to-rose-400/10 blur-[120px] rounded-full pointer-events-none -z-10" />
+        <div className="absolute -top-32 -right-28 w-[740px] h-[740px] bg-gradient-to-bl from-purple-600/30 via-indigo-500/20 to-pink-500/15 blur-[120px] rounded-full pointer-events-none -z-10" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[650px] h-[380px] bg-gradient-to-r from-orange-500/15 via-rose-500/10 to-purple-600/15 blur-[110px] rounded-full pointer-events-none -z-10" />
+
+        {/* Ambient Luminous Orbital Rings (Matching Image 3) */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[980px] h-[520px] rounded-[100%] border border-orange-500/25 dark:border-orange-500/30 [transform:rotate(-14deg)_scaleY(0.68)] pointer-events-none -z-10 shadow-[0_0_80px_rgba(255,87,34,0.12)]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] rounded-[100%] border border-purple-500/20 dark:border-purple-500/25 [transform:rotate(12deg)_scaleY(0.65)] pointer-events-none -z-10 shadow-[0_0_70px_rgba(168,85,247,0.10)]" />
+
+        {/* Sweeping Gradient Ribbon Waves */}
+        <svg
+          className="absolute inset-0 w-full h-full pointer-events-none -z-10 opacity-45 dark:opacity-35"
+          viewBox="0 0 1440 900"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M-100 220 C 300 120, 600 420, 1100 270 C 1300 220, 1500 370, 1600 420"
+            stroke="url(#bg-wave-gradient-1)"
+            strokeWidth="2"
+            strokeDasharray="8 8"
+          />
+          <path
+            d="M-50 480 C 400 380, 800 680, 1500 520"
+            stroke="url(#bg-wave-gradient-2)"
+            strokeWidth="2.5"
+          />
+          <defs>
+            <linearGradient id="bg-wave-gradient-1" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f97316" stopOpacity="0.6" />
+              <stop offset="50%" stopColor="#fb923c" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#c084fc" stopOpacity="0.6" />
+            </linearGradient>
+            <linearGradient id="bg-wave-gradient-2" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#fb923c" stopOpacity="0.4" />
+              <stop offset="50%" stopColor="#a855f7" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="#6366f1" stopOpacity="0.4" />
+            </linearGradient>
+          </defs>
+        </svg>
 
         {/* Subtle Ambient Dot Grid Pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] dark:bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none -z-20 opacity-50" />
+        <div className="absolute inset-0 bg-[radial-gradient(rgba(148,163,184,0.35)_1px,transparent_1px)] dark:bg-[radial-gradient(rgba(71,85,105,0.45)_1px,transparent_1px)] [background-size:26px_26px] pointer-events-none -z-20 opacity-70" />
 
-        {/* Perspective Grid Floor at Bottom */}
-        <div className="absolute bottom-0 inset-x-0 h-48 bg-[linear-gradient(to_right,rgba(148,163,184,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.1)_1px,transparent_1px)] bg-[size:36px_36px] [transform:perspective(500px)_rotateX(60deg)] pointer-events-none origin-bottom opacity-75 -z-10" />
+        {/* Perspective 3D Cyber Grid Floor at Bottom */}
+        <div
+          className="absolute bottom-0 inset-x-0 h-64 pointer-events-none -z-10 overflow-hidden"
+          style={{
+            maskImage: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 55%, transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 55%, transparent 100%)",
+          }}
+        >
+          <div
+            className="w-full h-full bg-[linear-gradient(to_right,rgba(249,115,22,0.18)_1px,transparent_1px),linear-gradient(to_bottom,rgba(168,85,247,0.18)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(249,115,22,0.24)_1px,transparent_1px),linear-gradient(to_bottom,rgba(168,85,247,0.24)_1px,transparent_1px)] [background-size:42px_42px] origin-bottom [transform:perspective(600px)_rotateX(62deg)_scale(1.5)]"
+          />
+        </div>
 
         {/* Decorative Dot Matrices in Top Corners */}
-        <div className="absolute top-10 left-6 sm:left-12 grid grid-cols-5 gap-2 opacity-35 pointer-events-none -z-10">
-          {Array.from({ length: 25 }).map((_, i) => (
-            <span key={i} className="h-1 w-1 rounded-full bg-slate-400 dark:bg-slate-600" />
+        <div className="absolute top-10 left-6 sm:left-12 grid grid-cols-6 gap-2.5 opacity-55 pointer-events-none -z-10">
+          {Array.from({ length: 30 }).map((_, i) => (
+            <span
+              key={i}
+              className={`h-1.5 w-1.5 rounded-full ${
+                i % 4 === 0 ? "bg-orange-400" : "bg-slate-300 dark:bg-slate-700"
+              }`}
+            />
           ))}
         </div>
-        <div className="absolute top-10 right-6 sm:right-12 grid grid-cols-5 gap-2 opacity-35 pointer-events-none -z-10">
-          {Array.from({ length: 25 }).map((_, i) => (
-            <span key={i} className="h-1 w-1 rounded-full bg-slate-400 dark:bg-slate-600" />
+        <div className="absolute top-10 right-6 sm:right-12 grid grid-cols-6 gap-2.5 opacity-55 pointer-events-none -z-10">
+          {Array.from({ length: 30 }).map((_, i) => (
+            <span
+              key={i}
+              className={`h-1.5 w-1.5 rounded-full ${
+                i % 3 === 0 ? "bg-purple-400" : "bg-slate-300 dark:bg-slate-700"
+              }`}
+            />
           ))}
         </div>
 
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 relative">
-          {/* Ambient Floating 3D Badges */}
-          <div className="absolute top-2 -left-4 sm:-left-8 z-20 hidden md:flex items-center justify-center h-14 w-14 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-600 to-purple-700 text-white font-mono font-black text-xl shadow-2xl shadow-purple-500/40 -rotate-12 hover:rotate-0 hover:scale-110 transition-all cursor-default select-none border border-white/20 animate-float">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative">
+          {/* Ambient Floating 3D Badges (Placed with high-end spatial balance) */}
+          {/* Top-Left: Purple 3D Cube </> */}
+          <div className="absolute top-2 -left-2 sm:left-2 lg:left-6 z-20 hidden md:flex items-center justify-center h-14 w-14 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-600 to-purple-700 text-white font-mono font-black text-xl shadow-2xl shadow-purple-500/50 -rotate-12 hover:rotate-0 hover:scale-110 transition-all cursor-default select-none border border-white/30 animate-float">
             &lt;/&gt;
           </div>
-          <div className="absolute top-4 -right-4 sm:-right-8 z-20 hidden md:flex items-center justify-center h-13 w-13 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-2xl shadow-amber-500/25 rotate-6 hover:rotate-0 hover:scale-110 transition-all cursor-default select-none p-2.5 animate-float-delayed">
-            <Zap className="h-7 w-7 text-amber-500 fill-amber-500" />
+
+          {/* Top-Right: Orange 3D Cube ⚡ (Image 3 Style) */}
+          <div className="absolute top-4 -right-2 sm:right-2 lg:right-6 z-20 hidden md:flex items-center justify-center h-13 w-13 rounded-2xl bg-gradient-to-br from-amber-400 via-orange-500 to-orange-600 text-white shadow-2xl shadow-orange-500/50 rotate-12 hover:rotate-0 hover:scale-110 transition-all cursor-default select-none border border-white/30 p-2.5 animate-float-delayed">
+            <Zap className="h-7 w-7 text-white fill-white" />
           </div>
-          <div className="absolute bottom-28 -right-6 sm:-right-10 z-20 hidden lg:flex items-center justify-center h-14 w-14 rounded-2xl bg-gradient-to-br from-purple-500 via-purple-600 to-indigo-700 text-white shadow-2xl shadow-purple-500/40 rotate-12 hover:rotate-0 hover:scale-110 transition-all cursor-default select-none border border-white/20 animate-float">
-            <Cloud className="h-7 w-7 fill-white/20" />
+
+          {/* Mid-Left: Zero Setup Pill */}
+          <div className="absolute top-44 -left-6 sm:left-0 lg:left-4 z-20 hidden lg:flex items-center gap-1.5 rounded-full border border-purple-200/90 dark:border-purple-500/30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl px-3.5 py-1.5 shadow-xl shadow-purple-500/10 animate-float-delayed text-xs">
+            <Sparkles className="h-3.5 w-3.5 text-purple-600 dark:text-purple-400" />
+            <span className="font-semibold text-purple-700 dark:text-purple-300">Zero Setup Required</span>
           </div>
-          <div className="absolute bottom-28 -left-6 sm:-left-10 z-20 hidden lg:flex items-center gap-2 rounded-full border border-slate-200/90 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl px-3.5 py-1.5 shadow-xl animate-float-delayed text-xs">
+
+          {/* Mid-Right: Isolated Sandbox Pill */}
+          <div className="absolute top-44 -right-6 sm:right-0 lg:right-4 z-20 hidden lg:flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl px-3.5 py-1.5 shadow-xl shadow-emerald-500/10 animate-float text-xs">
+            <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" />
+            <span className="font-semibold text-emerald-600 dark:text-emerald-400">100% Isolated Sandbox</span>
+          </div>
+
+          {/* Bottom-Left: < 25ms Execution Pill */}
+          <div className="absolute bottom-36 -left-4 sm:left-4 lg:left-8 z-20 hidden lg:flex items-center gap-2 rounded-full border border-orange-200/90 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl px-4 py-1.5 shadow-xl shadow-orange-500/10 animate-float-delayed text-xs">
             <Zap className="h-3.5 w-3.5 text-orange-500 fill-orange-500" />
             <span className="font-bold text-orange-600 dark:text-orange-400 font-mono">&lt; 25ms</span>
             <span className="text-[11px] text-slate-500 dark:text-slate-400">Execution</span>
+          </div>
+
+          {/* Bottom-Right: Purple 3D Cloud Cube ☁️ */}
+          <div className="absolute bottom-36 -right-4 sm:right-4 lg:right-8 z-20 hidden lg:flex items-center justify-center h-13 w-13 rounded-2xl bg-gradient-to-br from-purple-500 via-purple-600 to-indigo-700 text-white shadow-2xl shadow-purple-500/50 rotate-12 hover:rotate-0 hover:scale-110 transition-all cursor-default select-none border border-white/30 animate-float">
+            <Cloud className="h-6 w-6 fill-white/20" />
           </div>
 
           {/* Centered Hero Content */}
@@ -232,62 +307,64 @@ export default function LandingPage() {
               </Link>
             </div>
 
-            {/* Supported Languages Showcase Grid (Centered 2 Rows with Official Style) */}
-            <div className="space-y-2 pt-2 flex flex-col items-center">
-              {/* Row 1 */}
-              <div className="flex flex-wrap items-center justify-center gap-2">
-                {[
-                  { id: "python", name: "Python", version: "3.10", icon: <PythonIcon /> },
-                  { id: "javascript", name: "JavaScript", version: "(Node 18)", icon: <JavaScriptIcon /> },
-                  { id: "html", name: "HTML", version: "5", icon: <HtmlIcon /> },
-                  { id: "css", name: "CSS", version: "3", icon: <CssIcon /> },
-                  { id: "cpp", name: "C++", version: "(G++ 10)", icon: <CppIcon /> },
-                ].map((item) => (
-                  <Link
-                    key={item.id}
-                    href={`/compiler/${item.id}`}
-                    className="inline-flex items-center gap-2 rounded-full bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 px-3.5 py-1.5 shadow-sm hover:shadow-md hover:border-orange-500/50 hover:scale-105 transition-all group"
-                  >
-                    {item.icon}
-                    <div className="flex flex-col text-left leading-tight">
-                      <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 group-hover:text-orange-500 transition-colors">
-                        {item.name}
-                      </span>
-                      <span className="text-[9px] font-mono text-slate-400 dark:text-slate-500">
-                        {item.version}
-                      </span>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+            {/* Supported Languages Showcase - Only Logo Move Style (Continuous Infinite Marquee) */}
+            <div className="w-full flex flex-col items-center space-y-2 pt-2">
+              <span className="text-[11px] font-semibold tracking-wider uppercase text-slate-400 dark:text-slate-500 font-mono">
+                Instant Cloud Runtimes &bull; Click Any Logo To Compile
+              </span>
 
-              {/* Row 2 */}
-              <div className="flex flex-wrap items-center justify-center gap-2">
-                {[
-                  { id: "java", name: "Java", version: "(OpenJDK 15)", icon: <JavaIcon /> },
-                  { id: "c", name: "C", version: "(GCC 10)", icon: <CIcon /> },
-                  { id: "go", name: "Go", version: "1.16", icon: <GoIcon /> },
-                  { id: "php", name: "PHP", version: "8.2", icon: <PhpIcon /> },
-                  { id: "sql", name: "SQL", version: "(SQLite)", icon: <SqlIcon /> },
-                ].map((item) => (
-                  <Link
-                    key={item.id}
-                    href={`/compiler/${item.id}`}
-                    className="inline-flex items-center gap-2 rounded-full bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 px-3.5 py-1.5 shadow-sm hover:shadow-md hover:border-orange-500/50 hover:scale-105 transition-all group"
-                  >
-                    {item.icon}
-                    <div className="flex flex-col text-left leading-tight">
-                      <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 group-hover:text-orange-500 transition-colors">
-                        {item.name}
-                      </span>
-                      {item.version && (
-                        <span className="text-[9px] font-mono text-slate-400 dark:text-slate-500">
-                          {item.version}
-                        </span>
-                      )}
-                    </div>
-                  </Link>
-                ))}
+              <div
+                className="w-full max-w-3xl overflow-hidden py-2 select-none"
+                style={{
+                  maskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+                  WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+                }}
+              >
+                <div className="flex items-center gap-3.5 animate-marquee py-2">
+                  {[
+                    { id: "python", name: "Python", version: "3.10", icon: <PythonIcon className="h-7 w-7" /> },
+                    { id: "javascript", name: "JavaScript", version: "Node 18", icon: <JavaScriptIcon className="h-7 w-7" /> },
+                    { id: "html", name: "HTML5", version: "Live Editor", icon: <HtmlIcon className="h-7 w-7" /> },
+                    { id: "css", name: "CSS3", version: "Live Sandbox", icon: <CssIcon className="h-7 w-7" /> },
+                    { id: "cpp", name: "C++", version: "G++ 10", icon: <CppIcon className="h-7 w-7" /> },
+                    { id: "java", name: "Java", version: "OpenJDK 15", icon: <JavaIcon className="h-7 w-7" /> },
+                    { id: "c", name: "C", version: "GCC 10", icon: <CIcon className="h-7 w-7" /> },
+                    { id: "go", name: "Go", version: "1.16", icon: <GoIcon className="h-7 w-7" /> },
+                    { id: "php", name: "PHP", version: "8.2", icon: <PhpIcon className="h-7 w-7" /> },
+                    { id: "sql", name: "SQL", version: "SQLite", icon: <SqlIcon className="h-7 w-7" /> },
+                    // Duplicated items for seamless infinite loop
+                    { id: "python", name: "Python", version: "3.10", icon: <PythonIcon className="h-7 w-7" /> },
+                    { id: "javascript", name: "JavaScript", version: "Node 18", icon: <JavaScriptIcon className="h-7 w-7" /> },
+                    { id: "html", name: "HTML5", version: "Live Editor", icon: <HtmlIcon className="h-7 w-7" /> },
+                    { id: "css", name: "CSS3", version: "Live Sandbox", icon: <CssIcon className="h-7 w-7" /> },
+                    { id: "cpp", name: "C++", version: "G++ 10", icon: <CppIcon className="h-7 w-7" /> },
+                    { id: "java", name: "Java", version: "OpenJDK 15", icon: <JavaIcon className="h-7 w-7" /> },
+                    { id: "c", name: "C", version: "GCC 10", icon: <CIcon className="h-7 w-7" /> },
+                    { id: "go", name: "Go", version: "1.16", icon: <GoIcon className="h-7 w-7" /> },
+                    { id: "php", name: "PHP", version: "8.2", icon: <PhpIcon className="h-7 w-7" /> },
+                    { id: "sql", name: "SQL", version: "SQLite", icon: <SqlIcon className="h-7 w-7" /> },
+                  ].map((item, idx) => (
+                    <Link
+                      key={`${item.id}-${idx}`}
+                      href={`/compiler/${item.id}`}
+                      className="group relative flex items-center justify-center h-14 w-14 min-w-[56px] rounded-2xl bg-white/95 dark:bg-slate-900/95 border border-slate-200/90 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-orange-500/60 hover:-translate-y-2 hover:scale-110 transition-all duration-300 cursor-pointer backdrop-blur-md"
+                    >
+                      {/* Logo Only with hover scale */}
+                      <div className="transition-transform duration-300 group-hover:scale-110 flex items-center justify-center">
+                        {item.icon}
+                      </div>
+
+                      {/* Floating Micro-Tooltip */}
+                      <div className="absolute -top-9 left-1/2 -translate-x-1/2 opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-200 z-30 whitespace-nowrap">
+                        <div className="rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-2.5 py-0.5 text-[10px] font-bold shadow-lg shadow-black/20 flex items-center gap-1">
+                          <span>{item.name}</span>
+                          <span className="text-orange-400 dark:text-orange-600 font-mono text-[9px]">{item.version}</span>
+                        </div>
+                        <div className="w-1.5 h-1.5 bg-slate-900 dark:bg-white rotate-45 mx-auto -mt-0.5" />
+                      </div>
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
 

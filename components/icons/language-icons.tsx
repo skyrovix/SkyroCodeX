@@ -5,8 +5,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
 }
 
-// 1. Official Python Logo
-export function PythonIcon({ className = "h-4 w-4 shrink-0", ...props }: IconProps) {
+// 1. Official Python Logo (PSF Vector)
+export function PythonIcon({ className = "h-5 w-5 shrink-0", ...props }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 256 255" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" {...props}>
       <path
@@ -21,18 +21,21 @@ export function PythonIcon({ className = "h-4 w-4 shrink-0", ...props }: IconPro
   );
 }
 
-// 2. Official JavaScript Logo
-export function JavaScriptIcon({ className = "h-4 w-4 shrink-0", ...props }: IconProps) {
+// 2. Official JavaScript Logo (JS Yellow Square)
+export function JavaScriptIcon({ className = "h-5 w-5 shrink-0", ...props }: IconProps) {
   return (
-    <svg className={className} viewBox="0 0 630 630" xmlns="http://www.w3.org/2000/svg" {...props}>
-      <rect width="630" height="630" fill="#F7DF1E" rx="80" />
-      <path d="m423.2 492.19c12.69 20.72 29.2 35.95 58.4 35.95 24.53 0 40.2-12.26 40.2-29.2 0-20.3-16.1-27.49-43.1-39.3l-14.8-6.35c-42.72-18.2-71.1-41-71.1-89.2 0-44.4 33.83-78.2 86.7-78.2 37.64 0 64.7 13.1 84.2 47.4l-39.7 25.4c-9.72-17.3-22.41-24.1-44.4-24.1-20.72 0-33.84 13.1-33.84 27.5 0 19 12.7 26.2 39.7 37.6l14.8 6.4c49.9 21.1 76.6 43.1 76.6 91.8 0 52.5-41.5 82.5-94.8 82.5-52.9 0-87.6-28.8-103.2-64.7l44.4-27.5zm-209.6 4.7c8.9 15.6 17.3 28.8 37.2 28.8 19 0 31.3-7.6 31.3-36.8v-182.7h52.9v184.4c0 58.4-34.3 85-83.3 85-44.8 0-70.6-23.7-84.6-53.7l46.5-25z" fill="#000" />
+    <svg className={className} viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <rect width="128" height="128" rx="20" fill="#F7DF1E" />
+      <path
+        d="m85.8 99.8c2.6 4.2 6 7.3 11.9 7.3 5 0 8.2-2.5 8.2-6 0-4.1-3.3-5.6-8.8-8l-3-1.3c-8.7-3.7-14.5-8.4-14.5-18.2 0-9 6.9-15.9 17.7-15.9 7.7 0 13.2 2.7 17.2 9.7l-8.1 5.2c-2-3.5-4.6-4.9-9.1-4.9-4.2 0-6.9 2.7-6.9 5.6 0 3.9 2.6 5.3 8.1 7.7l3 1.3c10.2 4.3 15.6 8.8 15.6 18.7 0 10.7-8.5 16.8-19.3 16.8-10.8 0-17.8-5.9-21-13.2l9-4.1zm-42.7 1c1.8 3.2 3.5 5.9 7.6 5.9 3.9 0 6.4-1.6 6.4-7.5v-37.2h10.8v37.6c0 11.9-7 17.3-17 17.3-9.1 0-14.4-4.8-17.2-11l9.4-5.1z"
+        fill="#000"
+      />
     </svg>
   );
 }
 
-// 3. Official C++ Logo
-export function CppIcon({ className = "h-4 w-4 shrink-0", ...props }: IconProps) {
+// 3. Official C++ Logo (Standard ISO Hexagon)
+export function CppIcon({ className = "h-5 w-5 shrink-0", ...props }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path fill="#00599C" d="M117.8 89.6L68.6 118a9.4 9.4 0 0 1-9.4 0L10.2 89.6a9.4 9.4 0 0 1-4.7-8.1V24.5a9.4 9.4 0 0 1 4.7-8.1L59.2 2a9.4 9.4 0 0 1 9.4 0l49.2 28.4a9.4 9.4 0 0 1 4.7 8.1v57a9.4 9.4 0 0 1-4.7 8.1z" />
@@ -43,18 +46,20 @@ export function CppIcon({ className = "h-4 w-4 shrink-0", ...props }: IconProps)
   );
 }
 
-// 4. Official Oracle Java Logo
-export function JavaIcon({ className = "h-4 w-4 shrink-0", ...props }: IconProps) {
+// 4. Official Oracle Java Logo (Crisp Coffee Cup & Steam)
+export function JavaIcon({ className = "h-5 w-5 shrink-0", ...props }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" {...props}>
+      {/* Blue Steam & Saucer */}
+      <path fill="#5382A1" d="M83.2 86.8c13.7-7.1 7.4-19.8-2.6-21.7 1.4 2.7 1.7 5.7.8 8.6-1.5 4.8-5.7 7.8-9.4 11 3.9.7 7.7 1.4 11.2 2.1zM59.4 38.8c-2.4 4.5-3.6 9.6-3.4 14.8.2 4.4 1.5 8.7 3.8 12.4 1.7-3.9 1.4-8.3-.7-12.1-2.4-4.4-1.9-9.7.3-15.1zM79.2 110.4c17.5-1.1 31.2-8.9 31.2-8.9s-4.3 4.2-12.3 7.1c-13.4 4.9-38.9 5.3-54.8.4-6.4-2-12.7-5.5-12.7-5.5s3.6 3.1 11.9 5.1c11.9 2.9 24.8 2.6 36.7 1.8zM41.7 101.4c13.6 1.7 32.1 1.2 47.9-1.9 5.8-1.1 14.8-3.7 14.8-3.7s-3.7 2.1-9.7 3.9c-16.1 4.7-43.2 4.4-58.8-.5-4.4-1.4-7.4-3.4-7.4-3.4s2.8 1.9 8.2 3.4zM32.5 119.8c23.6 7.6 72.8 7.9 94.6-2.6 0 0-8.2 4.5-27.1 6.8-23.7 2.9-57 2.1-74.8-2.5-7-1.8-13.6-4.5-13.6-4.5s7.2 2.9 20.9 2.8z" />
+      {/* Red/Orange Cup */}
       <path fill="#EA2D2E" d="M46.7 89.5c-4.4 2.8 1.4 5.9 8.2 6.5 13.3 1.2 28.5-2.2 41.2-3.4 3.7-.4 8.7-.3 8.3-4.8-.5-5.2-12.2-4.1-18.4-4.1-14.7.1-27.4 4.1-39.3 5.8zM45.5 75.3c-4.4 2.8 1.2 5.7 7.7 6.4 12.3 1.2 25.8-.8 37.6-3.1 3.5-.7 8.2-.8 8-4.9-.3-5.2-11.4-3.5-17.2-3.4-14.4.1-25.2 3.4-36.1 5zM63.7 54.8c4.3 4.4 8.4 8.9 7.3 15.3 3.5-3.3 5.8-7.9 5.8-12.7 0-3.8-1.5-7.5-3.8-10.5-5.5 4-8.8 8.9-9.3 7.9z" />
-      <path fill="#5382A1" d="M83.2 86.8c13.7-7.1 7.4-19.8-2.6-21.7 1.4 2.7 1.7 5.7.8 8.6-1.5 4.8-5.7 7.8-9.4 11 3.9.7 7.7 1.4 11.2 2.1zM59.4 40.8c-2.4 4.5-3.6 9.6-3.4 14.8.2 4.4 1.5 8.7 3.8 12.4 1.7-3.9 1.4-8.3-.7-12.1-2.4-4.4-1.9-9.7.3-15.1zM79.2 110.4c17.5-1.1 31.2-8.9 31.2-8.9s-4.3 4.2-12.3 7.1c-13.4 4.9-38.9 5.3-54.8.4-6.4-2-12.7-5.5-12.7-5.5s3.6 3.1 11.9 5.1c11.9 2.9 24.8 2.6 36.7 1.8zM41.7 101.4c13.6 1.7 32.1 1.2 47.9-1.9 5.8-1.1 14.8-3.7 14.8-3.7s-3.7 2.1-9.7 3.9c-16.1 4.7-43.2 4.4-58.8-.5-4.4-1.4-7.4-3.4-7.4-3.4s2.8 1.9 8.2 3.4zM32.5 119.8c23.6 7.6 72.8 7.9 94.6-2.6 0 0-8.2 4.5-27.1 6.8-23.7 2.9-57 2.1-74.8-2.5-7-1.8-13.6-4.5-13.6-4.5s7.2 2.9 20.9 2.8z" />
     </svg>
   );
 }
 
-// 5. Official C Language Logo
-export function CIcon({ className = "h-4 w-4 shrink-0", ...props }: IconProps) {
+// 5. Official C Language Logo (Hexagon)
+export function CIcon({ className = "h-5 w-5 shrink-0", ...props }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path fill="#A8B9CC" d="M117.8 89.6L68.6 118a9.4 9.4 0 0 1-9.4 0L10.2 89.6a9.4 9.4 0 0 1-4.7-8.1V24.5a9.4 9.4 0 0 1 4.7-8.1L59.2 2a9.4 9.4 0 0 1 9.4 0l49.2 28.4a9.4 9.4 0 0 1 4.7 8.1v57a9.4 9.4 0 0 1-4.7 8.1z" />
@@ -65,18 +70,18 @@ export function CIcon({ className = "h-4 w-4 shrink-0", ...props }: IconProps) {
   );
 }
 
-// 6. Official PHP Logo
-export function PhpIcon({ className = "h-4 w-4 shrink-0", ...props }: IconProps) {
+// 6. Official PHP Logo (Elephant Indigo Oval)
+export function PhpIcon({ className = "h-5 w-5 shrink-0", ...props }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" {...props}>
-      <ellipse cx="64" cy="64" rx="60" ry="34" fill="#777BB4" />
+      <ellipse cx="64" cy="64" rx="60" ry="36" fill="#777BB4" />
       <path fill="#FFF" d="M43.2 55.4h-9.3L28.1 82h7.8l2-9.6h5.3c8.1 0 12.8-4.4 14.1-10.4 1.3-6.2-2.1-10.4-10-10.4h-4.1zm-3.2 11.9l1.4-6.8h2.8c3.6 0 5.4 1.6 4.7 4.9-.7 3.3-3.1 4.9-6.7 4.9h-2.2zm33.1-11.9h-7.8l-5.8 26.6h7.8l2.2-9.9h7.3l-2.2 9.9h7.8l5.8-26.6h-7.8l-2 9.4H71l2.1-9.4zm34.3 0h-9.3L91.9 82h7.8l2-9.6h5.3c8.1 0 12.8-4.4 14.1-10.4 1.3-6.2-2.1-10.4-10-10.4h-4.1zm-3.2 11.9l1.4-6.8h2.8c3.6 0 5.4 1.6 4.7 4.9-.7 3.3-3.1 4.9-6.7 4.9h-2.2z" />
     </svg>
   );
 }
 
-// 7. Official SQLite / SQL Logo
-export function SqlIcon({ className = "h-4 w-4 shrink-0", ...props }: IconProps) {
+// 7. Official SQLite / SQL Logo (Cylinder with feather)
+export function SqlIcon({ className = "h-5 w-5 shrink-0", ...props }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path fill="#0EA5E9" d="M125.8 30.6c-4.4-8.8-19.9-15.3-40.4-17.7l-4.5 13.9c16.3 1.9 27.8 6.9 29.8 12.8 2.6 7.4-8.7 16-27.1 20.8l3.6 14.3c24.6-6.4 41.9-18.4 38.6-30.8-.2-1.2-.6-2.3-1.2-3.3h1.2z" />
@@ -86,8 +91,8 @@ export function SqlIcon({ className = "h-4 w-4 shrink-0", ...props }: IconProps)
   );
 }
 
-// 8. Official HTML5 Logo
-export function HtmlIcon({ className = "h-4 w-4 shrink-0", ...props }: IconProps) {
+// 8. Official HTML5 Logo (W3C Shield)
+export function HtmlIcon({ className = "h-5 w-5 shrink-0", ...props }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path fill="#E44D26" d="M19.3 115.3L8.4 0h111.2l-10.9 115.3-44.7 12.7z" />
@@ -98,8 +103,8 @@ export function HtmlIcon({ className = "h-4 w-4 shrink-0", ...props }: IconProps
   );
 }
 
-// 9. Official CSS3 Logo
-export function CssIcon({ className = "h-4 w-4 shrink-0", ...props }: IconProps) {
+// 9. Official CSS3 Logo (W3C Shield)
+export function CssIcon({ className = "h-5 w-5 shrink-0", ...props }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path fill="#1572B6" d="M19.3 115.3L8.4 0h111.2l-10.9 115.3-44.7 12.7z" />
@@ -110,12 +115,16 @@ export function CssIcon({ className = "h-4 w-4 shrink-0", ...props }: IconProps)
   );
 }
 
-// 10. Official Go Logo
-export function GoIcon({ className = "h-4 w-4 shrink-0", ...props }: IconProps) {
+// 10. Official Go Logo (Google Golang Cyan Typography)
+export function GoIcon({ className = "h-5 w-5 shrink-0", ...props }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" {...props}>
-      <path fill="#00ACD7" d="M64 8.7C33.5 8.7 8.7 33.5 8.7 64s24.8 55.3 55.3 55.3 55.3-24.8 55.3-55.3S94.5 8.7 64 8.7zm26.4 69.2H61.8v-9.6h17.9c-2.3-9-9.5-13.6-18.7-13.6-12 0-20.9 9.3-20.9 21.6 0 12.2 8.9 21.6 20.9 21.6 9 0 15.6-4.7 18.2-12.4h9.9c-3.1 13-14.5 21.6-28.1 21.6-17.7 0-31.1-13.5-31.1-30.8s13.4-30.8 31.1-30.8c14 0 24.8 8.4 27.6 20.6.2.6.3 1.2.3 1.8z" />
+      {/* Official Golang Cyan Round Badge with bold white 'GO' letterforms */}
+      <circle cx="64" cy="64" r="60" fill="#00ADD8" />
+      <path
+        d="M24 64c0-14.8 11.2-26.8 26.8-26.8 9.5 0 16.5 4.3 20.8 10.5l-7.8 5.6c-2.9-4.3-7.5-6.9-13-6.9-9.8 0-16.7 7.7-16.7 17.6s6.9 17.6 16.7 17.6c6.2 0 10.8-2.6 13.5-6.2v-5.2H50.8v-8.8H74v18.2C68.6 87.2 60.5 90.8 50.8 90.8 35.2 90.8 24 78.8 24 64zm56 0c0-14.8 11.2-26.8 26.8-26.8 15.6 0 26.8 12 26.8 26.8s-11.2 26.8-26.8 26.8C91.2 90.8 80 78.8 80 64zm43.6 0c0-9.9-6.9-17.6-16.8-17.6-9.9 0-16.8 7.7-16.8 17.6s6.9 17.6 16.8 17.6c9.9 0 16.8-7.7 16.8-17.6z"
+        fill="#FFFFFF"
+      />
     </svg>
   );
 }
-

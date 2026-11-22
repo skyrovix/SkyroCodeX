@@ -420,125 +420,193 @@ export default function AboutPage() {
             </div>
           </section>
 
-          {/* SECTION 04: FOUNDER STORY · FROM A STUDENT'S DREAM TO A PLATFORM FOR EVERY LEARNER */}
-          <section className="space-y-8">
+          {/* SECTION 04: LEADERSHIP & FOUNDERS · FROM A SHARED VISION TO A PLATFORM FOR EVERY LEARNER */}
+          <section className="space-y-10">
             <div className="flex items-center gap-3">
               <span className="px-3 py-1 rounded-md bg-orange-600 text-white font-mono text-xs font-bold tracking-wider">
                 04
               </span>
               <div>
                 <span className="text-xs font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400">
-                  Founder Story
+                  Leadership &amp; Founders
                 </span>
                 <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-                  From a Student&apos;s Dream to a Platform for Every Learner
+                  The Leadership Team Behind Skyrovix
                 </h2>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <p className="max-w-3xl text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+              Skyrovix was founded with a shared vision: to bridge the gap between academic education and industry expectations. Through hands-on internships, mentor reviews, and cloud-first developer tools like SkyroCodeX, our founders are dedicated to creating meaningful learning experiences for every aspiring engineer.
+            </p>
+
+            {/* TWO LEADERSHIP CARDS */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-stretch">
               {/* Founder Profile Card */}
-              <div className="lg:col-span-4 p-5 sm:p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm text-center space-y-4">
-                {/* Executive Founder Portrait */}
-                <div className="relative mx-auto w-full max-w-[280px] aspect-[4/5] rounded-2xl overflow-hidden shadow-lg border-2 border-orange-500/25 group">
-                  <img
-                    src="/founder.jpg"
-                    alt="Hariharan S. - Founder & Lead Developer of Skyrovix"
-                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
-                  <div className="absolute bottom-2.5 left-2.5 right-2.5 px-3 py-1.5 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 text-white text-[11px] font-semibold text-center">
-                    Hariharan S. · Founder &amp; Lead Developer
+              <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm text-center flex flex-col justify-between space-y-5 hover:border-orange-500/40 hover:shadow-md transition-all group">
+                <div className="space-y-4">
+                  {/* Executive Founder Portrait */}
+                  <div className="relative mx-auto w-full max-w-[280px] aspect-[4/5] rounded-2xl overflow-hidden shadow-lg border-2 border-orange-500/25 group/img">
+                    <img
+                      src="/founder.jpg"
+                      alt="Hariharan S. - Founder & Lead Developer of Skyrovix"
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover/img:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+                    <div className="absolute bottom-3 left-3 right-3 px-3 py-1.5 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 text-white text-xs font-semibold text-center">
+                      Founder &amp; Lead Developer
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-xl font-black text-slate-900 dark:text-white">
+                      Hariharan S.
+                    </h3>
+                    <p className="text-xs font-bold text-orange-600 dark:text-orange-400 uppercase tracking-wider mt-0.5">
+                      Founder &amp; Lead Developer
+                    </p>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed px-2">
+                    Leads software architecture, real-time compiler sandboxing, and product engineering. Passionate about empowering students through hands-on technical creation.
+                  </p>
+
+                  <div className="flex flex-wrap justify-center gap-1.5 text-[11px] font-semibold text-slate-500 dark:text-slate-400 pt-1">
+                    <span className="px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800">
+                      Product Architect
+                    </span>
+                    <span className="px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800">
+                      Full Stack Dev
+                    </span>
+                    <span className="px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800">
+                      Tech Entrepreneur
+                    </span>
                   </div>
                 </div>
 
-                <div>
-                  <h3 className="text-xl font-black text-slate-900 dark:text-white">
-                    Hariharan S.
-                  </h3>
-                  <p className="text-xs font-bold text-orange-600 dark:text-orange-400 uppercase tracking-wider mt-0.5">
-                    Founder &amp; Lead Developer
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap justify-center gap-1.5 text-[11px] font-semibold text-slate-500 dark:text-slate-400">
-                  <span className="px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800">
-                    Technology Enthusiast
-                  </span>
-                  <span className="px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800">
-                    Full Stack Developer
-                  </span>
-                  <span className="px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800">
-                    Entrepreneur
-                  </span>
-                </div>
-
-                <div className="pt-2">
+                <div className="pt-3 border-t border-slate-100 dark:border-slate-800/80">
                   <a
                     href="https://www.linkedin.com/in/hariharan-s-92b566381"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#0077B5] hover:bg-[#006097] text-white text-xs font-bold shadow-sm transition-all group"
+                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#0077B5] hover:bg-[#006097] text-white text-xs font-bold shadow-sm transition-all group/btn"
                   >
                     <Linkedin className="h-4 w-4" />
-                    <span>Connect on LinkedIn</span>
-                    <ExternalLink className="h-3 w-3 opacity-80 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    <span>Connect with Hariharan</span>
+                    <ExternalLink className="h-3 w-3 opacity-80 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                   </a>
                 </div>
               </div>
 
-              {/* Founder Narrative */}
-              <div className="lg:col-span-8 space-y-6">
-                <div className="space-y-4 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-                  <p>
-                    Every meaningful journey begins with an idea. For Skyrovix, that idea came from a student who believed that education should go beyond textbooks, theory, and certificates.
-                  </p>
-                  <p>
-                    As a technology enthusiast and aspiring entrepreneur, Hariharan began his journey with a passion for software development, innovation, and helping students build practical skills.
-                  </p>
-                  <p>
-                    During his own learning and internship journey, he recognised a challenge: many students complete their academic studies but still need more opportunities to practise what they learn, develop projects, and gain exposure to professional workflows.
-                  </p>
-                  <p>
-                    That realisation became a turning point. Instead of simply accepting the gap between academic learning and practical experience, he decided to build something that could help address it.
-                  </p>
-                  <p>
-                    With that vision, <strong className="text-slate-900 dark:text-white font-semibold">Skyrovix</strong> was born. What started as an idea gradually developed into a virtual internship and training platform designed to give students opportunities to learn, build projects, develop technical confidence, and showcase their abilities.
-                  </p>
-                  <p>
-                    As Founder and Lead Developer, Hariharan continues to focus on building the platform, improving its technology, and creating meaningful learning experiences for students.
-                  </p>
-                </div>
-
-                {/* Message from the Founder Quote */}
-                <div className="relative p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-orange-500/10 via-amber-500/5 to-transparent border border-orange-500/25 shadow-sm space-y-3">
-                  <Quote className="h-8 w-8 text-orange-500/40 absolute top-4 right-5" />
-                  <div className="text-xs font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400">
-                    A Message from the Founder
-                  </div>
-                  <blockquote className="text-sm sm:text-base italic text-slate-800 dark:text-slate-200 leading-relaxed font-medium">
-                    &ldquo;I started Skyrovix not just to build a company, but to create opportunities for students who are looking for a chance to learn, build, and prove their abilities. I believe every student deserves an opportunity to gain practical experience and move forward with confidence.&rdquo;
-                  </blockquote>
-                  <div className="pt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs border-t border-orange-500/15">
-                    <div className="flex items-center gap-2.5">
-                      <img
-                        src="/founder.jpg"
-                        alt="Hariharan S."
-                        className="h-9 w-9 rounded-full object-cover object-top border-2 border-orange-500/40 shadow-sm"
-                      />
-                      <div>
-                        <span className="block font-bold text-slate-900 dark:text-white">
-                          Hariharan S.
-                        </span>
-                        <span className="block text-[11px] text-slate-500 dark:text-slate-400">
-                          Founder &amp; Lead Developer
-                        </span>
-                      </div>
+              {/* Co-Founder Profile Card */}
+              <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm text-center flex flex-col justify-between space-y-5 hover:border-amber-500/40 hover:shadow-md transition-all group">
+                <div className="space-y-4">
+                  {/* Executive Co-Founder Portrait */}
+                  <div className="relative mx-auto w-full max-w-[280px] aspect-[4/5] rounded-2xl overflow-hidden shadow-lg border-2 border-amber-500/25 group/img">
+                    <img
+                      src="/cofounder.jpg"
+                      alt="Co-Founder of Skyrovix"
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover/img:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+                    <div className="absolute bottom-3 left-3 right-3 px-3 py-1.5 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 text-white text-xs font-semibold text-center">
+                      Co-Founder &amp; Operations
                     </div>
-                    <span className="text-orange-600 dark:text-orange-400 font-semibold font-mono text-[11px] bg-orange-500/10 px-2.5 py-1 rounded-md w-fit">
-                      Learn. Build. Experience. Grow.
+                  </div>
+
+                  <div>
+                    <h3 className="text-xl font-black text-slate-900 dark:text-white">
+                      Co-Founder
+                    </h3>
+                    <p className="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider mt-0.5">
+                      Co-Founder &amp; Operations Lead
+                    </p>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed px-2">
+                    Drives platform operations, university partnerships, student success initiatives, and national community outreach across India.
+                  </p>
+
+                  <div className="flex flex-wrap justify-center gap-1.5 text-[11px] font-semibold text-slate-500 dark:text-slate-400 pt-1">
+                    <span className="px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800">
+                      Operations Strategy
+                    </span>
+                    <span className="px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800">
+                      Student Success
+                    </span>
+                    <span className="px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800">
+                      Growth &amp; Outreach
                     </span>
                   </div>
+                </div>
+
+                <div className="pt-3 border-t border-slate-100 dark:border-slate-800/80">
+                  <a
+                    href="https://skyrovix.in"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white text-xs font-bold shadow-sm transition-all group/btn"
+                  >
+                    <HeartHandshake className="h-4 w-4" />
+                    <span>Connect with Skyrovix Team</span>
+                    <ExternalLink className="h-3 w-3 opacity-80 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Leadership Story & Shared Vision */}
+            <div className="space-y-6 pt-4">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div className="lg:col-span-12 space-y-4 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                  <p>
+                    Every meaningful journey begins with an idea. For Skyrovix, that idea arose from the shared belief that education should extend far beyond textbooks, theory, and certificates.
+                  </p>
+                  <p>
+                    As student innovators and passionate technologists, the founding team experienced firsthand the steep gap between academic coursework and real-world software engineering workflows. Rather than accepting the status quo, they united to build a comprehensive ecosystem where learners can write code, receive mentor feedback, solve practical problems, and build verifiable proof of their skills.
+                  </p>
+                  <p>
+                    Today, with Government MSME certification and thousands of learners across India, Skyrovix and SkyroCodeX represent a continued commitment to accessible, practical, and world-class technical education.
+                  </p>
+                </div>
+              </div>
+
+              {/* Shared Message from Leadership Quote */}
+              <div className="relative p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-orange-500/10 via-amber-500/5 to-transparent border border-orange-500/25 shadow-sm space-y-4">
+                <Quote className="h-8 w-8 text-orange-500/40 absolute top-4 right-5" />
+                <div className="text-xs font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400">
+                  A Shared Message from Leadership
+                </div>
+                <blockquote className="text-sm sm:text-base italic text-slate-800 dark:text-slate-200 leading-relaxed font-medium">
+                  &ldquo;We started Skyrovix not merely to build a business, but to unlock opportunities for ambitious learners seeking the chance to build, innovate, and prove their potential. Every student deserves access to real tools, real projects, and the mentorship needed to step confidently into the future of technology.&rdquo;
+                </blockquote>
+                <div className="pt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-xs border-t border-orange-500/15">
+                  <div className="flex items-center gap-4">
+                    {/* Dual Avatars */}
+                    <div className="flex -space-x-3 overflow-hidden">
+                      <img
+                        src="/founder.jpg"
+                        alt="Hariharan S. - Founder"
+                        className="inline-block h-10 w-10 rounded-full ring-2 ring-white dark:ring-slate-900 object-cover object-top"
+                      />
+                      <img
+                        src="/cofounder.jpg"
+                        alt="Co-Founder"
+                        className="inline-block h-10 w-10 rounded-full ring-2 ring-white dark:ring-slate-900 object-cover object-top"
+                      />
+                    </div>
+                    <div>
+                      <span className="block font-bold text-slate-900 dark:text-white">
+                        Hariharan S. &amp; Co-Founder
+                      </span>
+                      <span className="block text-[11px] text-slate-500 dark:text-slate-400">
+                        Executive Leadership · Skyrovix
+                      </span>
+                    </div>
+                  </div>
+                  <span className="text-orange-600 dark:text-orange-400 font-semibold font-mono text-[11px] bg-orange-500/10 px-3 py-1.5 rounded-lg border border-orange-500/20 w-fit">
+                    Learn · Build · Experience · Grow
+                  </span>
                 </div>
               </div>
             </div>
