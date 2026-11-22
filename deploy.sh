@@ -24,3 +24,4 @@ fi
 
 echo "✅ [5/5] SkyroCodeX deployed successfully and running live!"
 pm2 status skyrocodex
+

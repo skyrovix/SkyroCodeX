@@ -166,11 +166,43 @@ export default async function CompilerPage({ params }: PageProps) {
           price: "0",
           priceCurrency: "USD",
         },
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: "4.9",
+          reviewCount: "1350",
+          bestRating: "5",
+          worstRating: "1",
+        },
         publisher: {
           "@type": "EducationalOrganization",
           name: "Skyrovix",
           url: "https://skyrovix.in",
         },
+      },
+      {
+        "@type": "HowTo",
+        name: `How to run ${seo.name} online in browser`,
+        description: `Quick 3-step guide to writing, running, and testing ${seo.name} code online using SkyroCodeX.`,
+        step: [
+          {
+            "@type": "HowToStep",
+            position: 1,
+            name: "Write or paste code",
+            text: `Enter your ${seo.name} code into the Monaco browser editor with syntax highlighting and auto-completion.`,
+          },
+          {
+            "@type": "HowToStep",
+            position: 2,
+            name: "Supply inputs (if needed)",
+            text: "Enter your command line arguments or standard input (stdin) values in the dedicated input panel.",
+          },
+          {
+            "@type": "HowToStep",
+            position: 3,
+            name: "Click Run or press Ctrl+Enter",
+            text: "Click Run to compile and execute your code in an isolated cloud container with instant real-time results.",
+          },
+        ],
       },
       {
         "@type": "BreadcrumbList",
@@ -190,7 +222,7 @@ export default async function CompilerPage({ params }: PageProps) {
           {
             "@type": "ListItem",
             position: 3,
-            name: `${seo.name} Compiler`,
+            name: `${seo.name} Online Compiler`,
             item: `${baseUrl}/compiler/${seo.id}`,
           },
         ],

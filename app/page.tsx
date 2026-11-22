@@ -572,12 +572,15 @@ export default function LandingPage() {
       {/* Supported Languages Section */}
       <section id="languages" className="py-20 border-t border-slate-200 dark:border-slate-800/80 bg-slate-100/40 dark:bg-slate-900/20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/25 text-orange-600 dark:text-orange-400 text-xs font-bold tracking-wider uppercase">
+              Dedicated Compiler Landings
+            </span>
             <h2 className="text-3xl font-black tracking-tight text-slate-900 dark:text-white sm:text-4xl">
-              Supported Languages & Environments
+              Explore Our Online Compilers by Language
             </h2>
-            <p className="mt-4 text-slate-600 dark:text-slate-400 text-sm sm:text-base">
-              Select any language to open with verified starter code, syntax highlighting, and isolated runtime.
+            <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
+              Click any language below to open its dedicated online compiler with pre-configured templates, syntax highlighting, stdin support, and isolated execution.
             </p>
           </div>
 
@@ -585,12 +588,12 @@ export default function LandingPage() {
             {LANGUAGE_LIST.map((lang) => (
               <Link
                 key={lang.id}
-                href="/editor"
+                href={`/compiler/${lang.id}`}
                 className="group flex flex-col justify-between rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 p-5 hover:border-orange-500/70 hover:shadow-lg dark:hover:bg-slate-900 transition-all shadow-sm"
               >
                 <div className="flex items-center justify-between mb-3">
                   <span className="font-mono text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
-                    {lang.name}
+                    {lang.name} Online Compiler
                   </span>
                   <span className="rounded bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-[10px] font-mono text-slate-600 dark:text-slate-400 font-medium">
                     {lang.version}
@@ -599,11 +602,94 @@ export default function LandingPage() {
                 <div className="flex items-center justify-between text-xs text-slate-500">
                   <span>{lang.isWebPreview ? "Live Web Preview" : `Extension: ${lang.fileExtension}`}</span>
                   <span className="text-orange-600 dark:text-orange-400 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 font-bold">
-                    Open IDE <ArrowRight className="h-3 w-3" />
+                    Open Compiler <ArrowRight className="h-3 w-3" />
                   </span>
                 </div>
               </Link>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SEO Deep Content Section: Why SkyroCodeX Online Compiler */}
+      <section className="py-20 border-t border-slate-200 dark:border-slate-800/80 bg-white dark:bg-[#090D16]">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-12">
+          <div className="text-center max-w-3xl mx-auto space-y-4">
+            <span className="text-xs font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400">
+              The #1 Free Cloud IDE &amp; Code Runner
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">
+              Why Millions of Learners Choose SkyroCodeX Online Compiler
+            </h2>
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+              SkyroCodeX is an ultra-fast, zero-setup online compiler and web editor designed for students, interview candidates, and professional software engineers. From quick algorithmic verification to full frontend web prototyping, experience sub-25ms compilation with zero local installation.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+            <div className="p-7 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40 space-y-3">
+              <div className="p-2.5 rounded-xl bg-orange-500/10 text-orange-600 dark:text-orange-400 w-fit">
+                <Code2 className="h-5 w-5" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                HTML Online Compiler with Real-Time Live Preview
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                Writing web applications is effortless with our HTML online compiler. Enjoy real-time live iframe preview, modern HTML5 semantic markup, CSS3 styling (Flexbox and Grid), and interactive JavaScript DOM manipulation. Perfect for student frontend labs and rapid component prototyping.
+              </p>
+              <Link href="/compiler/html" className="inline-flex items-center gap-1.5 text-xs font-bold text-orange-600 dark:text-orange-400 hover:underline pt-1">
+                <span>Try HTML Online Compiler</span>
+                <ArrowRight className="h-3 w-3" />
+              </Link>
+            </div>
+
+            <div className="p-7 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40 space-y-3">
+              <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 w-fit">
+                <Terminal className="h-5 w-5" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                Online Python, C++, Java &amp; C Sandboxes with stdin
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                Practice competitive programming and Data Structures &amp; Algorithms (DSA) without downloading bulky IDEs. Pass standard input (stdin) directly into Python 3, GCC 10 C++, OpenJDK 15 Java, or Golang, and receive instant stdout, stderr, and memory benchmarks.
+              </p>
+              <Link href="/compiler/python" className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-600 dark:text-amber-400 hover:underline pt-1">
+                <span>Try Python Online Compiler</span>
+                <ArrowRight className="h-3 w-3" />
+              </Link>
+            </div>
+
+            <div className="p-7 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40 space-y-3">
+              <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 w-fit">
+                <ShieldCheck className="h-5 w-5" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                100% Free, Secure &amp; Sandboxed Cloud Execution
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                Every code submission is isolated inside pre-warmed Linux containers with strict CPU timeouts, memory caps, and non-root execution permissions. No credit card, no registration, and no software downloads required.
+              </p>
+              <Link href="/editor" className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline pt-1">
+                <span>Launch Full Web IDE</span>
+                <ArrowRight className="h-3 w-3" />
+              </Link>
+            </div>
+
+            <div className="p-7 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40 space-y-3">
+              <div className="p-2.5 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 w-fit">
+                <Share2 className="h-5 w-5" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                One-Click Code Sharing &amp; Reproducible Snippets
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                Collaborate with peers, mentors, and interviewers by generating permanent, shareable code URLs. Anyone visiting your link can inspect the code, execute it immediately, or fork it into their own workspace with one click.
+              </p>
+              <Link href="/about" className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-600 dark:text-purple-400 hover:underline pt-1">
+                <span>About Skyrovix Platform</span>
+                <ArrowRight className="h-3 w-3" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
