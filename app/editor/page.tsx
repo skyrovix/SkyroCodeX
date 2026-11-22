@@ -42,6 +42,8 @@ function EditorContent() {
       ? (langQuery as SupportedLanguage)
       : "python";
 
+  const initialConfig = getLanguageConfig(initialLang);
+
   const [language, setLanguage] = useState<SupportedLanguage>(initialLang);
   const [fontSize, setFontSize] = useState<number>(14);
   const [stdin, setStdin] = useState<string>("");
@@ -62,10 +64,25 @@ function EditorContent() {
   }, [langQuery]);
 
   // Files state (supports multi-tab files like HTML/CSS/JS or multiple code tabs)
-  const [filesMap, setFilesMap] = useState<Record<string, EditorFile[]>>({});
+  const [filesMap, setFilesMap] = useState<Record<string, EditorFile[]>>(() => {
+    if (initialConfig.isWebPreview && initialConfig.files) {
+      return { [initialLang]: initialConfig.files };
+    }
+    return {
+      [initialLang]: [
+        {
+          name: initialConfig.defaultFileName,
+          language: initialConfig.monacoLang,
+          content: initialConfig.starterCode,
+        },
+      ],
+    };
+  });
 
   // Right pane tab switcher: "output" | "preview"
-  const [rightPaneTab, setRightPaneTab] = useState<"output" | "preview">("output");
+  const [rightPaneTab, setRightPaneTab] = useState<"output" | "preview">(
+    initialConfig.isWebPreview ? "preview" : "output"
+  );
 
   // Mobile layout tab switcher: "editor" | "output"
   const [mobileTab, setMobileTab] = useState<"editor" | "output">("editor");

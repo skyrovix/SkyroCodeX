@@ -346,7 +346,7 @@ export default function LandingPage() {
                   ].map((item, idx) => (
                     <Link
                       key={`${item.id}-${idx}`}
-                      href={`/compiler/${item.id}`}
+                      href={`/editor?lang=${item.id}`}
                       className="group relative flex items-center justify-center h-14 w-14 min-w-[56px] rounded-2xl bg-white/95 dark:bg-slate-900/95 border border-slate-200/90 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-orange-500/60 hover:-translate-y-2 hover:scale-110 transition-all duration-300 cursor-pointer backdrop-blur-md"
                     >
                       {/* Logo Only with hover scale */}
@@ -588,7 +588,7 @@ export default function LandingPage() {
             {LANGUAGE_LIST.map((lang) => (
               <Link
                 key={lang.id}
-                href={`/compiler/${lang.id}`}
+                href={`/editor?lang=${lang.id}`}
                 className="group flex flex-col justify-between rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 p-5 hover:border-orange-500/70 hover:shadow-lg dark:hover:bg-slate-900 transition-all shadow-sm"
               >
                 <div className="flex items-center justify-between mb-3">
@@ -637,7 +637,7 @@ export default function LandingPage() {
               <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                 Writing web applications is effortless with our HTML online compiler. Enjoy real-time live iframe preview, modern HTML5 semantic markup, CSS3 styling (Flexbox and Grid), and interactive JavaScript DOM manipulation. Perfect for student frontend labs and rapid component prototyping.
               </p>
-              <Link href="/compiler/html" className="inline-flex items-center gap-1.5 text-xs font-bold text-orange-600 dark:text-orange-400 hover:underline pt-1">
+              <Link href="/editor?lang=html" className="inline-flex items-center gap-1.5 text-xs font-bold text-orange-600 dark:text-orange-400 hover:underline pt-1">
                 <span>Try HTML Online Compiler</span>
                 <ArrowRight className="h-3 w-3" />
               </Link>
@@ -653,7 +653,7 @@ export default function LandingPage() {
               <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                 Practice competitive programming and Data Structures &amp; Algorithms (DSA) without downloading bulky IDEs. Pass standard input (stdin) directly into Python 3, GCC 10 C++, OpenJDK 15 Java, or Golang, and receive instant stdout, stderr, and memory benchmarks.
               </p>
-              <Link href="/compiler/python" className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-600 dark:text-amber-400 hover:underline pt-1">
+              <Link href="/editor?lang=python" className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-600 dark:text-amber-400 hover:underline pt-1">
                 <span>Try Python Online Compiler</span>
                 <ArrowRight className="h-3 w-3" />
               </Link>

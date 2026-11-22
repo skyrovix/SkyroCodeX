@@ -75,61 +75,61 @@ export function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <Link href="/compiler/python" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
+                <Link href="/editor?lang=python" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
                   <span>Python 3 Compiler</span>
                   <span className="text-[10px] font-mono text-slate-400">v3.10</span>
                 </Link>
               </li>
               <li>
-                <Link href="/compiler/javascript" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
+                <Link href="/editor?lang=javascript" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
                   <span>JavaScript / Node.js</span>
                   <span className="text-[10px] font-mono text-slate-400">v18</span>
                 </Link>
               </li>
               <li>
-                <Link href="/compiler/html" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
+                <Link href="/editor?lang=html" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
                   <span>HTML5 Live Editor</span>
                   <span className="text-[10px] font-mono text-slate-400">HTML5</span>
                 </Link>
               </li>
               <li>
-                <Link href="/compiler/css" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
+                <Link href="/editor?lang=css" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
                   <span>CSS3 Live Sandbox</span>
                   <span className="text-[10px] font-mono text-slate-400">CSS3</span>
                 </Link>
               </li>
               <li>
-                <Link href="/compiler/cpp" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
+                <Link href="/editor?lang=cpp" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
                   <span>C++ (G++) Compiler</span>
                   <span className="text-[10px] font-mono text-slate-400">GCC 10</span>
                 </Link>
               </li>
               <li>
-                <Link href="/compiler/java" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
+                <Link href="/editor?lang=java" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
                   <span>Java OpenJDK Runtime</span>
                   <span className="text-[10px] font-mono text-slate-400">v15</span>
                 </Link>
               </li>
               <li>
-                <Link href="/compiler/c" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
+                <Link href="/editor?lang=c" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
                   <span>C (GCC) Online</span>
                   <span className="text-[10px] font-mono text-slate-400">GCC 10</span>
                 </Link>
               </li>
               <li>
-                <Link href="/compiler/go" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
+                <Link href="/editor?lang=go" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
                   <span>Go (Golang) Runner</span>
                   <span className="text-[10px] font-mono text-slate-400">v1.16</span>
                 </Link>
               </li>
               <li>
-                <Link href="/compiler/php" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
+                <Link href="/editor?lang=php" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
                   <span>PHP 8 Sandbox</span>
                   <span className="text-[10px] font-mono text-slate-400">v8.2</span>
                 </Link>
               </li>
               <li>
-                <Link href="/compiler/sql" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
+                <Link href="/editor?lang=sql" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center justify-between">
                   <span>SQL SQLite Sandbox</span>
                   <span className="text-[10px] font-mono text-slate-400">v3.36</span>
                 </Link>
