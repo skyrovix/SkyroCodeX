@@ -93,7 +93,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const canonicalUrl = `https://skyrocodex.skyrovix.com/compiler/${seo.id}`;
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://skyrocodex.skyrovix.online";
+  const canonicalUrl = `${baseUrl}/compiler/${seo.id}`;
 
   return {
     title: seo.seoTitle,
@@ -147,6 +148,8 @@ export default async function CompilerPage({ params }: PageProps) {
 
   const langConfig = getLanguageConfig(seo.id);
 
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://skyrocodex.skyrovix.online";
+
   // Generate Google Structured Data (JSON-LD)
   const structuredData = {
     "@context": "https://schema.org",
@@ -156,7 +159,7 @@ export default async function CompilerPage({ params }: PageProps) {
         name: `${seo.name} Online Compiler`,
         applicationCategory: "DeveloperApplication",
         operatingSystem: "All",
-        url: `https://skyrocodex.skyrovix.com/compiler/${seo.id}`,
+        url: `${baseUrl}/compiler/${seo.id}`,
         description: seo.metaDescription,
         offers: {
           "@type": "Offer",
@@ -176,19 +179,19 @@ export default async function CompilerPage({ params }: PageProps) {
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://skyrocodex.skyrovix.com",
+            item: `${baseUrl}`,
           },
           {
             "@type": "ListItem",
             position: 2,
             name: "Compilers",
-            item: "https://skyrocodex.skyrovix.com/editor",
+            item: `${baseUrl}/editor`,
           },
           {
             "@type": "ListItem",
             position: 3,
             name: `${seo.name} Compiler`,
-            item: `https://skyrocodex.skyrovix.com/compiler/${seo.id}`,
+            item: `${baseUrl}/compiler/${seo.id}`,
           },
         ],
       },

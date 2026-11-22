@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { ALL_SEO_LANGUAGES } from "@/lib/seo-languages";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://skyrocodex.skyrovix.com";
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://skyrocodex.skyrovix.online";
   const now = new Date();
 
   // Core static pages

@@ -7,7 +7,7 @@
 server {
     listen 80;
     listen [::]:80;
-    server_name yourdomain.com www.yourdomain.com; # Replace with your actual domain or subdomain
+    server_name skyrocodex.skyrovix.online www.skyrocodex.skyrovix.online; # Replace with your actual domain or subdomain
 
     # Security Headers
     add_header X-Frame-Options "SAMEORIGIN" always;
@@ -47,3 +47,4 @@ server {
 
     client_max_body_size 25M;
 }
+

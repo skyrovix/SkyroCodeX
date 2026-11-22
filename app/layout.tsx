@@ -3,7 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://skyrocodex.skyrovix.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://skyrocodex.skyrovix.online"),
   title: {
     default: "SkyroCodeX — Online Code Compiler & IDE by Skyrovix",
     template: "%s | SkyroCodeX",
@@ -30,12 +30,12 @@ export const metadata: Metadata = {
   creator: "Hariharan S.",
   publisher: "Skyrovix",
   alternates: {
-    canonical: "https://skyrocodex.skyrovix.com",
+    canonical: "https://skyrocodex.skyrovix.online",
   },
   openGraph: {
     title: "SkyroCodeX — Online Code Compiler & IDE by Skyrovix",
     description: "Write, compile, and execute code in 9+ languages with pre-warmed container sandboxing. Zero setup, real-time output, and instant sharing.",
-    url: "https://skyrocodex.skyrovix.com",
+    url: "https://skyrocodex.skyrovix.online",
     siteName: "SkyroCodeX",
     type: "website",
     locale: "en_US",
