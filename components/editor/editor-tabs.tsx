@@ -53,7 +53,7 @@ export function EditorTabs({
   };
 
   return (
-    <div className="h-9 flex items-center select-none overflow-x-auto scrollbar-none transition-colors">
+    <div className="h-9 flex-1 min-w-0 flex items-center select-none overflow-x-auto scrollbar-none transition-colors">
       <div className="h-full flex items-center">
         {files.map((file, idx) => {
           const isActive = idx === activeFileIndex;
@@ -62,14 +62,14 @@ export function EditorTabs({
               key={`${file.name}-${idx}`}
               onClick={() => onSelectFile(idx)}
               className={cn(
-                "group h-full flex items-center gap-2 px-3.5 text-xs font-mono transition-colors cursor-pointer border-r border-slate-200/80 dark:border-slate-800 border-t-2",
+                "group h-full flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 text-xs font-mono transition-colors cursor-pointer border-r border-slate-200/80 dark:border-slate-800 border-t-2 shrink-0",
                 isActive
                   ? "bg-white dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 border-t-[#FF5722] font-semibold shadow-sm"
                   : "bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-900/50 hover:text-slate-900 dark:hover:text-slate-200 border-t-transparent"
               )}
             >
               {getFileIcon(file.name)}
-              <span className="truncate max-w-[130px]">{file.name}</span>
+              <span className="truncate max-w-[95px] xs:max-w-[130px]">{file.name}</span>
 
               {/* Close Button - Always visible matching OneCompiler style */}
               {onCloseFile && (
@@ -94,7 +94,7 @@ export function EditorTabs({
           <button
             type="button"
             onClick={onAddFile}
-            className="h-full min-w-[38px] px-3.5 flex items-center justify-center text-xs text-slate-500 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-slate-100 border-r border-slate-200/80 dark:border-slate-800 transition-colors"
+            className="h-full min-w-[34px] sm:min-w-[38px] px-2.5 sm:px-3.5 flex items-center justify-center text-xs text-slate-500 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-slate-100 border-r border-slate-200/80 dark:border-slate-800 transition-colors shrink-0"
             title="Add new file (+)"
           >
             <Plus className="h-3.5 w-3.5" />

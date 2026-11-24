@@ -309,30 +309,50 @@ function EditorContent() {
       />
 
       {/* Mobile Tab Switcher */}
-      <div className="flex md:hidden border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-1.5 justify-around text-xs font-medium">
-        <button
-          onClick={() => setMobileTab("editor")}
-          className={`flex items-center gap-1.5 py-1 px-3 rounded ${
-            mobileTab === "editor" ? "bg-orange-600 text-white font-semibold" : "text-slate-600 dark:text-slate-400"
-          }`}
-        >
-          <Code className="h-4 w-4" />
-          <span>Editor</span>
-        </button>
-        <button
-          onClick={() => {
-            const outTab = currentLangConfig.isWebPreview ? "preview" : "output";
-            setRightPaneTab(outTab);
-            setMobileTab("output");
-          }}
-          className={`flex items-center gap-1.5 py-1 px-3 rounded ${
-            mobileTab === "output" ? "bg-orange-600 text-white font-semibold" : "text-slate-600 dark:text-slate-400"
-          }`}
-        >
-          {currentLangConfig.isWebPreview ? <Eye className="h-4 w-4" /> : <Terminal className="h-4 w-4" />}
-          <span>{currentLangConfig.isWebPreview ? "Preview" : "Console"}</span>
-          {stats.status === "running" && <span className="h-2 w-2 rounded-full bg-orange-400 animate-ping"></span>}
-        </button>
+      <div className="flex md:hidden items-center justify-between border-b border-slate-200 dark:border-slate-800/80 bg-slate-50/90 dark:bg-[#0A0E17]/90 backdrop-blur px-2.5 py-1.5 shrink-0 select-none">
+        <div className="grid grid-cols-2 p-1 bg-slate-200/70 dark:bg-slate-900/80 rounded-xl w-full border border-slate-200 dark:border-slate-800/60 shadow-inner gap-1">
+          <button
+            type="button"
+            onClick={() => setMobileTab("editor")}
+            className={`flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-xs transition-all ${
+              mobileTab === "editor"
+                ? "bg-white dark:bg-[#1E293B] text-slate-900 dark:text-white shadow-sm font-bold border border-slate-200/50 dark:border-slate-700/50"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 font-medium"
+            }`}
+          >
+            <Code className="h-3.5 w-3.5 text-orange-500 shrink-0" />
+            <span>Editor</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              const outTab = currentLangConfig.isWebPreview ? "preview" : "output";
+              setRightPaneTab(outTab);
+              setMobileTab("output");
+            }}
+            className={`flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-xs transition-all relative ${
+              mobileTab === "output"
+                ? "bg-white dark:bg-[#1E293B] text-slate-900 dark:text-white shadow-sm font-bold border border-slate-200/50 dark:border-slate-700/50"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 font-medium"
+            }`}
+          >
+            {currentLangConfig.isWebPreview ? (
+              <Eye className="h-3.5 w-3.5 text-orange-500 shrink-0" />
+            ) : (
+              <Terminal className="h-3.5 w-3.5 text-orange-500 shrink-0" />
+            )}
+            <span>{currentLangConfig.isWebPreview ? "Preview" : "Console"}</span>
+            {stats.status === "running" && (
+              <span className="flex h-2 w-2 relative ml-1">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+              </span>
+            )}
+            {stats.status === "success" && (
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 ml-1"></span>
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Main Split-Pane Workspace with Left Activity Bar */}
@@ -474,7 +494,7 @@ function EditorContent() {
             />
 
             {/* Font Size & Info */}
-            <div className="flex items-center gap-1 text-slate-500 dark:text-slate-400">
+            <div className="hidden xs:flex shrink-0 items-center gap-1 text-slate-500 dark:text-slate-400 pl-2">
               <span className="text-[11px] font-mono mr-1 hidden sm:inline uppercase font-bold text-orange-600 dark:text-orange-400">
                 {activeFile.language}
               </span>
